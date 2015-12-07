@@ -5,29 +5,33 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Sebas on 05/12/2015.
  */
 
 class Alarma{
     int id;
-    String no_hombre;
-    String LONGaniza;
-    String LATido;
-    String puta_distancia;
+    String nombre;
+    String longitud;
+    String latitud;
+    String distancia;
 
     public Alarma(int id, String nombre, String longitud, String latitud, String distancia){
         this.id = id;
-        this.no_hombre = nombre;
-        this.LONGaniza = longitud;
-        this.LATido = latitud;
-        this.puta_distancia = distancia;
+        this.nombre = nombre;
+        this.longitud = longitud;
+        this.latitud = latitud;
+        this.distancia = distancia;
     }
 
 }
 
 class conexionBase extends  SQLiteOpenHelper{
-    String sqlCreate = "CREATE TABLE IF NOT EXISTS Halarmas (aidi INTEGER, no_hombre TEXT, LONGaniza TEXT, LATido TEXT, puta_distancia TEXT)";
+    String sqlCreate = "CREATE TABLE IF NOT EXISTS Alarmas (id INTEGER, nombre TEXT, longitud TEXT, latitud TEXT, distancia TEXT)";
 
     public conexionBase(Context contexto, String nombre,CursorFactory factory, int version) {
         super(contexto, nombre, factory, version);
@@ -48,27 +52,25 @@ class conexionBase extends  SQLiteOpenHelper{
 
 public class AlarmDB {
 
-    private conexionBase conesion;
+    private conexionBase conexion;
     SQLiteDatabase db;
     Context context;
 
     public AlarmDB(Context contexto, String nombre){
         this.context = contexto;
-        this.conesion = new conexionBase(contexto, nombre, null, 1);
-        this.db = conesion.getWritableDatabase();
+        this.conexion = new conexionBase(contexto, nombre, null, 1);
+        this.db = conexion.getWritableDatabase();
     }
 
-    public Alarma[] DameTodasLasAlarmasOTeQuemo(){
-        int halarmas;
-        Alarma[] alarmas;
-        halarmas = cantAlarms();
-        alarmas = new Alarma[halarmas];
-        Cursor c = db.rawQuery("SELECT aidi, no_hombre, LONGaniza, LATido, puta_distancia FROM Halarma", null);
+    public List<Alarma> obtenerTodasAlarmas(){
+        int cant_alarmas = cantidadAlarmas();
+        List<Alarma> alarmas = new ArrayList<Alarma>();
+        Cursor c = db.rawQuery("SELECT id, nombre, longitud, latitud, distancia FROM Alarmas", null);
         int i = 0;
         c.moveToFirst();
-        while (i < halarmas) {
-            Alarma larma = new Alarma(c.getInt(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4));
-            alarmas[i] = larma;
+        while (i < cant_alarmas) {
+            Alarma una_alarma = new Alarma(c.getInt(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4));
+            alarmas.add(una_alarma);
             c.moveToNext();
             i++;
         }
@@ -76,53 +78,53 @@ public class AlarmDB {
         return alarmas;
     }
 
-    public int cantAlarms(){
-        int halarmas = 0;
-        Cursor c = db.rawQuery("SELECT count(1) FROM Halarma", null);
+    public int cantidadAlarmas(){
+        int retornar = 0;
+        Cursor c = db.rawQuery("SELECT count(1) FROM Alarmas", null);
         if (c.moveToFirst()) {
-            halarmas = c.getInt(0);
+            retornar = c.getInt(0);
         }
-        return halarmas;
+        return retornar;
     }
 
-    public int dameElAidiQueSigueLagarto(){
-        int vomito;
-        int hay = cantAlarms();
+    public int proximoId(){
+        int proximo_id;
+        int hay = cantidadAlarmas();
         if (hay > 0){
-            Cursor c = db.rawQuery("SELECT max(aidi) FROM Halarma", null);
+            Cursor c = db.rawQuery("SELECT max(id) FROM Alarmas", null);
             if (c.moveToFirst()) {
-                vomito = c.getInt(0);
+                proximo_id = c.getInt(0);
             }else
-                vomito = 0;
+                proximo_id = 0;
         }
         else {
-            vomito = -1;
+            proximo_id = -1;
         }
-        return vomito;
+        return proximo_id;
     }
 
-    public Alarma buscateEsta(int aidi){
-        Cursor c = db.rawQuery("SELECT no_hombre, LONGaniza, LATido, puta_distancia FROM Halarma where aidi=" + aidi, null);
-        Alarma larma = new Alarma(-1, "", "", "", "");
+    public Alarma obtenerAlarmaPorId(int id){
+        Cursor c = db.rawQuery("SELECT nombre, longitud, latitud, distancia FROM Alarmas where id=" + id, null);
+        Alarma mi_alarma = new Alarma(-1, "", "", "", "");
         if (c.moveToFirst()) {
-            larma = new Alarma(c.getInt(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4));
+            mi_alarma = new Alarma(c.getInt(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4));
         }
-        return larma;
+        return mi_alarma;
     }
 
-    public void InsertateWacho(Alarma wacho){
-        String sql = "INSERT INTO Halarmas (aidi,no_hombre,LONGaniza,LATido, puta_distancia) VALUES (" + wacho.id + ",'" + wacho.no_hombre + "','" + wacho.LONGaniza + "','" + wacho.LATido + "','" + wacho.puta_distancia + "')";
+    public void insertarAlarma(Alarma alarma){
+        String sql = "INSERT INTO Alarmas (id,nombre,longitud,latitud,distancia) VALUES (" + alarma.id + ",'" + alarma.nombre + "','" + alarma.longitud + "','" + alarma.latitud + "','" + alarma.distancia + "')";
         db.execSQL(sql);
     }
 
-    public void InsertateWacho(String nombre, String lat, String longi, String dist){
-        int prox_id = dameElAidiQueSigueLagarto();
-        String sql = "INSERT INTO Halarmas (aidi,no_hombre,LONGaniza,LATido, puta_distancia) VALUES (" + prox_id + ",'" + nombre + "','" + longi + "','" + lat + "','" + dist + "')";
+    public void insertarAlarma(String nombre, String lat, String longi, String dist){
+        int prox_id = proximoId();
+        String sql = "INSERT INTO Alarmas (id,nombre,longitud,latitud,distancia) VALUES (" + prox_id + ",'" + nombre + "','" + longi + "','" + lat + "','" + dist + "')";
         db.execSQL(sql);
     }
 
-    public void TocaDeAcaAlarmaTurra(Alarma turra){
-        String sql = "DELETE FROM Halarmas WHERE id=" + turra.id;
+    public void borrarAlarma(Alarma alarma){
+        String sql = "DELETE FROM Alarmas WHERE id=" + alarma.id;
         db.execSQL(sql);
     }
 

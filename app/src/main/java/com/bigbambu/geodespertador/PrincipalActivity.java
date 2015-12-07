@@ -30,12 +30,13 @@ public class PrincipalActivity extends AppCompatActivity {
         mi_lista_alarmas = (ListView)findViewById(R.id.listView);
 
 
-        //Traigo alarmas del XML
-        List<Alarma> lista_alarmas = new ArrayList<>();
-
-        //cargar lista_alarmas
-        AlarmDB mi_base = new AlarmDB(this, "Halarmas");
-        mi_base.InsertateWacho("Casa", "100", "200", "50");
+        AlarmDB mi_base = new AlarmDB(this, "Alarmas");
+        mi_base.insertarAlarma("Casa", "100", "200", "50");
+        mi_base.insertarAlarma("Facu", "50", "46", "20");
+        mi_base.insertarAlarma("Sinagoga", "234", "53", "25");
+        mi_base.insertarAlarma("LCDTM", "646", "32", "30");
+        List<Alarma> alarmas_lista = mi_base.obtenerTodasAlarmas();
+        cargarListView(alarmas_lista);
 
 
         nueva_alarma=(Button)findViewById(R.id.btn_nueva);
@@ -89,7 +90,7 @@ public class PrincipalActivity extends AppCompatActivity {
         //generate list
         ArrayList<String> list = new ArrayList<String>();
         for(int i=0; i<lista_mostrar.size(); i++){
-            list.add(lista_mostrar.get(i).no_hombre);
+            list.add(lista_mostrar.get(i).nombre);
         }
 
         //instantiate custom adapter
