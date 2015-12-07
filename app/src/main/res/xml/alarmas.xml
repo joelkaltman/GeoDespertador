@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<title type="text">GeoDespertador</title>
+<alarmas>
+    <alarma>
+        <nombre>
+            Casa
+        </nombre>
+        <radio>1000</radio>
+    </alarma>
+    <alarma>
+        <nombre>Facu</nombre>
+        <radio>750</radio>
+    </alarma>
+    <alarma>
+        <nombre>Lo de carlitos</nombre>
+        <radio>500</radio>
+    </alarma>
+    <alarma>
+        <nombre>Calle falsa</nombre>
+        <radio>123</radio>
+    </alarma>
+    <alarma>
+        <nombre>Balcarce 54</nombre>
+        <radio>500</radio>
+    </alarma>
+    <alarma>
+        <nombre>Travatour</nombre>
+        <radio>200</radio>
+    </alarma>
+    <alarma>
+        <nombre>Mansion BB</nombre>
+        <radio>1100</radio>
+    </alarma>
+    <alarma>
+        <nombre>Sin ideas</nombre>
+        <radio>1200</radio>
+    </alarma>
+    <alarma>
+        <nombre>Ultima</nombre>
+        <radio>800</radio>
+    </alarma>
+</alarmas>
+</PreferenceScreen>
