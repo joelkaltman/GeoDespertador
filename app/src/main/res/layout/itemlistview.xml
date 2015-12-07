@@ -14,12 +14,12 @@ android:layout_height="match_parent" >
 
 <Button
     android:id="@+id/delete_btn"
-    android:layout_width="40dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentRight="true"
     android:layout_centerVertical="true"
     android:layout_marginRight="5dp"
-    android:text="X"
+    android:text="Modificar"
     android:textSize="15sp"
     android:textStyle="bold"/>
 

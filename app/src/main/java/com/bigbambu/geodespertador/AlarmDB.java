@@ -128,5 +128,9 @@ public class AlarmDB {
         db.execSQL(sql);
     }
 
+    public void borrarAlarmaPorNombre(String nombre){
+        String sql = "DELETE FROM Alarmas WHERE nombre=" + nombre;
+        db.execSQL(sql);
+    }
 }
 

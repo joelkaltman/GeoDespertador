@@ -22,6 +22,7 @@ import java.util.List;
 public class PrincipalActivity extends AppCompatActivity {
     ListView mi_lista_alarmas;
     Button nueva_alarma;
+    public AlarmDB mi_base;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public class PrincipalActivity extends AppCompatActivity {
         mi_lista_alarmas = (ListView)findViewById(R.id.listView);
 
 
-        AlarmDB mi_base = new AlarmDB(this, "Alarmas");
+        mi_base = new AlarmDB(this, "Alarmas");
         mi_base.insertarAlarma("Casa", "100", "200", "50");
         mi_base.insertarAlarma("Facu", "50", "46", "20");
         mi_base.insertarAlarma("Sinagoga", "234", "53", "25");
@@ -94,7 +95,7 @@ public class PrincipalActivity extends AppCompatActivity {
         }
 
         //instantiate custom adapter
-        MyCustomAdapter adapter = new MyCustomAdapter(list, this);
+        MyCustomAdapter adapter = new MyCustomAdapter(list, this, this);
 
         //handle listview and assign adapter
         mi_lista_alarmas.setAdapter(adapter);
@@ -110,12 +111,13 @@ public class PrincipalActivity extends AppCompatActivity {
     public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
         private ArrayList<String> list = new ArrayList<String>();
         private Context context;
+        PrincipalActivity actividad;
 
 
-
-        public MyCustomAdapter(ArrayList<String> list, Context context) {
+        public MyCustomAdapter(ArrayList<String> list, Context context, PrincipalActivity actividad) {
             this.list = list;
             this.context = context;
+            this.actividad = actividad;
         }
 
         @Override
@@ -148,24 +150,17 @@ public class PrincipalActivity extends AppCompatActivity {
             listItemText.setText(list.get(position));
 
             //Handle buttons and add onClickListeners
-            /*Button deleteBtn = (Button)view.findViewById(R.id.delete_btn);
-            Button addBtn = (Button)view.findViewById(R.id.add_btn);
+            Button deleteBtn = (Button)view.findViewById(R.id.delete_btn);
 
             deleteBtn.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     //do something
-                    list.remove(position); //or some other task
+                    Intent i = new Intent(getApplicationContext(), SettingsAlarma.class);
+                    startActivity(i);
                     notifyDataSetChanged();
                 }
             });
-            addBtn.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    //do something
-                    notifyDataSetChanged();
-                }
-            });*/
 
             return view;
         }
