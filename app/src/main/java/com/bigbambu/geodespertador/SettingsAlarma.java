@@ -14,6 +14,9 @@ public class SettingsAlarma extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_alarma);
+
+        AlarmDB mi_base = AlarmDB.con;
+
         btn_guardar = (Button)findViewById(R.id.btn_guardar);
         btn_guardar.setOnClickListener(new View.OnClickListener() {
 

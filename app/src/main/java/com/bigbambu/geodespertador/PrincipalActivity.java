@@ -32,6 +32,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
 
         mi_base = new AlarmDB(this, "Alarmas");
+        AlarmDB.con = mi_base;
         mi_base.insertarAlarma("Casa", "100", "200", "50");
         mi_base.insertarAlarma("Facu", "50", "46", "20");
         mi_base.insertarAlarma("Sinagoga", "234", "53", "25");

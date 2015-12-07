@@ -55,6 +55,7 @@ public class AlarmDB {
     private conexionBase conexion;
     SQLiteDatabase db;
     Context context;
+    public static AlarmDB con;
 
     public AlarmDB(Context contexto, String nombre){
         this.context = contexto;
