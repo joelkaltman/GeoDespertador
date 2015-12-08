@@ -31,7 +31,7 @@ public class PrincipalActivity extends AppCompatActivity {
         mi_lista_alarmas = (ListView)findViewById(R.id.listView);
 
 
-        mi_base = new AlarmDB(this, "Alarmas");
+        mi_base = new AlarmDB(this);
         AlarmDB.con = mi_base;
         mi_base.insertarAlarma("Casa", "100", "200", "50");
         mi_base.insertarAlarma("Facu", "50", "46", "20");

@@ -1,28 +1,53 @@
 package com.bigbambu.geodespertador;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.SeekBar;
 
 public class SettingsAlarma extends AppCompatActivity {
     Button btn_guardar;
+    Button btn_volver;
+    EditText txt_nombre;
+    SeekBar skb_distancia;
+    AlarmDB mi_base;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_alarma);
 
-        AlarmDB mi_base = AlarmDB.con;
+        mi_base = AlarmDB.con;
 
+        txt_nombre = (EditText)findViewById(R.id.txt_nombre);
         btn_guardar = (Button)findViewById(R.id.btn_guardar);
+        btn_volver = (Button)findViewById(R.id.btn_volver);
+        skb_distancia = (SeekBar)findViewById(R.id.skb_distancia);
+
         btn_guardar.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
+                String nombre = txt_nombre.getText().toString();
+                int distancia = skb_distancia.getProgress();
+                //mi_base.insertarAlarma(mi_alarma);
+
+            }
+        });
+
+        btn_volver.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent i = new Intent(getApplicationContext(), PrincipalActivity.class);
+                startActivity(i);
 
             }
         });

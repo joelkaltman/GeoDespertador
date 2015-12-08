@@ -20,6 +20,7 @@
             android:name=".SettingsAlarma"
             android:label="@string/title_activity_settings_alarma" >
         </activity>
+        <uses-library android:name="com.google.android.maps" />
     </application>
 
 </manifest>

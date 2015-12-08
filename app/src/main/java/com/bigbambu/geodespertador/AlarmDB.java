@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Created by Sebas on 05/12/2015.
  */
@@ -57,9 +58,9 @@ public class AlarmDB {
     Context context;
     public static AlarmDB con;
 
-    public AlarmDB(Context contexto, String nombre){
+    public AlarmDB(Context contexto){
         this.context = contexto;
-        this.conexion = new conexionBase(contexto, nombre, null, 1);
+        this.conexion = new conexionBase(contexto, "Alarmas", null, 1);
         this.db = conexion.getWritableDatabase();
     }
 
@@ -140,4 +141,3 @@ public class AlarmDB {
         db.execSQL(sql);
     }
 }
-
