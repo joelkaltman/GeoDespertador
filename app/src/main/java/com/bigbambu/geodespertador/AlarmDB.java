@@ -5,10 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * Created by Sebas on 05/12/2015.
  */
@@ -119,9 +119,15 @@ public class AlarmDB {
     }
 
     public void insertarAlarma(String nombre, String lat, String longi, String dist){
-        int prox_id = proximoId();
-        String sql = "INSERT INTO Alarmas (id,nombre,longitud,latitud,distancia) VALUES (" + prox_id + ",'" + nombre + "','" + longi + "','" + lat + "','" + dist + "')";
-        db.execSQL(sql);
+        Cursor c = db.rawQuery("SELECT 1 FROM Alarmas where nombre = '"+ nombre + "'", null);
+        if (c.moveToFirst()) {
+            Toast t = Toast.makeText(context, "Ya existe una alrma con ese nombre", Toast.LENGTH_SHORT);
+        }
+        else {
+            int prox_id = proximoId();
+            String sql = "INSERT INTO Alarmas (id,nombre,longitud,latitud,distancia) VALUES (" + prox_id + ",'" + nombre + "','" + longi + "','" + lat + "','" + dist + "')";
+            db.execSQL(sql);
+        }
     }
 
     public void borrarAlarma(Alarma alarma){
