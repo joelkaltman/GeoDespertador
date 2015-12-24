@@ -10,6 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 public class SettingsAlarma extends AppCompatActivity {
     Button btn_guardar;
     Button btn_volver;
@@ -17,11 +22,16 @@ public class SettingsAlarma extends AppCompatActivity {
     SeekBar skb_distancia;
     AlarmDB mi_base;
 
+    GoogleMap map;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_alarma);
-
+        GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+        map.addMarker(new MarkerOptions().position(new LatLng(39.233956, -77.484703))
+                .title("This is the title")
+                .snippet("This is the snippet within the InfoWindow"));
         mi_base = AlarmDB.con;
 
         txt_nombre = (EditText)findViewById(R.id.txt_nombre);
