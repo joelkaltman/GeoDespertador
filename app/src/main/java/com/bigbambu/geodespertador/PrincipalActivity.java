@@ -22,7 +22,8 @@ import java.util.List;
 public class PrincipalActivity extends AppCompatActivity {
     ListView mi_lista_alarmas;
     Button nueva_alarma;
-    public AlarmDB mi_base;
+    public static AlarmDB mi_base;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +31,7 @@ public class PrincipalActivity extends AppCompatActivity {
         setContentView(R.layout.principal);
         mi_lista_alarmas = (ListView)findViewById(R.id.listView);
 
-
         mi_base = new AlarmDB(this);
-        AlarmDB.con = mi_base;
         mi_base.insertarAlarma("Casa", "100", "200", "50");
         mi_base.insertarAlarma("Facu", "50", "46", "20");
         mi_base.insertarAlarma("Sinagoga", "234", "53", "25");

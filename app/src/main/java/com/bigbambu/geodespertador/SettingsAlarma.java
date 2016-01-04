@@ -1,7 +1,11 @@
 package com.bigbambu.geodespertador;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,34 +24,46 @@ public class SettingsAlarma extends AppCompatActivity {
     Button btn_volver;
     EditText txt_nombre;
     SeekBar skb_distancia;
-    AlarmDB mi_base;
-
+    AlarmDB base;
+    public LatLng miUbicacion;
     GoogleMap map;
+    LocationManager locman;
+    MyLocation loclist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings_alarma);
+        setContentView(R.layout.fragment_settings_alarma);
         GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         map.addMarker(new MarkerOptions().position(new LatLng(39.233956, -77.484703))
                 .title("This is the title")
                 .snippet("This is the snippet within the InfoWindow"));
-        mi_base = AlarmDB.con;
 
+
+        locman = (LocationManager) getSystemService(LOCATION_SERVICE);
+        loclist = new MyLocation(this);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        locman.requestLocationUpdates(locman.GPS_PROVIDER, 0L, 0.0F, loclist);
+        locman.getLastKnownLocation(locman.GPS_PROVIDER);
+
+        base = new AlarmDB(this);
         txt_nombre = (EditText)findViewById(R.id.txt_nombre);
         btn_guardar = (Button)findViewById(R.id.btn_guardar);
         btn_volver = (Button)findViewById(R.id.btn_volver);
         skb_distancia = (SeekBar)findViewById(R.id.skb_distancia);
 
         btn_guardar.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
+                String lng = String.valueOf(miUbicacion.longitude);
+                String lat = String.valueOf(miUbicacion.latitude);
                 String nombre = txt_nombre.getText().toString();
                 int distancia = skb_distancia.getProgress();
-                //mi_base.insertarAlarma(mi_alarma);
-
+                base.insertarAlarma(nombre, lat, lng, String.valueOf(distancia));
             }
         });
 

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,18 +52,20 @@ class conexionBase extends  SQLiteOpenHelper{
     }
 }
 
-public class AlarmDB {
+public class AlarmDB implements Serializable{
 
-    private conexionBase conexion;
-    SQLiteDatabase db;
-    Context context;
-    public static AlarmDB con;
+    public conexionBase conexion;
+    public SQLiteDatabase db;
+    public Context context;
 
-    public AlarmDB(Context contexto){
-        this.context = contexto;
-        this.conexion = new conexionBase(contexto, "Alarmas", null, 1);
-        this.db = conexion.getWritableDatabase();
+
+    public AlarmDB(Context contexto) {
+        context = contexto;
+        conexion = new conexionBase(contexto, "Alarmas", null, 1);
+        db = conexion.getWritableDatabase();
     }
+
+
 
     public List<Alarma> obtenerTodasAlarmas(){
         int cant_alarmas = cantidadAlarmas();
