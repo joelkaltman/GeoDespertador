@@ -124,20 +124,19 @@ public class AlarmDB implements Serializable{
     }
 
     public void insertarAlarma(Alarma alarma){
-        String sql = "INSERT INTO Alarmas (id,nombre,longitud,latitud,distancia) VALUES (" + alarma.id + ",'" + alarma.nombre + "','" + alarma.longitud + "','" + alarma.latitud + "','" + alarma.distancia + "')";
-        db.execSQL(sql);
-    }
-
-    public void insertarAlarma(String nombre, String lat, String longi, String dist){
-        Cursor c = db.rawQuery("SELECT 1 FROM Alarmas where nombre = '"+ nombre + "'", null);
+        Cursor c = db.rawQuery("SELECT 1 FROM Alarmas where id = '"+ alarma.id + "'", null);
         if (c.moveToFirst()) {
             Toast t = Toast.makeText(context, "Ya existe una alrma con ese nombre", Toast.LENGTH_SHORT);
         }
         else {
-            int prox_id = proximoId();
-            String sql = "INSERT INTO Alarmas (id,nombre,longitud,latitud,distancia) VALUES (" + prox_id + ",'" + nombre + "','" + longi + "','" + lat + "','" + dist + "')";
+            String sql = "INSERT INTO Alarmas (id,nombre,longitud,latitud,distancia) VALUES (" + alarma.id + ",'" + alarma.nombre + "','" + alarma.longitud + "','" + alarma.latitud + "','" + alarma.distancia + "')";
             db.execSQL(sql);
         }
+    }
+
+    public void insertarAlarma(String nombre, String lat, String longi, String dist){
+        Alarma alarma = new Alarma(nombre, lat, longi, dist);
+        insertarAlarma(alarma);
     }
 
     public void borrarAlarma(Alarma alarma){
@@ -147,6 +146,11 @@ public class AlarmDB implements Serializable{
 
     public void borrarAlarmaPorNombre(String nombre){
         String sql = "DELETE FROM Alarmas WHERE nombre=" + nombre;
+        db.execSQL(sql);
+    }
+
+    public void borrarAlarmaPorNombre(int id){
+        String sql = "DELETE FROM Alarmas WHERE id=" + id;
         db.execSQL(sql);
     }
 }

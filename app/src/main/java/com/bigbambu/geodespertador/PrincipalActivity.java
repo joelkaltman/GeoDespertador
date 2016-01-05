@@ -32,10 +32,9 @@ public class PrincipalActivity extends AppCompatActivity {
         mi_lista_alarmas = (ListView)findViewById(R.id.listView);
 
         mi_base = new AlarmDB(this);
-        mi_base.insertarAlarma("Casa", "100", "200", "50");
-        mi_base.insertarAlarma("Facu", "50", "46", "20");
-        mi_base.insertarAlarma("Sinagoga", "234", "53", "25");
-        mi_base.insertarAlarma("LCDTM", "646", "32", "30");
+
+        CrearAlarmas();
+
         List<Alarma> alarmas_lista = mi_base.obtenerTodasAlarmas();
         cargarListView(alarmas_lista);
 
@@ -52,6 +51,18 @@ public class PrincipalActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    //MEtodo para crear alarmas, luego va a desaparecer
+    private void CrearAlarmas() {
+        Alarma alarm = new Alarma("Casa", "100", "200", "50");
+        mi_base.insertarAlarma(alarm);
+        alarm = new Alarma("Facu", "50", "46", "20");
+        mi_base.insertarAlarma(alarm);
+        alarm = new Alarma("Sinagoga", "234", "53", "25");
+        mi_base.insertarAlarma(alarm);
+        alarm = new Alarma("LCDTM", "646", "32", "30");
+        mi_base.insertarAlarma(alarm);
     }
 
     @Override
@@ -155,10 +166,11 @@ public class PrincipalActivity extends AppCompatActivity {
             listItemText = (TextView)view.findViewById(R.id.list_item_string);
             listItemText.setText(list.get(position).nombre);
 
+
             //Handle buttons and add onClickListeners
             Button deleteBtn = (Button)view.findViewById(R.id.delete_btn);
 
-            deleteBtn.setOnClickListener(new View.OnClickListener(){
+            deleteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //do something

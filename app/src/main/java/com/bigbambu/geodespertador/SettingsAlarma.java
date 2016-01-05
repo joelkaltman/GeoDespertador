@@ -66,6 +66,7 @@ public class SettingsAlarma extends AppCompatActivity implements GoogleMap.OnMap
         btn_volver = (Button)findViewById(R.id.btn_volver);
         skb_distancia = (SeekBar)findViewById(R.id.skb_distancia);
 
+
         btn_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +75,8 @@ public class SettingsAlarma extends AppCompatActivity implements GoogleMap.OnMap
                 String lat = String.valueOf(miUbicacion.latitude);
                 String nombre = txt_nombre.getText().toString();
                 int distancia = skb_distancia.getProgress();
-                base.insertarAlarma(nombre, lat, lng, String.valueOf(distancia));
+                Alarma alarma = new Alarma(nombre, lat, lng, String.valueOf(distancia));
+                base.insertarAlarma(alarma);
             }
         });
 
