@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class SettingsAlarma extends AppCompatActivity implements GoogleMap.OnMapLongClickListener {
     Button btn_guardar;
     Button btn_volver;
+    Button btn_borrar;
     EditText txt_nombre;
     SeekBar skb_distancia;
     AlarmDB base;
@@ -65,18 +66,30 @@ public class SettingsAlarma extends AppCompatActivity implements GoogleMap.OnMap
         btn_guardar = (Button)findViewById(R.id.btn_guardar);
         btn_volver = (Button)findViewById(R.id.btn_volver);
         skb_distancia = (SeekBar)findViewById(R.id.skb_distancia);
+        btn_borrar = (Button)findViewById(R.id.btn_borrar);
 
 
         btn_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                String lng = String.valueOf(miUbicacion.longitude);
-                String lat = String.valueOf(miUbicacion.latitude);
+                String lng = ""; // String.valueOf(miUbicacion.longitude);
+                String lat = ""; // String.valueOf(miUbicacion.latitude);
                 String nombre = txt_nombre.getText().toString();
-                int distancia = skb_distancia.getProgress();
+                int distancia = 0; // skb_distancia.getProgress();
                 Alarma alarma = new Alarma(nombre, lat, lng, String.valueOf(distancia));
                 base.insertarAlarma(alarma);
+            }
+        });
+
+        btn_borrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                String id = getIntent().getStringExtra("id");
+                int numero = Integer.parseInt(id);
+                base.borrarAlarmaPorNombre(numero);
+                Volver();
             }
         });
 
@@ -85,13 +98,16 @@ public class SettingsAlarma extends AppCompatActivity implements GoogleMap.OnMap
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent i = new Intent(getApplicationContext(), PrincipalActivity.class);
-                startActivity(i);
-
+                Volver();
             }
         });
 
 
+    }
+
+    private void Volver(){
+        Intent i = new Intent(getApplicationContext(), PrincipalActivity.class);
+        startActivity(i);
     }
 
     private void nuevaAlarma(){

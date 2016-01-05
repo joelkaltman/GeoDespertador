@@ -23,7 +23,7 @@ public class PrincipalActivity extends AppCompatActivity {
     ListView mi_lista_alarmas;
     Button nueva_alarma;
     public static AlarmDB mi_base;
-
+    public static Context contexto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +31,7 @@ public class PrincipalActivity extends AppCompatActivity {
         setContentView(R.layout.principal);
         mi_lista_alarmas = (ListView)findViewById(R.id.listView);
 
+        contexto = this;
         mi_base = new AlarmDB(this);
 
         CrearAlarmas();
@@ -154,6 +155,7 @@ public class PrincipalActivity extends AppCompatActivity {
             return 0;
         }
 
+
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             View view = convertView;
@@ -166,26 +168,34 @@ public class PrincipalActivity extends AppCompatActivity {
             listItemText = (TextView)view.findViewById(R.id.list_item_string);
             listItemText.setText(list.get(position).nombre);
 
+            listItemText.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    modificar(list.get(position));
+                    return true;
+                }
+            });
 
-            //Handle buttons and add onClickListeners
-            Button deleteBtn = (Button)view.findViewById(R.id.delete_btn);
-
-            deleteBtn.setOnClickListener(new View.OnClickListener() {
+            listItemText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //do something
-                    Intent i = new Intent(getApplicationContext(), SettingsAlarma.class);
-                    i.putExtra("nombre", list.get(position).nombre);
-                    i.putExtra("lat", list.get(position).latitud);
-                    i.putExtra("long", list.get(position).longitud);
-                    i.putExtra("distancia", list.get(position).distancia);
-                    i.setAction("MODIFICAR");
-                    startActivity(i);
-                    notifyDataSetChanged();
+                    modificar(list.get(position));
                 }
             });
 
             return view;
         }
+
+        public void modificar(Alarma alarma){
+            Intent i = new Intent(PrincipalActivity.contexto, SettingsAlarma.class);
+            i.putExtra("id",String.valueOf(alarma.id));
+            i.putExtra("nombre", alarma.nombre);
+            i.putExtra("lat", alarma.latitud);
+            i.putExtra("long", alarma.longitud);
+            i.putExtra("distancia", alarma.distancia);
+            i.setAction("MODIFICAR");
+            startActivity(i);
+        }
+
     }
 }

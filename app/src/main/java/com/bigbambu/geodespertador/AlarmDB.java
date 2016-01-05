@@ -31,6 +31,7 @@ class Alarma{
     }
 
     public Alarma(String nombre, String longitud, String latitud, String distancia){
+        this.id = -1;
         this.nombre = nombre;
         this.longitud = longitud;
         this.latitud = latitud;
@@ -72,6 +73,10 @@ public class AlarmDB implements Serializable{
     }
 
 
+    public Alarma AsignarID(Alarma alarma){
+        alarma.id = proximoId();
+        return alarma;
+    }
 
     public List<Alarma> obtenerTodasAlarmas(){
         int cant_alarmas = cantidadAlarmas();
@@ -124,6 +129,9 @@ public class AlarmDB implements Serializable{
     }
 
     public void insertarAlarma(Alarma alarma){
+        if (alarma.id == -1){
+            alarma.id = proximoId();
+        }
         Cursor c = db.rawQuery("SELECT 1 FROM Alarmas where id = '"+ alarma.id + "'", null);
         if (c.moveToFirst()) {
             Toast t = Toast.makeText(context, "Ya existe una alrma con ese nombre", Toast.LENGTH_SHORT);
@@ -141,11 +149,6 @@ public class AlarmDB implements Serializable{
 
     public void borrarAlarma(Alarma alarma){
         String sql = "DELETE FROM Alarmas WHERE id=" + alarma.id;
-        db.execSQL(sql);
-    }
-
-    public void borrarAlarmaPorNombre(String nombre){
-        String sql = "DELETE FROM Alarmas WHERE nombre=" + nombre;
         db.execSQL(sql);
     }
 
