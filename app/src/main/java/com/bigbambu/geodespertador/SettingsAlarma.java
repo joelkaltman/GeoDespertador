@@ -14,28 +14,53 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-public class SettingsAlarma extends AppCompatActivity {
+public class SettingsAlarma extends AppCompatActivity implements GoogleMap.OnMapLongClickListener {
     Button btn_guardar;
     Button btn_volver;
     EditText txt_nombre;
     SeekBar skb_distancia;
     AlarmDB base;
     public LatLng miUbicacion;
+    public Marker miMarcador;
     GoogleMap map;
     LocationManager locman;
     MyLocation loclist;
+    Alarma alarma_guardar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_settings_alarma);
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+        map.setOnMapLongClickListener(this);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-34.6229419, -58.4491101), 11f));
 
         base = new AlarmDB(this);
+
+        this.botones();
+
+        String nombre = getIntent().getStringExtra("nombre");
+        if (nombre.equals("NUEVO")){
+            nuevaAlarma();
+        }else{
+            String lat = getIntent().getStringExtra("lat");
+            String lng = getIntent().getStringExtra("long");
+            String distancia = getIntent().getStringExtra("distancia");
+            txt_nombre.setText(nombre);
+            this.actualizarMarcador(new LatLng(Double.parseDouble(lat), Double.parseDouble(lng)));
+        }
+    }
+
+
+
+    private void botones(){
         txt_nombre = (EditText)findViewById(R.id.txt_nombre);
         btn_guardar = (Button)findViewById(R.id.btn_guardar);
         btn_volver = (Button)findViewById(R.id.btn_volver);
@@ -53,7 +78,6 @@ public class SettingsAlarma extends AppCompatActivity {
             }
         });
 
-
         btn_volver.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -65,16 +89,8 @@ public class SettingsAlarma extends AppCompatActivity {
             }
         });
 
-        String acc = "NUEVO";
-        String accion = getIntent().getAction();
-        if (accion.equals(acc)){
-            nuevaAlarma();
-        }else{
-            txt_nombre.setText(accion);
-        }
 
     }
-
 
     private void nuevaAlarma(){
         locman = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -85,6 +101,19 @@ public class SettingsAlarma extends AppCompatActivity {
         }
         locman.requestLocationUpdates(locman.GPS_PROVIDER, 0L, 0.0F, loclist);
         locman.getLastKnownLocation(locman.GPS_PROVIDER);
+    }
+
+    private void actualizarMarcador(LatLng nueva_pos){
+        if(miMarcador != null) {
+            miMarcador.remove();
+        }
+        miMarcador = map.addMarker(new MarkerOptions().position(new LatLng(nueva_pos.latitude, nueva_pos.longitude)));
+    }
+
+    @Override
+    public void onMapLongClick(LatLng point) {
+        this.miUbicacion = point;
+        this.actualizarMarcador(this.miUbicacion);
     }
 
     @Override

@@ -30,6 +30,12 @@ class Alarma{
         this.distancia = distancia;
     }
 
+    public Alarma(String nombre, String longitud, String latitud, String distancia){
+        this.nombre = nombre;
+        this.longitud = longitud;
+        this.latitud = latitud;
+        this.distancia = distancia;
+    }
 }
 
 class conexionBase extends  SQLiteOpenHelper{

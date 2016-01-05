@@ -47,7 +47,7 @@ public class PrincipalActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Intent i = new Intent(getApplicationContext(), SettingsAlarma.class);
-                i.setAction("NUEVO");
+                i.putExtra("nombre", "NUEVO");
                 startActivity(i);
             }
         });
@@ -90,9 +90,13 @@ public class PrincipalActivity extends AppCompatActivity {
 
 
         //generate list
-        ArrayList<String> list = new ArrayList<String>();
+        /*ArrayList<String> list = new ArrayList<String>();
         for(int i=0; i<lista_mostrar.size(); i++){
             list.add(lista_mostrar.get(i).nombre);
+        }*/
+        ArrayList<Alarma> list = new ArrayList<Alarma>();
+        for(int i=0; i<lista_mostrar.size(); i++){
+            list.add(lista_mostrar.get(i));
         }
 
         //instantiate custom adapter
@@ -110,13 +114,13 @@ public class PrincipalActivity extends AppCompatActivity {
 
 
     public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
-        private ArrayList<String> list = new ArrayList<String>();
+        private ArrayList<Alarma> list = new ArrayList<Alarma>();
         private Context context;
         PrincipalActivity actividad;
         TextView listItemText;
 
 
-        public MyCustomAdapter(ArrayList<String> list, Context context, PrincipalActivity actividad) {
+        public MyCustomAdapter(ArrayList<Alarma> list, Context context, PrincipalActivity actividad) {
             this.list = list;
             this.context = context;
             this.actividad = actividad;
@@ -149,7 +153,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
             //Handle TextView and display string from your list
             listItemText = (TextView)view.findViewById(R.id.list_item_string);
-            listItemText.setText(list.get(position));
+            listItemText.setText(list.get(position).nombre);
 
             //Handle buttons and add onClickListeners
             Button deleteBtn = (Button)view.findViewById(R.id.delete_btn);
@@ -159,7 +163,10 @@ public class PrincipalActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     //do something
                     Intent i = new Intent(getApplicationContext(), SettingsAlarma.class);
-                    i.setAction(list.get(position).toString());
+                    i.putExtra("nombre", list.get(position).nombre);
+                    i.putExtra("lat", list.get(position).latitud);
+                    i.putExtra("long", list.get(position).longitud);
+                    i.putExtra("distancia", list.get(position).distancia);
                     startActivity(i);
                     notifyDataSetChanged();
                 }
