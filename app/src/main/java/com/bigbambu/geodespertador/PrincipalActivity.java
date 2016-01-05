@@ -34,7 +34,7 @@ public class PrincipalActivity extends AppCompatActivity {
         contexto = this;
         mi_base = new AlarmDB(this);
 
-        CrearAlarmas();
+        //CrearAlarmas();
 
         List<Alarma> alarmas_lista = mi_base.obtenerTodasAlarmas();
         cargarListView(alarmas_lista);
@@ -166,7 +166,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
             //Handle TextView and display string from your list
             listItemText = (TextView)view.findViewById(R.id.list_item_string);
-            listItemText.setText(list.get(position).nombre);
+            listItemText.setText(list.get(position).nombre + "-" + list.get(position).id);
 
             listItemText.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override

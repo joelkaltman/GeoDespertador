@@ -110,11 +110,12 @@ public class AlarmDB implements Serializable{
             Cursor c = db.rawQuery("SELECT max(id) FROM Alarmas", null);
             if (c.moveToFirst()) {
                 proximo_id = c.getInt(0);
+                proximo_id++;
             }else
-                proximo_id = 0;
+                proximo_id = -1; //error
         }
         else {
-            proximo_id = -1;
+            proximo_id = 0;
         }
         return proximo_id;
     }
@@ -152,8 +153,14 @@ public class AlarmDB implements Serializable{
         db.execSQL(sql);
     }
 
-    public void borrarAlarmaPorNombre(int id){
+    public void borrarAlarmaPorId(int id){
         String sql = "DELETE FROM Alarmas WHERE id=" + id;
+        db.execSQL(sql);
+    }
+
+
+    public void borrarAlarmaPorNombre(String nombre){
+        String sql = "DELETE FROM Alarmas WHERE nombre=" + nombre;
         db.execSQL(sql);
     }
 }

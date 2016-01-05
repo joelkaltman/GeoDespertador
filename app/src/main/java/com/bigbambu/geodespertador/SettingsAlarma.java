@@ -33,7 +33,7 @@ public class SettingsAlarma extends AppCompatActivity implements GoogleMap.OnMap
     GoogleMap map;
     LocationManager locman;
     MyLocation loclist;
-    Alarma alarma_guardar;
+    Alarma alarmaActual;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +55,10 @@ public class SettingsAlarma extends AppCompatActivity implements GoogleMap.OnMap
             String lng = getIntent().getStringExtra("long");
             String distancia = getIntent().getStringExtra("distancia");
             txt_nombre.setText(getIntent().getStringExtra("nombre"));
+            alarmaActual = new Alarma(txt_nombre.getText().toString(), lat, lng, distancia);
             this.actualizarMarcador(new LatLng(Double.parseDouble(lat), Double.parseDouble(lng)));
         }
     }
-
 
 
     private void botones(){
@@ -73,12 +73,17 @@ public class SettingsAlarma extends AppCompatActivity implements GoogleMap.OnMap
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                String lng = ""; // String.valueOf(miUbicacion.longitude);
-                String lat = ""; // String.valueOf(miUbicacion.latitude);
-                String nombre = txt_nombre.getText().toString();
-                int distancia = 0; // skb_distancia.getProgress();
-                Alarma alarma = new Alarma(nombre, lat, lng, String.valueOf(distancia));
-                base.insertarAlarma(alarma);
+                if(miUbicacion != null) {
+                    String lng = String.valueOf(miUbicacion.longitude);
+                    String lat = String.valueOf(miUbicacion.latitude);
+                    String nombre = txt_nombre.getText().toString();
+                    int distancia = skb_distancia.getProgress();
+                    alarmaActual = new Alarma(nombre, lat, lng, String.valueOf(distancia));
+                    base.insertarAlarma(alarmaActual);
+                    Volver();
+                }else{
+                    //debe ingresar una ubicacion
+                }
             }
         });
 
@@ -86,9 +91,9 @@ public class SettingsAlarma extends AppCompatActivity implements GoogleMap.OnMap
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                String id = getIntent().getStringExtra("id");
-                int numero = Integer.parseInt(id);
-                base.borrarAlarmaPorNombre(numero);
+                //String id = getIntent().getStringExtra("id");
+                //int numero = Integer.parseInt(id);
+                base.borrarAlarmaPorNombre(alarmaActual.nombre);
                 Volver();
             }
         });
