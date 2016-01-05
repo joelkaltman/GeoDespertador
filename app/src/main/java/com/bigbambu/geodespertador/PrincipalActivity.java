@@ -47,7 +47,7 @@ public class PrincipalActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Intent i = new Intent(getApplicationContext(), SettingsAlarma.class);
-                i.putExtra("nombre", "NUEVO");
+                i.setAction("NUEVO");
                 startActivity(i);
             }
         });
@@ -167,6 +167,7 @@ public class PrincipalActivity extends AppCompatActivity {
                     i.putExtra("lat", list.get(position).latitud);
                     i.putExtra("long", list.get(position).longitud);
                     i.putExtra("distancia", list.get(position).distancia);
+                    i.setAction("MODIFICAR");
                     startActivity(i);
                     notifyDataSetChanged();
                 }

@@ -46,14 +46,14 @@ public class SettingsAlarma extends AppCompatActivity implements GoogleMap.OnMap
 
         this.botones();
 
-        String nombre = getIntent().getStringExtra("nombre");
-        if (nombre.equals("NUEVO")){
+        String accion = getIntent().getAction();
+        if (accion.equals("NUEVO")){
             nuevaAlarma();
         }else{
             String lat = getIntent().getStringExtra("lat");
             String lng = getIntent().getStringExtra("long");
             String distancia = getIntent().getStringExtra("distancia");
-            txt_nombre.setText(nombre);
+            txt_nombre.setText(getIntent().getStringExtra("nombre"));
             this.actualizarMarcador(new LatLng(Double.parseDouble(lat), Double.parseDouble(lng)));
         }
     }
