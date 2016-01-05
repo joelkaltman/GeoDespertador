@@ -47,6 +47,7 @@ public class PrincipalActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Intent i = new Intent(getApplicationContext(), SettingsAlarma.class);
+                i.setAction("NUEVO");
                 startActivity(i);
             }
         });
@@ -112,6 +113,7 @@ public class PrincipalActivity extends AppCompatActivity {
         private ArrayList<String> list = new ArrayList<String>();
         private Context context;
         PrincipalActivity actividad;
+        TextView listItemText;
 
 
         public MyCustomAdapter(ArrayList<String> list, Context context, PrincipalActivity actividad) {
@@ -146,7 +148,7 @@ public class PrincipalActivity extends AppCompatActivity {
             }
 
             //Handle TextView and display string from your list
-            TextView listItemText = (TextView)view.findViewById(R.id.list_item_string);
+            listItemText = (TextView)view.findViewById(R.id.list_item_string);
             listItemText.setText(list.get(position));
 
             //Handle buttons and add onClickListeners
@@ -157,6 +159,7 @@ public class PrincipalActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     //do something
                     Intent i = new Intent(getApplicationContext(), SettingsAlarma.class);
+                    i.setAction(list.get(position).toString());
                     startActivity(i);
                     notifyDataSetChanged();
                 }

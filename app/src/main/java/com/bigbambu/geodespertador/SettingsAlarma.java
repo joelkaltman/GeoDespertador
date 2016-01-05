@@ -17,7 +17,6 @@ import android.widget.SeekBar;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 public class SettingsAlarma extends AppCompatActivity {
     Button btn_guardar;
@@ -34,20 +33,7 @@ public class SettingsAlarma extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_settings_alarma);
-        GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
-        map.addMarker(new MarkerOptions().position(new LatLng(39.233956, -77.484703))
-                .title("This is the title")
-                .snippet("This is the snippet within the InfoWindow"));
-
-
-        locman = (LocationManager) getSystemService(LOCATION_SERVICE);
-        loclist = new MyLocation(this);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        locman.requestLocationUpdates(locman.GPS_PROVIDER, 0L, 0.0F, loclist);
-        locman.getLastKnownLocation(locman.GPS_PROVIDER);
+        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 
         base = new AlarmDB(this);
         txt_nombre = (EditText)findViewById(R.id.txt_nombre);
@@ -67,6 +53,7 @@ public class SettingsAlarma extends AppCompatActivity {
             }
         });
 
+
         btn_volver.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -77,8 +64,28 @@ public class SettingsAlarma extends AppCompatActivity {
 
             }
         });
+
+        String acc = "NUEVO";
+        String accion = getIntent().getAction();
+        if (accion.equals(acc)){
+            nuevaAlarma();
+        }else{
+            txt_nombre.setText(accion);
+        }
+
     }
 
+
+    private void nuevaAlarma(){
+        locman = (LocationManager) getSystemService(LOCATION_SERVICE);
+        loclist = new MyLocation(this);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        locman.requestLocationUpdates(locman.GPS_PROVIDER, 0L, 0.0F, loclist);
+        locman.getLastKnownLocation(locman.GPS_PROVIDER);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
