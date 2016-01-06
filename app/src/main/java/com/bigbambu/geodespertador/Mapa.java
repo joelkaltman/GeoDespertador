@@ -1,8 +1,5 @@
 package com.bigbambu.geodespertador;
 
-import android.view.Menu;
-import android.view.MenuItem;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
@@ -17,7 +14,7 @@ public class Mapa implements GoogleMap.OnMapLongClickListener {
     SettingsAlarma settings;
     public LatLng miUbicacion;
     public Marker miMarcador;
-    public LatLng miMrk;
+    public boolean marcado;
 
     public Mapa(GoogleMap map,SettingsAlarma setings){
         this.map = map;
@@ -32,9 +29,7 @@ public class Mapa implements GoogleMap.OnMapLongClickListener {
 
     public void centrarMapa(LatLng ubic){
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(ubic.latitude, ubic.longitude), 11f));
-        map.animateCamera(CameraUpdateFactory.zoomIn());
-        map.animateCamera(CameraUpdateFactory.zoomIn());
-        map.animateCamera(CameraUpdateFactory.zoomIn());
+        zoomin();
     }
 
     public void actualizarMarcador(LatLng nueva_pos){
@@ -44,8 +39,13 @@ public class Mapa implements GoogleMap.OnMapLongClickListener {
 
         }
         this.miMarcador = map.addMarker(new MarkerOptions().position(nueva_pos));
-        this.miMrk = nueva_pos;
+        this.marcado = true;
     }
+
+    public void zoomin(){
+        map.animateCamera( CameraUpdateFactory.zoomTo( 16.0f ) );
+    }
+
     @Override
     public void onMapLongClick(LatLng point) {
         this.miUbicacion = point;

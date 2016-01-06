@@ -21,7 +21,7 @@ class Alarma{
     String latitud;
     String distancia;
 
-    public Alarma(String nombre, String longitud, String latitud, String distancia){
+    public Alarma(String nombre, String latitud, String longitud, String distancia){
         this.nombre = nombre;
         this.longitud = longitud;
         this.latitud = latitud;
@@ -65,7 +65,7 @@ public class AlarmDB implements Serializable{
     public List<Alarma> obtenerTodasAlarmas(){
         int cant_alarmas = cantidadAlarmas();
         List<Alarma> alarmas = new ArrayList<Alarma>();
-        Cursor c = db.rawQuery("SELECT nombre, longitud, latitud, distancia FROM Alarmas", null);
+        Cursor c = db.rawQuery("SELECT nombre, latitud, longitud, distancia FROM Alarmas", null);
         int i = 0;
         c.moveToFirst();
         while (i < cant_alarmas) {
@@ -88,7 +88,7 @@ public class AlarmDB implements Serializable{
     }
 
     public Alarma obtenerAlarmaPorId(String nombre){
-        Cursor c = db.rawQuery("SELECT nombre, longitud, latitud, distancia FROM Alarmas where nombre=" + nombre, null);
+        Cursor c = db.rawQuery("SELECT nombre, latitud, longitud, distancia FROM Alarmas where nombre=" + nombre, null);
         Alarma mi_alarma = new Alarma("","","","");
         if (c.moveToFirst()) {
             mi_alarma = new Alarma(c.getString(0), c.getString(1), c.getString(2), c.getString(3));
@@ -118,12 +118,12 @@ public class AlarmDB implements Serializable{
     }
 
     public void borrarAlarma(Alarma alarma){
-        String sql = "DELETE FROM Alarmas WHERE nombre=" + alarma.nombre;
+        String sql = "DELETE FROM Alarmas WHERE nombre='" + alarma.nombre+ "'";
         db.execSQL(sql);
     }
 
     public void borrarAlarma(String nombre){
-        String sql = "DELETE FROM Alarmas WHERE nombre=" + nombre;
+        String sql = "DELETE FROM Alarmas WHERE nombre='" + nombre + "'";
         db.execSQL(sql);
     }
 }
