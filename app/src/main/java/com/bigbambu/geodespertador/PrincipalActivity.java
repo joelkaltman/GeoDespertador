@@ -51,13 +51,13 @@ public class PrincipalActivity extends AppCompatActivity {
 
     //MEtodo para crear alarmas, luego va a desaparecer
     private void CrearAlarmas() {
-        Alarma alarm = new Alarma("Casa", "100", "200", "50");
+        Alarma alarm = new Alarma("Casa", "-34.6229419", "-58.4491101", "100");
         mi_base.insertarAlarma(alarm);
-        alarm = new Alarma("Facu", "50", "46", "20");
+        alarm = new Alarma("Facu", "20", "46", "50");
         mi_base.insertarAlarma(alarm);
-        alarm = new Alarma("Sinagoga", "234", "53", "25");
+        alarm = new Alarma("Sinagoga", "25", "53", "234");
         mi_base.insertarAlarma(alarm);
-        alarm = new Alarma("LCDTM", "646", "32", "30");
+        alarm = new Alarma("LCDTM", "30", "32", "646");
         mi_base.insertarAlarma(alarm);
     }
 

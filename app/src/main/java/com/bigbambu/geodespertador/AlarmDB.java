@@ -96,6 +96,11 @@ public class AlarmDB implements Serializable{
         return mi_alarma;
     }
 
+    public void actualizarAlarma(Alarma alarma){
+        borrarAlarma(alarma);
+        insertarAlarma(alarma);
+    }
+
     public void insertarAlarma(Alarma alarma){
         Cursor c = db.rawQuery("SELECT 1 FROM Alarmas where nombre = '"+ alarma.nombre + "'", null);
         if (c.moveToFirst()) {

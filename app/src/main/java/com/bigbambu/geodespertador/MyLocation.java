@@ -23,7 +23,7 @@ public class MyLocation implements LocationListener {
     public void setMapsActivity(SettingsAlarma mapsActivity){ this.mapsActivity = mapsActivity; }
 
     public void onLocationChanged(Location loc){
-        mapsActivity.miUbicacion = new LatLng(loc.getLatitude(),loc.getLongitude());
+        mapsActivity.map.miUbicacion = new LatLng(loc.getLatitude(),loc.getLongitude());
      }
 
     public void onProviderDisabled(String provider){}
