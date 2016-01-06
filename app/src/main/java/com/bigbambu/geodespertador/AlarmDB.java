@@ -16,22 +16,12 @@ import java.util.List;
  */
 
 class Alarma{
-    int id;
     String nombre;
     String longitud;
     String latitud;
     String distancia;
 
-    public Alarma(int id, String nombre, String longitud, String latitud, String distancia){
-        this.id = id;
-        this.nombre = nombre;
-        this.longitud = longitud;
-        this.latitud = latitud;
-        this.distancia = distancia;
-    }
-
     public Alarma(String nombre, String longitud, String latitud, String distancia){
-        this.id = -1;
         this.nombre = nombre;
         this.longitud = longitud;
         this.latitud = latitud;
@@ -40,7 +30,7 @@ class Alarma{
 }
 
 class conexionBase extends  SQLiteOpenHelper{
-    String sqlCreate = "CREATE TABLE IF NOT EXISTS Alarmas (id INTEGER, nombre TEXT, longitud TEXT, latitud TEXT, distancia TEXT)";
+    String sqlCreate = "CREATE TABLE IF NOT EXISTS Alarmas (nombre TEXT, longitud TEXT, latitud TEXT, distancia TEXT)";
 
     public conexionBase(Context contexto, String nombre,CursorFactory factory, int version) {
         super(contexto, nombre, factory, version);
@@ -72,20 +62,14 @@ public class AlarmDB implements Serializable{
         db = conexion.getWritableDatabase();
     }
 
-
-    public Alarma AsignarID(Alarma alarma){
-        alarma.id = proximoId();
-        return alarma;
-    }
-
     public List<Alarma> obtenerTodasAlarmas(){
         int cant_alarmas = cantidadAlarmas();
         List<Alarma> alarmas = new ArrayList<Alarma>();
-        Cursor c = db.rawQuery("SELECT id, nombre, longitud, latitud, distancia FROM Alarmas", null);
+        Cursor c = db.rawQuery("SELECT nombre, longitud, latitud, distancia FROM Alarmas", null);
         int i = 0;
         c.moveToFirst();
         while (i < cant_alarmas) {
-            Alarma una_alarma = new Alarma(c.getInt(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4));
+            Alarma una_alarma = new Alarma(c.getString(0), c.getString(1), c.getString(2), c.getString(3));
             alarmas.add(una_alarma);
             c.moveToNext();
             i++;
@@ -103,28 +87,11 @@ public class AlarmDB implements Serializable{
         return retornar;
     }
 
-    public int proximoId(){
-        int proximo_id;
-        int hay = cantidadAlarmas();
-        if (hay > 0){
-            Cursor c = db.rawQuery("SELECT max(id) FROM Alarmas", null);
-            if (c.moveToFirst()) {
-                proximo_id = c.getInt(0);
-                proximo_id++;
-            }else
-                proximo_id = -1; //error
-        }
-        else {
-            proximo_id = 0;
-        }
-        return proximo_id;
-    }
-
-    public Alarma obtenerAlarmaPorId(int id){
-        Cursor c = db.rawQuery("SELECT nombre, longitud, latitud, distancia FROM Alarmas where id=" + id, null);
-        Alarma mi_alarma = new Alarma(-1, "", "", "", "");
+    public Alarma obtenerAlarmaPorId(String nombre){
+        Cursor c = db.rawQuery("SELECT nombre, longitud, latitud, distancia FROM Alarmas where nombre=" + nombre, null);
+        Alarma mi_alarma = new Alarma("","","","");
         if (c.moveToFirst()) {
-            mi_alarma = new Alarma(c.getInt(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4));
+            mi_alarma = new Alarma(c.getString(0), c.getString(1), c.getString(2), c.getString(3));
         }
         return mi_alarma;
     }
@@ -135,10 +102,7 @@ public class AlarmDB implements Serializable{
             Toast t = Toast.makeText(context, "Ya existe una alrma con ese nombre", Toast.LENGTH_SHORT);
         }
         else {
-            if (alarma.id == -1){
-                alarma.id = proximoId();
-            }
-            String sql = "INSERT INTO Alarmas (id,nombre,longitud,latitud,distancia) VALUES (" + alarma.id + ",'" + alarma.nombre + "','" + alarma.longitud + "','" + alarma.latitud + "','" + alarma.distancia + "')";
+            String sql = "INSERT INTO Alarmas (nombre,longitud,latitud,distancia) VALUES (" + alarma.nombre + "','" + alarma.longitud + "','" + alarma.latitud + "','" + alarma.distancia + "')";
             db.execSQL(sql);
         }
     }
@@ -149,17 +113,11 @@ public class AlarmDB implements Serializable{
     }
 
     public void borrarAlarma(Alarma alarma){
-        String sql = "DELETE FROM Alarmas WHERE id=" + alarma.id;
+        String sql = "DELETE FROM Alarmas WHERE nombre=" + alarma.nombre;
         db.execSQL(sql);
     }
 
-    public void borrarAlarmaPorId(int id){
-        String sql = "DELETE FROM Alarmas WHERE id=" + id;
-        db.execSQL(sql);
-    }
-
-
-    public void borrarAlarmaPorNombre(String nombre){
+    public void borrarAlarma(String nombre){
         String sql = "DELETE FROM Alarmas WHERE nombre=" + nombre;
         db.execSQL(sql);
     }

@@ -4,16 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +29,7 @@ public class PrincipalActivity extends AppCompatActivity {
         contexto = this;
         mi_base = new AlarmDB(this);
 
-        //CrearAlarmas();
+        CrearAlarmas();
 
         List<Alarma> alarmas_lista = mi_base.obtenerTodasAlarmas();
         cargarListView(alarmas_lista);
@@ -112,90 +107,10 @@ public class PrincipalActivity extends AppCompatActivity {
         }
 
         //instantiate custom adapter
-        MyCustomAdapter adapter = new MyCustomAdapter(list, this, this);
+        AlarmAdapter adapter = new AlarmAdapter(list, this, this);
 
         //handle listview and assign adapter
         mi_lista_alarmas.setAdapter(adapter);
-
-    }
-
-
-
-
-
-
-
-    public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
-        private ArrayList<Alarma> list = new ArrayList<Alarma>();
-        private Context context;
-        PrincipalActivity actividad;
-        TextView listItemText;
-
-
-        public MyCustomAdapter(ArrayList<Alarma> list, Context context, PrincipalActivity actividad) {
-            this.list = list;
-            this.context = context;
-            this.actividad = actividad;
-        }
-
-        @Override
-        public int getCount() {
-            return list.size();
-        }
-
-        @Override
-        public Object getItem(int pos) {
-            return list.get(pos);
-        }
-
-        @Override
-        public long getItemId(int pos) {
-            //return list.get(pos).getId();
-            //just return 0 if your list items do not have an Id variable.
-            return 0;
-        }
-
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            View view = convertView;
-            if (view == null) {
-                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.itemlistview, null);
-            }
-
-            //Handle TextView and display string from your list
-            listItemText = (TextView)view.findViewById(R.id.list_item_string);
-            listItemText.setText(list.get(position).nombre + "-" + list.get(position).id);
-
-            listItemText.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    modificar(list.get(position));
-                    return true;
-                }
-            });
-
-            listItemText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    modificar(list.get(position));
-                }
-            });
-
-            return view;
-        }
-
-        public void modificar(Alarma alarma){
-            Intent i = new Intent(PrincipalActivity.contexto, SettingsAlarma.class);
-            i.putExtra("id",String.valueOf(alarma.id));
-            i.putExtra("nombre", alarma.nombre);
-            i.putExtra("lat", alarma.latitud);
-            i.putExtra("long", alarma.longitud);
-            i.putExtra("distancia", alarma.distancia);
-            i.setAction("MODIFICAR");
-            startActivity(i);
-        }
 
     }
 }

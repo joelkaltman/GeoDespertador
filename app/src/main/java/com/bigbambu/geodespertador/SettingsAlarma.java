@@ -39,9 +39,8 @@ public class SettingsAlarma extends AppCompatActivity implements GoogleMap.OnMap
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_settings_alarma);
-        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
-        map.setOnMapLongClickListener(this);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-34.6229419, -58.4491101), 11f));
+        centrarMapa();
+
 
         base = new AlarmDB(this);
 
@@ -60,6 +59,11 @@ public class SettingsAlarma extends AppCompatActivity implements GoogleMap.OnMap
         }
     }
 
+    private void centrarMapa(){
+        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+        map.setOnMapLongClickListener(this);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-34.6229419, -58.4491101), 11f));
+    }
 
     private void botones(){
         txt_nombre = (EditText)findViewById(R.id.txt_nombre);
@@ -91,9 +95,8 @@ public class SettingsAlarma extends AppCompatActivity implements GoogleMap.OnMap
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                String id = getIntent().getStringExtra("id");
-                int numero = Integer.parseInt(id);
-                base.borrarAlarmaPorId(numero);
+                String nombre = getIntent().getStringExtra("nombre");
+                base.borrarAlarma(nombre);
                 Volver();
             }
         });
