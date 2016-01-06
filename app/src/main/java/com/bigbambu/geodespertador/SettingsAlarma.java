@@ -1,7 +1,6 @@
 package com.bigbambu.geodespertador;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
@@ -19,31 +18,37 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 
 public class SettingsAlarma extends AppCompatActivity {
+
+    //region vaiables
+    //elementos del layout
     Button btn_guardar;
     Button btn_volver;
     Button btn_borrar;
     EditText txt_nombre;
     SeekBar skb_distancia;
+
+    //base de datos
     AlarmDB base;
 
+    //mapa
     Mapa map;
-    LocationManager locman;
-    MyLocation loclist;
-    Alarma alarmaActual;
+
     int radio = 100;
     Circle miCirculo;
     CircleOptions opcionesCirculo;
-    Context context;
+
+    LocationManager locman;
+    MyLocation loclist;
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_settings_alarma);
-        map = new Mapa(((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap(),this);
 
+        map = new Mapa(((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap(),this);
         map.centrarMapa();
         configurarBotones();
-
         base = new AlarmDB(this);
 
         String accion = getIntent().getAction();
@@ -60,13 +65,11 @@ public class SettingsAlarma extends AppCompatActivity {
         String distancia = getIntent().getStringExtra("distancia");
         fijarDistancia(Integer.parseInt(distancia));
         txt_nombre.setText(getIntent().getStringExtra("nombre"));
-        alarmaActual = new Alarma(txt_nombre.getText().toString(), lat, lng, distancia);
+        Alarma alarmaActual = new Alarma(txt_nombre.getText().toString(), lat, lng, distancia);
         LatLng ubic = new LatLng(Double.parseDouble(lat),Double.parseDouble(lng));
         map.actualizarMarcador(ubic);
         map.centrarMapa(ubic);
     }
-
-
 
     private void configurarBotones(){
         txt_nombre = (EditText)findViewById(R.id.txt_nombre);
@@ -85,7 +88,7 @@ public class SettingsAlarma extends AppCompatActivity {
                     String lat = String.valueOf(map.miUbicacion.latitude);
                     String nombre = txt_nombre.getText().toString();
                     int distancia = skb_distancia.getProgress();
-                    alarmaActual = new Alarma(nombre, lat, lng, String.valueOf(distancia));
+                    Alarma alarmaActual = new Alarma(nombre, lat, lng, String.valueOf(distancia));
                     base.actualizarAlarma(alarmaActual);
                     Volver();
                 } else {
@@ -114,6 +117,11 @@ public class SettingsAlarma extends AppCompatActivity {
         });
 
 
+    }
+
+    private void Volver(){
+        Intent i = new Intent(getApplicationContext(), PrincipalActivity.class);
+        startActivity(i);
     }
 
     private void fijarDistancia(int distancia){
@@ -147,12 +155,6 @@ public class SettingsAlarma extends AppCompatActivity {
         });
     }
 
-
-    private void Volver(){
-        Intent i = new Intent(getApplicationContext(), PrincipalActivity.class);
-        startActivity(i);
-    }
-
     private void nuevaAlarma(){
         locman = (LocationManager) getSystemService(LOCATION_SERVICE);
         loclist = new MyLocation(this);
@@ -163,5 +165,4 @@ public class SettingsAlarma extends AppCompatActivity {
         locman.requestLocationUpdates(locman.GPS_PROVIDER, 0L, 0.0F, loclist);
         locman.getLastKnownLocation(locman.GPS_PROVIDER);
     }
-
 }

@@ -3,8 +3,6 @@ package com.bigbambu.geodespertador;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 import java.io.Serializable;
@@ -15,39 +13,9 @@ import java.util.List;
  * Created by Sebas on 05/12/2015.
  */
 
-class Alarma{
-    String nombre;
-    String longitud;
-    String latitud;
-    String distancia;
 
-    public Alarma(String nombre, String latitud, String longitud, String distancia){
-        this.nombre = nombre;
-        this.longitud = longitud;
-        this.latitud = latitud;
-        this.distancia = distancia;
-    }
-}
 
-class conexionBase extends  SQLiteOpenHelper{
-    String sqlCreate = "CREATE TABLE IF NOT EXISTS Alarmas (nombre TEXT, longitud TEXT, latitud TEXT, distancia TEXT)";
 
-    public conexionBase(Context contexto, String nombre,CursorFactory factory, int version) {
-        super(contexto, nombre, factory, version);
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        //Se ejecuta la sentencia SQL de creación de la tabla
-        db.execSQL(sqlCreate);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int versionAnterior,
-                          int versionNueva) {
-
-    }
-}
 
 public class AlarmDB implements Serializable{
 

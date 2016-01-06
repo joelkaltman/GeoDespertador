@@ -54,7 +54,7 @@ public class Mapa implements GoogleMap.OnMapLongClickListener {
     public void onMapLongClick(LatLng point) {
         this.miUbicacion = point;
         actualizarMarcador(this.miUbicacion);
-    }
 
+      }
 
 }
