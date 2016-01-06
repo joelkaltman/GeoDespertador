@@ -102,7 +102,7 @@ public class AlarmDB implements Serializable{
             Toast t = Toast.makeText(context, "Ya existe una alrma con ese nombre", Toast.LENGTH_SHORT);
         }
         else {
-            String sql = "INSERT INTO Alarmas (nombre,longitud,latitud,distancia) VALUES (" + alarma.nombre + "','" + alarma.longitud + "','" + alarma.latitud + "','" + alarma.distancia + "')";
+            String sql = "INSERT INTO Alarmas (nombre,longitud,latitud,distancia) VALUES ('" + alarma.nombre + "','" + alarma.longitud + "','" + alarma.latitud + "','" + alarma.distancia + "')";
             db.execSQL(sql);
         }
     }
