@@ -3,7 +3,6 @@ package com.bigbambu.geodespertador;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,10 +11,6 @@ import java.util.List;
 /**
  * Created by Sebas on 05/12/2015.
  */
-
-
-
-
 
 public class AlarmDB implements Serializable{
 
@@ -42,6 +37,7 @@ public class AlarmDB implements Serializable{
             c.moveToNext();
             i++;
         }
+        c.close();
         db.close();
         return alarmas;
     }
@@ -52,6 +48,7 @@ public class AlarmDB implements Serializable{
         if (c.moveToFirst()) {
             retornar = c.getInt(0);
         }
+        c.close();
         return retornar;
     }
 
@@ -61,26 +58,28 @@ public class AlarmDB implements Serializable{
         if (c.moveToFirst()) {
             mi_alarma = new Alarma(c.getString(0), c.getString(1), c.getString(2), c.getString(3));
         }
+        c.close();
         return mi_alarma;
     }
 
-    public void actualizarAlarma(Alarma alarma){
+    public void actualizarAlarma(Alarma alarma) throws Exception{
         borrarAlarma(alarma);
         insertarAlarma(alarma);
     }
 
-    public void insertarAlarma(Alarma alarma){
+    public void insertarAlarma(Alarma alarma) throws Exception{
         Cursor c = db.rawQuery("SELECT 1 FROM Alarmas where nombre = '"+ alarma.nombre + "'", null);
         if (c.moveToFirst()) {
-            Toast t = Toast.makeText(context, "Ya existe una alrma con ese nombre", Toast.LENGTH_SHORT);
+            throw new Exception("fallo");
         }
         else {
             String sql = "INSERT INTO Alarmas (nombre,longitud,latitud,distancia) VALUES ('" + alarma.nombre + "','" + alarma.longitud + "','" + alarma.latitud + "','" + alarma.distancia + "')";
             db.execSQL(sql);
         }
+        c.close();
     }
 
-    public void insertarAlarma(String nombre, String lat, String longi, String dist){
+    public void insertarAlarma(String nombre, String lat, String longi, String dist) throws Exception{
         Alarma alarma = new Alarma(nombre, lat, longi, dist);
         insertarAlarma(alarma);
     }

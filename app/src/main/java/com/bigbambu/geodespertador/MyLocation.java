@@ -12,19 +12,23 @@ import com.google.android.gms.maps.model.LatLng;
  */
 
 public class MyLocation implements LocationListener {
-    SettingsAlarma mapsActivity;
+    SettingsAlarma settings;
 
     public MyLocation(SettingsAlarma clase){
         setMapsActivity(clase);
     }
 
-    public SettingsAlarma getMapsActivity(){ return this.mapsActivity; }
+    public SettingsAlarma getMapsActivity(){ return this.settings; }
 
-    public void setMapsActivity(SettingsAlarma mapsActivity){ this.mapsActivity = mapsActivity; }
+    public void setMapsActivity(SettingsAlarma mapsActivity){ this.settings = mapsActivity; }
 
     public void onLocationChanged(Location loc){
-        mapsActivity.map.miUbicacion = new LatLng(loc.getLatitude(),loc.getLongitude());
-     }
+        settings.map.ubicacionUsuario = new LatLng(loc.getLatitude(),loc.getLongitude());
+        if(settings.map.marcadorUsuario != null)
+            settings.map.marcadorUsuario.remove();
+        LatLng latlng = new LatLng(1,1);
+        settings.map.actualizarMarcador(latlng,Mapa.USUARIO);
+    }
 
     public void onProviderDisabled(String provider){}
 
