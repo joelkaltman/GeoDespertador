@@ -6,6 +6,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
+
 /**
  * Created by Sebas on 06/01/2016.
  */
@@ -13,13 +16,13 @@ public class Mapa implements GoogleMap.OnMapLongClickListener {
     public GoogleMap map;
     SettingsAlarma settings;
     public LatLng miUbicacion;
-    public Marker miMarcador;
-    public boolean marcado;
+    public ArrayList<Marker> miMarcador;
 
     public Mapa(GoogleMap map,SettingsAlarma setings){
         this.map = map;
         this.settings = setings;
         map.setOnMapLongClickListener(this);
+        miMarcador = new ArrayList<Marker>();
     }
 
     public void centrarMapa(){
@@ -34,12 +37,13 @@ public class Mapa implements GoogleMap.OnMapLongClickListener {
 
     public void actualizarMarcador(LatLng nueva_pos){
         try{
-            this.miMarcador.remove();
+            this.miMarcador.get(0).remove();
+            this.miMarcador.clear();
         }catch(Exception a){
 
         }
-        this.miMarcador = map.addMarker(new MarkerOptions().position(nueva_pos));
-        this.marcado = true;
+        this.miMarcador.add(map.addMarker(new MarkerOptions().position(nueva_pos)));
+        this.miUbicacion = nueva_pos;
     }
 
     public void zoomin(){

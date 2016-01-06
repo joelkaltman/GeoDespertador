@@ -80,8 +80,7 @@ public class SettingsAlarma extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                if (map.marcado) {
-                    map.marcado = false; //porque sino queda siempre como "marcado"
+                if (map.miMarcador.size() > 0) {
                     String lng = String.valueOf(map.miUbicacion.longitude);
                     String lat = String.valueOf(map.miUbicacion.latitude);
                     String nombre = txt_nombre.getText().toString();
