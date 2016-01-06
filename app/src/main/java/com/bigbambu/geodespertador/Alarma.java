@@ -3,7 +3,7 @@ package com.bigbambu.geodespertador;
 /**
  * Created by Sebas on 06/01/2016.
  */
-class Alarma{
+public class Alarma{
     String nombre;
     String longitud;
     String latitud;
