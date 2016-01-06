@@ -91,9 +91,9 @@ public class SettingsAlarma extends AppCompatActivity implements GoogleMap.OnMap
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                //String id = getIntent().getStringExtra("id");
-                //int numero = Integer.parseInt(id);
-                base.borrarAlarmaPorNombre(alarmaActual.nombre);
+                String id = getIntent().getStringExtra("id");
+                int numero = Integer.parseInt(id);
+                base.borrarAlarmaPorId(numero);
                 Volver();
             }
         });
@@ -130,7 +130,7 @@ public class SettingsAlarma extends AppCompatActivity implements GoogleMap.OnMap
         if(miMarcador != null) {
             miMarcador.remove();
         }
-        miMarcador = map.addMarker(new MarkerOptions().position(new LatLng(nueva_pos.latitude, nueva_pos.longitude)));
+        miMarcador = map.addMarker(new MarkerOptions().position(nueva_pos));
     }
 
     @Override

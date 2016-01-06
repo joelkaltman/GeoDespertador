@@ -130,14 +130,14 @@ public class AlarmDB implements Serializable{
     }
 
     public void insertarAlarma(Alarma alarma){
-        if (alarma.id == -1){
-            alarma.id = proximoId();
-        }
-        Cursor c = db.rawQuery("SELECT 1 FROM Alarmas where id = '"+ alarma.id + "'", null);
+        Cursor c = db.rawQuery("SELECT 1 FROM Alarmas where nombre = '"+ alarma.nombre + "'", null);
         if (c.moveToFirst()) {
             Toast t = Toast.makeText(context, "Ya existe una alrma con ese nombre", Toast.LENGTH_SHORT);
         }
         else {
+            if (alarma.id == -1){
+                alarma.id = proximoId();
+            }
             String sql = "INSERT INTO Alarmas (id,nombre,longitud,latitud,distancia) VALUES (" + alarma.id + ",'" + alarma.nombre + "','" + alarma.longitud + "','" + alarma.latitud + "','" + alarma.distancia + "')";
             db.execSQL(sql);
         }
