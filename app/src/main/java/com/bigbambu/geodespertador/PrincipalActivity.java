@@ -26,7 +26,7 @@ public class PrincipalActivity extends AppCompatActivity {
         setContentView(R.layout.principal);
         mi_lista_alarmas = (ListView)findViewById(R.id.listView);
 
-        iniciarServicioVerificacion();
+        //iniciarServicioVerificacion();
 
         contexto = this;
         mi_base = new AlarmDB(this);

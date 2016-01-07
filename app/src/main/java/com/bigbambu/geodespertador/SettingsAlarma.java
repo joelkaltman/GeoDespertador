@@ -21,6 +21,7 @@ public class SettingsAlarma extends AppCompatActivity {
     EditText txt_nombre;
     SeekBar skb_distancia;
     String nombre;
+    Alarma alarma_actual;
 
     //base de datos
     AlarmDB base;
@@ -76,11 +77,11 @@ public class SettingsAlarma extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 if (Mapa.marcadorDestino != null) {
-                    String lng = String.valueOf(Mapa.ubicacionDestino.longitude);
-                    String lat = String.valueOf(Mapa.ubicacionDestino.latitude);
-                    String nombre = txt_nombre.getText().toString();
-                    int distancia = skb_distancia.getProgress();
-                    Alarma alarmaActual = new Alarma(nombre, lat, lng, String.valueOf(distancia));
+                    String nueva_lng = String.valueOf(Mapa.ubicacionDestino.longitude);
+                    String nueva_lat = String.valueOf(Mapa.ubicacionDestino.latitude);
+                    String nuevo_nombre = txt_nombre.getText().toString();
+                    int nueva_distancia = skb_distancia.getProgress();
+                    Alarma alarmaActual = new Alarma(nuevo_nombre, nueva_lat, nueva_lng, String.valueOf(nueva_distancia));
                     String accion = getIntent().getAction();
                     try {
                         if (accion.equals("NUEVO")) {
