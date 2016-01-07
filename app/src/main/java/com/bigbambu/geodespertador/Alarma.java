@@ -12,6 +12,7 @@ public class Alarma{
     String longitud;
     String latitud;
     String distancia;
+    boolean sonando;
 
     public Alarma(String nombre, String latitud, String longitud, String distancia){
         this.nombre = nombre;
@@ -20,7 +21,7 @@ public class Alarma{
         this.distancia = distancia;
     }
 
-    public boolean estaSonando(LatLng ubicacion){
+    public void estaSonando(LatLng ubicacion){
         Location ubicacionAlarma = new Location("");
         ubicacionAlarma.setLatitude(Double.parseDouble(this.latitud));
         ubicacionAlarma.setLongitude(Double.parseDouble(this.longitud));
@@ -28,12 +29,11 @@ public class Alarma{
         ubicacionDestino.setLatitude(ubicacion.latitude);
         ubicacionDestino.setLongitude(ubicacion.longitude);
         int radio = Integer.parseInt(distancia);
-        boolean aviso = false;
-        if(ubicacionDestino.distanceTo(ubicacionAlarma) < radio && !aviso) {
-            aviso = true;
-        }else if(ubicacionDestino.distanceTo(ubicacionAlarma) > radio){
-            aviso = false;
+        sonando = false;
+        if(ubicacionDestino.distanceTo(ubicacionAlarma) < radio && !sonando) {
+            sonando = true;
+        }else if(ubicacionDestino.distanceTo(ubicacionAlarma) > radio) {
+            sonando = false;
         }
-        return aviso;
     }
 }
