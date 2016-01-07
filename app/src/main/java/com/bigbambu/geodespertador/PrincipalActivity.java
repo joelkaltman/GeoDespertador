@@ -52,7 +52,7 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     private void iniciarServicioVerificacion(){
-        startService(new Intent(this, Servicio.class));
+        startService(new Intent(this, GPSTracker.class));
         //Intent i = new Intent(this, Servicio.class);
         //i.putExtra("foo", "bar");
         //startService(i);
