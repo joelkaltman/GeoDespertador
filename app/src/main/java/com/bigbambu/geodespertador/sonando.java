@@ -1,16 +1,20 @@
 package com.bigbambu.geodespertador;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class sonando extends AppCompatActivity {
+    TextView miTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sonando);
+        miTxt = (TextView)findViewById(R.id.texto_prueba);
+        miTxt.setText(getIntent().getStringExtra("nombre"));
     }
 
     @Override

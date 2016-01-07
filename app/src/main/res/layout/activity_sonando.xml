@@ -7,6 +7,7 @@
     tools:context="com.bigbambu.geodespertador.sonando">
 
     <TextView android:text="sonando.." android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/texto_prueba" />
 
 </RelativeLayout>

@@ -13,6 +13,8 @@ import android.support.v4.app.ActivityCompat;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.List;
+
 /**
  * Created by Joel on 07-Jan-16.
  */
@@ -24,10 +26,10 @@ public class GPSTracker extends Service implements LocationListener {
     boolean isNetworkEnabled = false;
 
     // The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 50; // 50 meters
 
     // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 30 * 1; // 30 segs
 
     // Declaring a Location Manager
     protected LocationManager locationManager;
@@ -86,6 +88,17 @@ public class GPSTracker extends Service implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         ubicacion_actual = new LatLng(location.getLatitude(), location.getLongitude());
+        AlarmDB base = new AlarmDB(this);
+        List<Alarma> alarmas = base.obtenerTodasAlarmas();
+        for (Alarma a: alarmas) {
+            a.estaSonando(ubicacion_actual);
+            if (a.sonando){
+                Intent i = new Intent(getApplicationContext(), sonando.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("nombre", a.nombre);
+                startActivity(i);
+            }
+        }
     }
 
 
