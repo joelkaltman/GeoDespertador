@@ -61,9 +61,6 @@ public class Servicio extends Service {
                 //aca es cuando esta en el rango
             }
         }
-//        Intent i = new Intent(getApplicationContext(), sonando.class);
-        //      i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //    startActivity(i);
     }
 
 
