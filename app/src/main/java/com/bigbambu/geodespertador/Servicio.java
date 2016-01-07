@@ -1,10 +1,11 @@
 package com.bigbambu.geodespertador;
 
-import android.app.IntentService;
+import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.IBinder;
 
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.model.LatLng;
@@ -12,7 +13,7 @@ import com.google.android.gms.maps.model.LatLng;
 /**
  * Created by Joel on 06-Jan-16.
  */
-public class Servicio extends IntentService {
+public class Servicio extends Service {
 
     LatLng ubic;
     private final LocationListener locationListener = new LocationListener() {
@@ -35,19 +36,10 @@ public class Servicio extends IntentService {
         }
     }
 
-    public Servicio() {
-        // Used to name the worker thread, important only for debugging.
-        super("Servicio");
-    }
-
     @Override
     public void onCreate() {
         super.onCreate(); // if you override onCreate(), make sure to call super().
         // If a Context object is needed, call getApplicationContext() here.
-    }
-
-    @Override
-    protected void onHandleIntent(Intent intent) {
         while (true){
             try {
                 Thread.sleep(10000);
@@ -67,6 +59,18 @@ public class Servicio extends IntentService {
     //    startActivity(i);
     }
 
+
     @Override
-    public void onDestroy() {}
+    public void onDestroy() {
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return START_STICKY;
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
 }

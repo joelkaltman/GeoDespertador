@@ -26,7 +26,7 @@ public class PrincipalActivity extends AppCompatActivity {
         setContentView(R.layout.principal);
         mi_lista_alarmas = (ListView)findViewById(R.id.listView);
 
-        //iniciarServicioVerificacion();
+        iniciarServicioVerificacion();
 
         contexto = this;
         mi_base = new AlarmDB(this);
@@ -52,9 +52,10 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     private void iniciarServicioVerificacion(){
-        Intent i = new Intent(this, Servicio.class);
-        i.putExtra("foo", "bar");
-        startService(i);
+        startService(new Intent(this, Servicio.class));
+        //Intent i = new Intent(this, Servicio.class);
+        //i.putExtra("foo", "bar");
+        //startService(i);
     }
 
     //MEtodo para crear alarmas, luego va a desaparecer
