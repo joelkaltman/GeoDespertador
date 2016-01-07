@@ -1,6 +1,8 @@
 package com.bigbambu.geodespertador;
 
+import android.app.AlertDialog;
 import android.app.Service;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.media.MediaPlayer;
@@ -52,6 +54,14 @@ public class Servicio extends Service {
     }
 
     private void verificar(LatLng ubicacionActual){
+        new AlertDialog.Builder(this)
+                .setTitle("Alerta")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        // Some stuff to do when ok got clicked
+                    }
+                })
+                .show();
         MediaPlayer mp = MediaPlayer.create(this, R.raw.asd);
         mp.start();
 //        Intent i = new Intent(getApplicationContext(), sonando.class);
