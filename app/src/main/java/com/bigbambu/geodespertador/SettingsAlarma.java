@@ -1,11 +1,7 @@
 package com.bigbambu.geodespertador;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -32,8 +28,6 @@ public class SettingsAlarma extends AppCompatActivity {
     //mapa
     Mapa map;
 
-    LocationManager locman;
-    MyLocation loclist;
     //endregion
 
     @Override
@@ -44,7 +38,6 @@ public class SettingsAlarma extends AppCompatActivity {
 
         map = new Mapa(((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap(),this);
         map.centrarMapa();
-        conexionGPS();
         configurarBotones();
         base = new AlarmDB(this);
 
@@ -82,9 +75,9 @@ public class SettingsAlarma extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                if (map.marcadorDestino != null) {
-                    String lng = String.valueOf(map.ubicacionDestino.longitude);
-                    String lat = String.valueOf(map.ubicacionDestino.latitude);
+                if (Mapa.marcadorDestino != null) {
+                    String lng = String.valueOf(Mapa.ubicacionDestino.longitude);
+                    String lat = String.valueOf(Mapa.ubicacionDestino.latitude);
                     String nombre = txt_nombre.getText().toString();
                     int distancia = skb_distancia.getProgress();
                     Alarma alarmaActual = new Alarma(nombre, lat, lng, String.valueOf(distancia));
@@ -158,15 +151,5 @@ public class SettingsAlarma extends AppCompatActivity {
        map.actualizarCirculo(Mapa.BSAS, skb_distancia.getProgress());
     }
 
-    private void conexionGPS(){
-        locman = (LocationManager) getSystemService(LOCATION_SERVICE);
-        loclist = new MyLocation(this);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        locman.requestLocationUpdates(locman.GPS_PROVIDER, 0L, 0.0F, loclist);
-        locman.getLastKnownLocation(locman.GPS_PROVIDER);
-    }
 
 }

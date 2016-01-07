@@ -26,6 +26,8 @@ public class PrincipalActivity extends AppCompatActivity {
         setContentView(R.layout.principal);
         mi_lista_alarmas = (ListView)findViewById(R.id.listView);
 
+        iniciarServicioVerificacion();
+
         contexto = this;
         mi_base = new AlarmDB(this);
 
@@ -49,16 +51,24 @@ public class PrincipalActivity extends AppCompatActivity {
 
     }
 
+    private void iniciarServicioVerificacion(){
+        Intent i = new Intent(this, Servicio.class);
+        i.putExtra("foo", "bar");
+        startService(i);
+    }
+
     //MEtodo para crear alarmas, luego va a desaparecer
     private void CrearAlarmas() {
-        Alarma alarm = new Alarma("Casa", "-34.6229419", "-58.4491101", "100");
-        mi_base.insertarAlarma(alarm);
-        alarm = new Alarma("Facu", "20", "46", "50");
-        mi_base.insertarAlarma(alarm);
-        alarm = new Alarma("Sinagoga", "25", "53", "234");
-        mi_base.insertarAlarma(alarm);
-        alarm = new Alarma("LCDTM", "30", "32", "646");
-        mi_base.insertarAlarma(alarm);
+        try {
+            Alarma alarm = new Alarma("Casa", "-34.6229419", "-58.4491101", "100");
+            mi_base.insertarAlarma(alarm);
+            alarm = new Alarma("Facu", "20", "46", "50");
+            mi_base.insertarAlarma(alarm);
+            alarm = new Alarma("Sinagoga", "25", "53", "234");
+            mi_base.insertarAlarma(alarm);
+            alarm = new Alarma("LCDTM", "30", "32", "646");
+            mi_base.insertarAlarma(alarm);
+        }catch (Exception e){}
     }
 
     @Override

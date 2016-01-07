@@ -16,18 +16,18 @@ public class Mapa implements GoogleMap.OnMapLongClickListener {
     public static final boolean DESTINO = true;
     public static final boolean USUARIO = false;
     public static final LatLng BSAS = new LatLng(-34.6229419,-58.4491101);
-    public GoogleMap map;
-    SettingsAlarma settings;
-    public LatLng ubicacionDestino;
-    public Marker marcadorDestino;
-    public CircleOptions opcionesCirculo;
-    public Circle miCirculo;
-    public LatLng ubicacionUsuario;
-    public Marker marcadorUsuario;
+    public static GoogleMap map;
+    public static SettingsAlarma settings;
+    public static LatLng ubicacionDestino;
+    public static Marker marcadorDestino;
+    public static CircleOptions opcionesCirculo;
+    public static Circle miCirculo;
+    public static LatLng ubicacionUsuario;
+    public static Marker marcadorUsuario;
 
     public Mapa(GoogleMap map, SettingsAlarma setings) {
-        this.map = map;
-        this.settings = setings;
+        Mapa.map = map;
+        Mapa.settings = setings;
         map.setOnMapLongClickListener(this);
         opcionesCirculo = new CircleOptions()
                 .radius(100)
@@ -39,7 +39,6 @@ public class Mapa implements GoogleMap.OnMapLongClickListener {
     }
 
     public void centrarMapa() {
-
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(Mapa.BSAS, 11f));
     }
 
@@ -51,18 +50,18 @@ public class Mapa implements GoogleMap.OnMapLongClickListener {
     public void actualizarMarcador(LatLng nueva_pos, boolean esDestino) {
         if (esDestino) {
             try {
-                this.marcadorDestino.remove();
+                Mapa.marcadorDestino.remove();
             } catch (Exception a) {
             }
-            this.marcadorDestino = map.addMarker(new MarkerOptions().position(nueva_pos));
-            this.ubicacionDestino = nueva_pos;
+            Mapa.marcadorDestino = map.addMarker(new MarkerOptions().position(nueva_pos));
+            Mapa.ubicacionDestino = nueva_pos;
         }else {
             try {
-                this.marcadorUsuario.remove();
+                Mapa.marcadorUsuario.remove();
             } catch (Exception a) {
             }
-            this.marcadorUsuario = map.addMarker(new MarkerOptions().position(nueva_pos));
-            this.ubicacionUsuario = nueva_pos;
+            Mapa.marcadorUsuario = Mapa.map.addMarker(new MarkerOptions().position(nueva_pos));
+            Mapa.ubicacionUsuario = nueva_pos;
         }
 
     }
@@ -70,29 +69,29 @@ public class Mapa implements GoogleMap.OnMapLongClickListener {
 
     public void actualizarCirculo(LatLng nueva_pos, int radio){
         try{
-            this.miCirculo.remove();
+            Mapa.miCirculo.remove();
         }catch(Exception a){
 
         }
-        opcionesCirculo.radius(radio);
-        opcionesCirculo.center(nueva_pos);
-        miCirculo = map.addCircle(opcionesCirculo);
+        Mapa.opcionesCirculo.radius(radio);
+        Mapa.opcionesCirculo.center(nueva_pos);
+        Mapa.miCirculo = Mapa.map.addCircle(opcionesCirculo);
     }
 
     public void actualizarRadioCirculo(int radio){
-        if(this.miCirculo != null)
-            this.miCirculo.setRadius(radio);
+        if(Mapa.miCirculo != null)
+            Mapa.miCirculo.setRadius(radio);
     }
 
     public void zoomin(){
-        map.animateCamera(CameraUpdateFactory.zoomTo( 16.0f ) );
+        Mapa.map.animateCamera(CameraUpdateFactory.zoomTo( 16.0f ) );
     }
 
     @Override
     public void onMapLongClick(LatLng point) {
-        this.ubicacionDestino = point;
-        actualizarMarcador(this.ubicacionDestino, Mapa.DESTINO);
-        actualizarCirculo(point, (int)miCirculo.getRadius());
+        Mapa.ubicacionDestino = point;
+        actualizarMarcador(Mapa.ubicacionDestino, Mapa.DESTINO);
+        actualizarCirculo(point, (int)Mapa.miCirculo.getRadius());
 
       }
 
