@@ -86,10 +86,10 @@ public class AlarmDB implements Serializable{
             else {
                 String sql = Constants.INSERTAR + "('"
                         + alarma.getNombre() + "','"
-                        + alarma.getLatLong().longitude + "','"
-                        + alarma.getLatLong().latitude + "','"
+                        + dobleAstring(alarma.getLatLong().latitude) + "','"
+                        + dobleAstring(alarma.getLatLong().longitude) + "','"
                         + String.valueOf(alarma.getDistancia()) + "',' +"
-                        + Constants.ACTIVADA + "')";
+                        + String.valueOf(Constants.ACTIVADA) + "')";
                 db.execSQL(sql);
             }
         }
@@ -102,8 +102,8 @@ public class AlarmDB implements Serializable{
      * Borra la Alarma segun nombre recibido por parametro
      * @param nombre El nombre de la alarma que se va a borrar
      */
-    public void borrarAlarma(String nombre){
-       String sql = armarDelete(nombre);
+    public void borrarAlarma(String nombre) {
+        String sql = armarDelete(nombre);
         db.execSQL(sql);
     }
 
@@ -176,6 +176,10 @@ public class AlarmDB implements Serializable{
         datos[3] = String.valueOf(alarma.getDistancia());
         datos[4] = String.valueOf(alarma.getActiva());
         return datos;
+    }
+
+    private String dobleAstring(Double dato){
+        return String.valueOf(dato);
     }
     //endregion
     //endregion

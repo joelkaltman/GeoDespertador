@@ -28,7 +28,7 @@ public class Constants {
     public static final boolean SINSONAR = false;
 
     //Constantes de querys AlarmaDB
-    public static final String INSERTAR = "INSERT INTO Alarmas (nombre,longitud,latitud,distancia,activa) VALUES";
+    public static final String INSERTAR = "INSERT INTO Alarmas (nombre,latitud,longitud,distancia,activa) VALUES";
     public static final String SELECTALL = "SELECT nombre, latitud, longitud, distancia, activa FROM Alarmas";
     public static final String COUNT = "SELECT count(1) FROM Alarmas";
     public static final String DELETE = "DELETE FROM Alarmas WHERE nombre='";
