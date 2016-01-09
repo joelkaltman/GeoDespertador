@@ -1,14 +1,13 @@
 package com.bigbambu.geodespertador.Ubicacion;
 
 import android.app.FragmentManager;
+
 import com.bigbambu.geodespertador.Constants.Constants;
 import com.bigbambu.geodespertador.Layouts.SettingsAlarma;
 import com.bigbambu.geodespertador.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -18,7 +17,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 /**
  * Created by Sebas on 06/01/2016.
  */
-public class Mapa implements GoogleMap.OnMapLongClickListener, OnMapReadyCallback{
+public class Mapa implements GoogleMap.OnMapLongClickListener{
 
     public static GoogleMap map;
     public static SettingsAlarma settings;
@@ -28,47 +27,49 @@ public class Mapa implements GoogleMap.OnMapLongClickListener, OnMapReadyCallbac
     public static Marker marcadorUsuario;
     public static CircleOptions opcionesCirculo;
     public static Circle miCirculo;
+    public static boolean ready = false;
 
     public Mapa(FragmentManager fragmentManager, SettingsAlarma setings) {
-        ((MapFragment) fragmentManager.findFragmentById(R.id.map)).getMapAsync(this);
+        map = ((MapFragment) fragmentManager.findFragmentById(R.id.map)).getMap();
         Mapa.settings = setings;
         configCirculo();
-    }
-
-    //cuando el mapa este listo
-    @Override
-    public void onMapReady(GoogleMap map) {
-        Mapa.map = map;
         Mapa.map.setOnMapLongClickListener(this);
+        Mapa.ready = true;
         centrarMapa(Constants.BSAS);
+
     }
 
     //region MOVER CAMARA MAPA
     public void zoomin(float zoom){
-        Mapa.map.animateCamera(CameraUpdateFactory.zoomTo(zoom));
+        if(Mapa.ready)
+            Mapa.map.animateCamera(CameraUpdateFactory.zoomTo(zoom));
     }
     public void centrarMapa(LatLng ubic) {
-        Mapa.map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(ubic.latitude, ubic.longitude), 11f));
+        if(Mapa.ready)
+            Mapa.map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(ubic.latitude, ubic.longitude), 11f));
     }
     public void centrarMapa(LatLng ubic,float zoom) {
-        Mapa.map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(ubic.latitude, ubic.longitude), zoom));
+        if(Mapa.ready)
+            Mapa.map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(ubic.latitude, ubic.longitude), zoom));
     }
     //endregion
 
     //region METODOS CIRCULO
-    public void actualizarCirculo(LatLng nueva_pos, int radio){
-        try{
-            Mapa.miCirculo.remove();
-        }catch(Exception a){
+    public void actualizarCirculo(LatLng nueva_pos, int radio) {
+        if (Mapa.ready) {
+            try {
+                Mapa.miCirculo.remove();
+            } catch (Exception a) {
 
+            }
+            Mapa.opcionesCirculo.radius(radio);
+            Mapa.opcionesCirculo.center(nueva_pos);
+            Mapa.miCirculo = Mapa.map.addCircle(Mapa.opcionesCirculo);
         }
-        Mapa.opcionesCirculo.radius(radio);
-        Mapa.opcionesCirculo.center(nueva_pos);
-        Mapa.miCirculo = Mapa.map.addCircle(Mapa.opcionesCirculo);
     }
 
     public void actualizarRadioCirculo(int radio){
-        if(Mapa.miCirculo != null)
+        if(Mapa.miCirculo != null && Mapa.ready)
             Mapa.miCirculo.setRadius(radio + Constants.MINDISTANCE);
     }
 
@@ -88,20 +89,22 @@ public class Mapa implements GoogleMap.OnMapLongClickListener, OnMapReadyCallbac
         Mapa.actualizarMarcadorEstatico(nueva_pos, esDestino);
     }
     public static void actualizarMarcadorEstatico(LatLng nueva_pos, boolean esDestino) {
-        if (esDestino) {
-            try {
-                Mapa.marcadorDestino.remove();
-            } catch (Exception a) {
+        if (Mapa.ready) {
+            if (esDestino) {
+                try {
+                    Mapa.marcadorDestino.remove();
+                } catch (Exception a) {
+                }
+                Mapa.marcadorDestino = Mapa.map.addMarker(new MarkerOptions().position(nueva_pos));
+                Mapa.ubicacionDestino = nueva_pos;
+            } else {
+                try {
+                    Mapa.marcadorUsuario.remove();
+                } catch (Exception a) {
+                }
+                Mapa.marcadorUsuario = Mapa.map.addMarker(new MarkerOptions().position(nueva_pos));//.icon(BitmapDescriptorFactory.fromResource(R.drawable.usuario)));
+                Mapa.ubicacionUsuario = nueva_pos;
             }
-            Mapa.marcadorDestino = Mapa.map.addMarker(new MarkerOptions().position(nueva_pos));
-            Mapa.ubicacionDestino = nueva_pos;
-        }else {
-            try {
-                Mapa.marcadorUsuario.remove();
-            } catch (Exception a) {
-            }
-            Mapa.marcadorUsuario = Mapa.map.addMarker(new MarkerOptions().position(nueva_pos).icon(BitmapDescriptorFactory.fromResource(R.drawable.usuario)));
-            Mapa.ubicacionUsuario = nueva_pos;
         }
 
     }

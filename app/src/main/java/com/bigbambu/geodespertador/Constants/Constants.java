@@ -10,7 +10,7 @@ public class Constants {
     //region PARAMETROS AJUSTABLES
     public static final int MINDISTANCE = 100;
     public static final LatLng BSAS = new LatLng(-34.6229419,-58.4491101);
-    public static final Float ZOOMALARMA = 16f;
+    public static final Float ZOOMALARMA = 14f;
     public static final long TIEMPOLOCALIZAR = 1000 * 30 * 1;   //30 segundos
     public static final long DISTANCIALOCALIZAR = 50;      // 50 meteros
     //endregion

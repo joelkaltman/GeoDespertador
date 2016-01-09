@@ -58,20 +58,19 @@ public class SettingsAlarma extends AppCompatActivity {
             map.centrarMapa(Constants.BSAS);
         }else if (accion.equals(Constants.MODIFICAR)){
             modificarAlarma();
-            map.centrarMapa(map.ubicacionDestino,Constants.ZOOMALARMA);
         }
     }
 
     private void modificarAlarma(){
-        String lat = getIntent().getStringExtra("lat");
-        String lng = getIntent().getStringExtra("long");
-        String distancia = getIntent().getStringExtra("distancia");
+        Double lat = getIntent().getDoubleExtra("lat",20);
+        Double lng = getIntent().getDoubleExtra("long",20);
+        int distancia = getIntent().getIntExtra("distancia",100);
         nombre = getIntent().getStringExtra("nombre");
         txt_nombre.setText(nombre);
-        skb_distancia.setProgress(Integer.parseInt(distancia));
-        LatLng ubic = new LatLng(Double.parseDouble(lat),Double.parseDouble(lng));
+        skb_distancia.setProgress(distancia);
+        LatLng ubic = new LatLng(lat,lng);
         map.actualizarMarcador(ubic, Constants.DESTINO);
-        map.actualizarCirculo(ubic, Integer.parseInt(distancia));
+        map.actualizarCirculo(ubic, distancia);
         map.centrarMapa(ubic,Constants.ZOOMALARMA);
     }
 
