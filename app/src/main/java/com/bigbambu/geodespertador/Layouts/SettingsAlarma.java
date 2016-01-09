@@ -90,7 +90,7 @@ public class SettingsAlarma extends AppCompatActivity {
         btn_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Mapa.marcadorDestino != null) {
+                if (Mapa.marcadorDestino != null || txt_nombre.getText().toString() == "") {
                     Alarma alarmaActual = getDatosPantalla();
                     String accion = getIntent().getAction();
                     try {
@@ -107,7 +107,10 @@ public class SettingsAlarma extends AppCompatActivity {
                     catch (Exception e){}
                     Volver();
                 } else {
-                    crearMensaje("Debe ingresar una ubicacion destino");
+                    if (Mapa.marcadorDestino == null)
+                        crearMensaje("Debe ingresar una ubicacion destino");
+                    if (txt_nombre.getText().toString() == "")
+                        crearMensaje("Nombre de alarma invalido");
                 }
             }
         });

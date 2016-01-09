@@ -10,4 +10,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/texto_prueba" />
 
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:id="@+id/map"
+        android:layout_weight="0.70"
+        android:layout_marginTop="10dp" />
+
 </RelativeLayout>
