@@ -13,8 +13,7 @@ import android.widget.ListView;
 import com.bigbambu.geodespertador.Alarma.AlarmAdapter;
 import com.bigbambu.geodespertador.Alarma.AlarmDB;
 import com.bigbambu.geodespertador.Alarma.Alarma;
-import com.bigbambu.geodespertador.GPSTracker;
-import com.bigbambu.geodespertador.Layouts.SettingsAlarma;
+import com.bigbambu.geodespertador.Ubicacion.GPSTracker;
 import com.bigbambu.geodespertador.R;
 
 import java.util.ArrayList;
@@ -49,7 +48,7 @@ public class PrincipalActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Intent i = new Intent(getApplicationContext(), SettingsAlarma.class);
-                i.setAction("NUEVO");
+                i.setAction(SettingsAlarma.NUEVO);
                 startActivity(i);
             }
         });
@@ -58,9 +57,6 @@ public class PrincipalActivity extends AppCompatActivity {
 
     private void iniciarServicioVerificacion(){
         startService(new Intent(this, GPSTracker.class));
-        //Intent i = new Intent(this, Servicio.class);
-        //i.putExtra("foo", "bar");
-        //startService(i);
     }
 
 
@@ -88,22 +84,6 @@ public class PrincipalActivity extends AppCompatActivity {
 
 
     void cargarListView(List<Alarma> lista_mostrar){
-        /*View hola;
-        String[] items = new String[lista_mostrar.size()];
-        for(int i=0; i<lista_mostrar.size(); i++){
-            items[i] = lista_mostrar.get(i).nombre + " - radio: " + lista_mostrar.get(i).radio + "m";
-        }
-
-        ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, R.layout.itemlistview, items);
-        mi_lista_alarmas.setAdapter(adaptador);
-        */
-
-
-        //generate list
-        /*ArrayList<String> list = new ArrayList<String>();
-        for(int i=0; i<lista_mostrar.size(); i++){
-            list.add(lista_mostrar.get(i).nombre);
-        }*/
         ArrayList<Alarma> list = new ArrayList<Alarma>();
         for(int i=0; i<lista_mostrar.size(); i++){
             list.add(lista_mostrar.get(i));

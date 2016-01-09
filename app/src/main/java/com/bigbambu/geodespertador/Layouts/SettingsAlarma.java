@@ -12,13 +12,16 @@ import android.widget.TextView;
 
 import com.bigbambu.geodespertador.Alarma.AlarmDB;
 import com.bigbambu.geodespertador.Alarma.Alarma;
-import com.bigbambu.geodespertador.Alarma.ExisteAlarmaException;
-import com.bigbambu.geodespertador.Mapa;
+import com.bigbambu.geodespertador.Excepciones.ExisteAlarmaException;
+import com.bigbambu.geodespertador.Ubicacion.Mapa;
 import com.bigbambu.geodespertador.R;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 public class SettingsAlarma extends AppCompatActivity {
+
+    public static final String MODIFICAR = "Modificar";
+    public static final String NUEVO = "Nuevo";
 
     //region vaiables
     //elementos del layout
@@ -88,18 +91,14 @@ public class SettingsAlarma extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (Mapa.marcadorDestino != null) {
-                    String nueva_lng = String.valueOf(Mapa.ubicacionDestino.longitude);
-                    String nueva_lat = String.valueOf(Mapa.ubicacionDestino.latitude);
-                    String nuevo_nombre = txt_nombre.getText().toString();
-                    int nueva_distancia = skb_distancia.getProgress();
-                    String distancia = String.valueOf(nueva_distancia);
-                    Alarma alarmaActual = new Alarma(nuevo_nombre, nueva_lat, nueva_lng, distancia,"s");
+                    Alarma alarmaActual = getDatosPantalla();
                     String accion = getIntent().getAction();
                     try {
-                        if (accion.equals("NUEVO")) {
+                        if (accion.equals(SettingsAlarma.NUEVO)){
                             base.insertarAlarma(alarmaActual);
-                        } else {
-                            base.borrarAlarma(nombre);
+                        } else if (accion.equals(SettingsAlarma.MODIFICAR)){
+                            String nombre_anterior = getIntent().getStringExtra("nombre");
+                            base.borrarAlarma(nombre_anterior);
                             base.insertarAlarma(alarmaActual);
                         }
                     }catch (ExisteAlarmaException fallo){
@@ -174,6 +173,15 @@ public class SettingsAlarma extends AppCompatActivity {
         });
 
 
+    }
+
+    private Alarma getDatosPantalla(){
+        Double nueva_lon = Mapa.ubicacionDestino.longitude;
+        Double nueva_lat = Mapa.ubicacionDestino.latitude;
+        LatLng nueva_latlong = new LatLng(nueva_lat,nueva_lon);
+        String nuevo_nombre = txt_nombre.getText().toString();
+        int nueva_distancia = skb_distancia.getProgress();
+        return new Alarma(nuevo_nombre, nueva_latlong, nueva_distancia,Alarma.ACTIVADA);
     }
 
     private void crearMensaje(String mensaje){

@@ -8,42 +8,47 @@ import com.google.android.gms.maps.model.LatLng;
  * Created by Sebas on 06/01/2016.
  */
 public class Alarma{
+    public static final char ACTIVADA = 'n';
+    public static final char DESACTIVADA = 's';
     String nombre;
-    String longitud;
-    String latitud;
-    String distancia;
+    LatLng ubicacion;
+    int distancia;
     boolean sonando;
     char activa;
 
-    public Alarma(String nombre, String latitud, String longitud, String distancia, String activar){
+    public Alarma(String nombre, LatLng latlong, int distancia, char activar){
         this.nombre = nombre;
-        this.longitud = longitud;
-        this.latitud = latitud;
+        this.ubicacion = latlong;
         this.distancia = distancia;
-        this.activa = activar.charAt(0);
+        this.activa = activar;
     }
 
     public String getNombre(){return this.nombre;}
-    public Double getLatitud(){return Double.parseDouble(this.latitud);}
-    public Double getLongitud(){return Double.parseDouble(this.longitud);}
-    public int getDistancia(){return Integer.parseInt(this.distancia);}
+    public LatLng getLatLong(){ return this.ubicacion;}
+    public int getDistancia(){return this.distancia;}
     public boolean getSonando(){return this.sonando;}
     public char getActiva(){return this.activa;}
 
-    public void estaSonando(LatLng ubicacion){
+    /**
+     * Modificara el valor "sonando" de la alarma
+     * en caso de que este la ubicacion pasada por paramentro
+     * este dentro del rango que contiene la alarma
+     * @param destino la ubicacion a verificar si esta en el rango de la alarma
+     */
+    public void estaSonando(LatLng destino){
         if (activa == 's') {
             Location ubicacionAlarma = new Location("");
-            ubicacionAlarma.setLatitude(Double.parseDouble(this.latitud));
-            ubicacionAlarma.setLongitude(Double.parseDouble(this.longitud));
+            ubicacionAlarma.setLatitude(this.ubicacion.latitude);
+            ubicacionAlarma.setLongitude(this.ubicacion.longitude);
             Location ubicacionDestino = new Location("");
-            ubicacionDestino.setLatitude(ubicacion.latitude);
-            ubicacionDestino.setLongitude(ubicacion.longitude);
-            int radio = Integer.parseInt(distancia);
-            sonando = false;
-            if (ubicacionDestino.distanceTo(ubicacionAlarma) < radio && !sonando) {
-                sonando = true;
-            } else if (ubicacionDestino.distanceTo(ubicacionAlarma) > radio) {
-                sonando = false;
+            ubicacionDestino.setLatitude(destino.latitude);
+            ubicacionDestino.setLongitude(destino.longitude);
+            this.sonando = false;
+            if (ubicacionDestino.distanceTo(ubicacionAlarma) < this.distancia && !this.sonando) {
+                this.sonando = true;
+                activa = 'n';
+            } else if (ubicacionDestino.distanceTo(ubicacionAlarma) > this.distancia) {
+                this.sonando = false;
             }
         }
     }

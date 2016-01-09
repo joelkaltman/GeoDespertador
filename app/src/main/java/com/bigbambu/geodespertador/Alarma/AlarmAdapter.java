@@ -59,7 +59,7 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
 
         //Handle TextView and display string from your list
         listItemText = (TextView)view.findViewById(R.id.list_item_string);
-        listItemText.setText(list.get(position).nombre);
+        listItemText.setText(list.get(position).getNombre());
 
         listItemText.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -81,11 +81,11 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
 
     public void modificar(Alarma alarma){
         Intent i = new Intent(PrincipalActivity.contexto, SettingsAlarma.class);
-        i.putExtra("nombre", alarma.nombre);
-        i.putExtra("lat", alarma.latitud);
-        i.putExtra("long", alarma.longitud);
-        i.putExtra("distancia", alarma.distancia);
-        i.setAction("MODIFICAR");
+        i.putExtra("nombre", alarma.getNombre());
+        i.putExtra("lat", alarma.getLatLong().latitude);
+        i.putExtra("long", alarma.getLatLong().longitude);
+        i.putExtra("distancia", alarma.getDistancia());
+        i.setAction(SettingsAlarma.MODIFICAR);
         PrincipalActivity.contexto.startActivity(i);
     }
 }
