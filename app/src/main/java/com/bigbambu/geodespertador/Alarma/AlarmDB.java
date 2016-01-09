@@ -157,7 +157,7 @@ public class AlarmDB implements Serializable{
         String nombre = cursor.getString(0);
         Double latitud = Double.parseDouble(cursor.getString(1));
         Double longitud = Double.parseDouble(cursor.getString(2));
-        LatLng latlong = new LatLng(latitud,latitud);
+        LatLng latlong = new LatLng(latitud,longitud);
         int distancia = Integer.parseInt(cursor.getString(3));
         char activa = cursor.getString(4).charAt(0);
         return new Alarma(nombre,latlong,distancia,activa);
