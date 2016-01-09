@@ -2,6 +2,7 @@ package com.bigbambu.geodespertador;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -39,15 +40,18 @@ public class Mapa implements GoogleMap.OnMapLongClickListener {
     }
 
     public void centrarMapa() {
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(Mapa.BSAS, 11f));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(Mapa.BSAS, 15f));
     }
 
     public void centrarMapa(LatLng ubic) {
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(ubic.latitude, ubic.longitude), 11f));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(ubic.latitude, ubic.longitude), 15f));
         zoomin();
     }
 
     public void actualizarMarcador(LatLng nueva_pos, boolean esDestino) {
+        Mapa.actualizarMarcadorEstatico(nueva_pos, esDestino);
+    }
+    public static void actualizarMarcadorEstatico(LatLng nueva_pos, boolean esDestino) {
         if (esDestino) {
             try {
                 Mapa.marcadorDestino.remove();
@@ -60,7 +64,7 @@ public class Mapa implements GoogleMap.OnMapLongClickListener {
                 Mapa.marcadorUsuario.remove();
             } catch (Exception a) {
             }
-            Mapa.marcadorUsuario = Mapa.map.addMarker(new MarkerOptions().position(nueva_pos));
+            Mapa.marcadorUsuario = Mapa.map.addMarker(new MarkerOptions().position(nueva_pos).icon(BitmapDescriptorFactory.fromResource(R.drawable.usuario)));
             Mapa.ubicacionUsuario = nueva_pos;
         }
 

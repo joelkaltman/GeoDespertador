@@ -19,7 +19,15 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/nombre">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre:"
+                android:id="@+id/textView"
+                android:layout_weight="0.04" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -32,14 +40,9 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="30dp">
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/distancia">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -52,53 +55,68 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/skb_distancia"
                 android:layout_weight="1" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="1">
 
-            <Button
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="volver"
-                android:id="@+id/btn_volver" />
+                android:text="0m"
+                android:id="@+id/txt_km" />
+
+        </LinearLayout>
+
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:name="com.google.android.gms.maps.MapFragment"
+            android:id="@+id/map"
+            android:layout_weight="0.70"
+            android:layout_marginTop="10dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:layout_marginTop="10dp"
+            android:id="@+id/botones">
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="57dp"
+                android:layout_height="wrap_content"
+                android:text="volver"
+                android:id="@+id/btn_volver"
+                android:textSize="10dp"
+                android:padding="0dp" />
+
+            <Button
+                android:layout_width="69dp"
                 android:layout_height="wrap_content"
                 android:text="Guardar"
                 android:id="@+id/btn_guardar"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:textSize="10dp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="77dp"
                 android:layout_height="wrap_content"
                 android:text="Borrar"
-                android:id="@+id/btn_borrar" />
+                android:id="@+id/btn_borrar"
+                android:textSize="10dp" />
 
             <ImageButton
-                android:layout_width="40dp"
+                android:layout_width="45dp"
                 android:layout_height="match_parent"
-                android:id="@+id/imageButton"
-                android:layout_weight="0.15" />
+                android:id="@+id/btn_centrar_usuario"
+                android:background="@drawable/centrar2" />
 
             <ImageButton
-                android:layout_width="40dp"
+                android:layout_width="45dp"
                 android:layout_height="match_parent"
-                android:id="@+id/imageButton2"
-                android:layout_weight="0.15" />
+                android:id="@+id/btn_centrar_destino"
+                android:background="@drawable/marcador2" />
         </LinearLayout>
-
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:name="com.google.android.gms.maps.MapFragment"
-            android:id="@+id/map"
-            android:layout_weight="0.70" />
 
 
     </LinearLayout>
