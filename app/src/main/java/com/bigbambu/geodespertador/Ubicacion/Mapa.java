@@ -8,6 +8,8 @@ import com.bigbambu.geodespertador.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -102,7 +104,8 @@ public class Mapa implements GoogleMap.OnMapLongClickListener{
                     Mapa.marcadorUsuario.remove();
                 } catch (Exception a) {
                 }
-                Mapa.marcadorUsuario = Mapa.map.addMarker(new MarkerOptions().position(nueva_pos));//.icon(BitmapDescriptorFactory.fromResource(R.drawable.usuario)));
+                BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.usuario);
+                Mapa.marcadorUsuario = Mapa.map.addMarker(new MarkerOptions().position(nueva_pos).icon(icon));
                 Mapa.ubicacionUsuario = nueva_pos;
             }
         }

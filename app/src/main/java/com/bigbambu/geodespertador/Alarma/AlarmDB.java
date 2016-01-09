@@ -88,7 +88,7 @@ public class AlarmDB implements Serializable{
                         + alarma.getNombre() + "','"
                         + dobleAstring(alarma.getLatLong().latitude) + "','"
                         + dobleAstring(alarma.getLatLong().longitude) + "','"
-                        + String.valueOf(alarma.getDistancia()) + "',' +"
+                        + String.valueOf(alarma.getDistancia()) + "','"
                         + String.valueOf(Constants.ACTIVADA) + "')";
                 db.execSQL(sql);
             }

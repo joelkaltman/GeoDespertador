@@ -22,8 +22,8 @@ public class Constants {
     public static final boolean USUARIO = false;
 
     //Constantes de la alarma
-    public static final char ACTIVADA = 'n';
-    public static final char DESACTIVADA = 's';
+    public static final char ACTIVADA = 's';
+    public static final char DESACTIVADA = 'n';
     public static final boolean SONANDO = true;
     public static final boolean SINSONAR = false;
 
