@@ -116,9 +116,9 @@ public class SettingsAlarma extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String accion = getIntent().getAction();
-                if (accion.equals("NUEVO")) {
+                if (accion.equals(SettingsAlarma.NUEVO)) {
                     Volver();
-                } else {
+                } else if (accion.equals(SettingsAlarma.MODIFICAR)){
                     String nombre = getIntent().getStringExtra("nombre");
                     base.borrarAlarma(nombre);
                     Volver();
@@ -180,7 +180,7 @@ public class SettingsAlarma extends AppCompatActivity {
         Double nueva_lat = Mapa.ubicacionDestino.latitude;
         LatLng nueva_latlong = new LatLng(nueva_lat,nueva_lon);
         String nuevo_nombre = txt_nombre.getText().toString();
-        int nueva_distancia = skb_distancia.getProgress();
+        int nueva_distancia = skb_distancia.getProgress() + Mapa.MINDISTANCE;
         return new Alarma(nuevo_nombre, nueva_latlong, nueva_distancia,Alarma.ACTIVADA);
     }
 
@@ -195,6 +195,12 @@ public class SettingsAlarma extends AppCompatActivity {
 
    private void nuevaAlarma(){
        txt_nombre.setText("Nueva Alarma");
+       txt_nombre.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               txt_nombre.setText("");
+           }
+       });
        map.actualizarMarcador(Mapa.BSAS, Mapa.DESTINO);
        map.actualizarCirculo(Mapa.BSAS, skb_distancia.getProgress());
     }

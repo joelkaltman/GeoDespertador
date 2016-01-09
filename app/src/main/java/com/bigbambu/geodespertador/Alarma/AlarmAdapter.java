@@ -31,6 +31,8 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
         this.actividad = actividad;
     }
 
+
+    //region METODOS OVERRIDE NECESARIOS
     @Override
     public int getCount() {
         return list.size();
@@ -47,7 +49,7 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
         //just return 0 if your list items do not have an Id variable.
         return 0;
     }
-
+    //endregion
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {

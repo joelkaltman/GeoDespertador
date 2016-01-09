@@ -16,6 +16,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * Created by Sebas on 06/01/2016.
  */
 public class Mapa implements GoogleMap.OnMapLongClickListener {
+    public static final int MINDISTANCE = 150;
     public static final boolean DESTINO = true;
     public static final boolean USUARIO = false;
     public static final LatLng BSAS = new LatLng(-34.6229419,-58.4491101);
@@ -86,7 +87,7 @@ public class Mapa implements GoogleMap.OnMapLongClickListener {
 
     public void actualizarRadioCirculo(int radio){
         if(Mapa.miCirculo != null)
-            Mapa.miCirculo.setRadius(radio);
+            Mapa.miCirculo.setRadius(radio+ Mapa.MINDISTANCE);
     }
 
     public void zoomin(){

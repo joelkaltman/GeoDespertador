@@ -1,7 +1,6 @@
 package com.bigbambu.geodespertador.Alarma;
 
 import android.location.Location;
-
 import com.google.android.gms.maps.model.LatLng;
 
 /**
@@ -25,11 +24,13 @@ public class Alarma{
         this.activa = activar;
     }
 
+    //region GETERS
     public String getNombre(){return this.nombre;}
     public LatLng getLatLong(){ return this.ubicacion;}
     public int getDistancia(){return this.distancia;}
     public boolean getSonando(){return this.sonando;}
     public char getActiva(){return this.activa;}
+    //endregion
 
     /**
      * Modificara el valor "sonando" de la alarma
@@ -48,7 +49,7 @@ public class Alarma{
             this.sonando = false;
             if (ubicacionDestino.distanceTo(ubicacionAlarma) < this.distancia && !this.sonando) {
                 this.sonando = true;
-                activa = 'n';
+                activa = Alarma.DESACTIVADA;
             } else if (ubicacionDestino.distanceTo(ubicacionAlarma) > this.distancia) {
                 this.sonando = false;
             }
