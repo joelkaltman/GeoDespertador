@@ -1,5 +1,6 @@
 package com.bigbambu.geodespertador;
 
+import com.bigbambu.geodespertador.Layouts.SettingsAlarma;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;

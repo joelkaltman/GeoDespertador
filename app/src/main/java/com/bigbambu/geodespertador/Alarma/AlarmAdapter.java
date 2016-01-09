@@ -9,10 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import com.bigbambu.geodespertador.Alarma.Alarma;
-import com.bigbambu.geodespertador.PrincipalActivity;
+import com.bigbambu.geodespertador.Layouts.PrincipalActivity;
 import com.bigbambu.geodespertador.R;
-import com.bigbambu.geodespertador.SettingsAlarma;
+import com.bigbambu.geodespertador.Layouts.SettingsAlarma;
 
 import java.util.ArrayList;
 
