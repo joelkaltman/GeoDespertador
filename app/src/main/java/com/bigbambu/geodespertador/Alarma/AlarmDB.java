@@ -9,7 +9,6 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Sebas on 05/12/2015.
@@ -43,10 +42,10 @@ public class AlarmDB implements Serializable{
     /**
      * Devuelve la lista de todas las alarmas en la base de datos
      */
-    public List<Alarma> obtenerTodasAlarmas(){
+    public ArrayList<Alarma> obtenerTodasAlarmas(){
         abrir();
         int cant_alarmas = cantidadAlarmas();
-        List<Alarma> alarmas = new ArrayList<Alarma>();
+        ArrayList<Alarma> alarmas = new ArrayList<Alarma>();
         Cursor cursor = db.rawQuery(AlarmDB.SELECTALL, null);
         int i = 0;
         cursor.moveToFirst();

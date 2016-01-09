@@ -12,35 +12,34 @@ import android.widget.ListView;
 
 import com.bigbambu.geodespertador.Alarma.AlarmAdapter;
 import com.bigbambu.geodespertador.Alarma.AlarmDB;
-import com.bigbambu.geodespertador.Alarma.Alarma;
-import com.bigbambu.geodespertador.Ubicacion.GPSTracker;
 import com.bigbambu.geodespertador.R;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.bigbambu.geodespertador.Ubicacion.GPSTracker;
 
 
 public class PrincipalActivity extends AppCompatActivity {
-    ListView mi_lista_alarmas;
-    Button nueva_alarma;
-    public static AlarmDB mi_base;
+
+    public AlarmDB mi_base;
     public static Context contexto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.principal);
-        mi_lista_alarmas = (ListView)findViewById(R.id.listView);
 
-        iniciarServicioVerificacion();
+        //iniciamos el servicio en segundo plano
+        startService(new Intent(this, GPSTracker.class));
 
-        contexto = this;
+        PrincipalActivity.contexto = this;
+
+        //Conecta a la db
         mi_base = new AlarmDB(this);
 
-        List<Alarma> alarmas_lista = mi_base.obtenerTodasAlarmas();
-        cargarListView(alarmas_lista);
+        //carga la lista de alarmas en el listView
+        cargarListView();
 
 
+        //region CONFIGURAR BOTON NUEVA ALARMA
+        Button nueva_alarma;
         nueva_alarma=(Button)findViewById(R.id.btn_nueva);
         nueva_alarma.setOnClickListener(new View.OnClickListener() {
 
@@ -52,14 +51,11 @@ public class PrincipalActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        //endregion
 
     }
 
-    private void iniciarServicioVerificacion(){
-        startService(new Intent(this, GPSTracker.class));
-    }
-
-
+    //region METODOS OVERRIDE QUE NO SE QUE HACEN
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -81,19 +77,20 @@ public class PrincipalActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    //endregion
 
+    /**
+     * Carga la vista en el layout y le asigna el adaptador
+     */
+    void cargarListView(){
+        //Crea el adaptador de alarmas
+        AlarmAdapter adapter = new AlarmAdapter(mi_base.obtenerTodasAlarmas(), this, this);
 
-    void cargarListView(List<Alarma> lista_mostrar){
-        ArrayList<Alarma> list = new ArrayList<Alarma>();
-        for(int i=0; i<lista_mostrar.size(); i++){
-            list.add(lista_mostrar.get(i));
-        }
+        //enlaza el list view del layout a la variable
+        ListView mi_lista_alarmas = (ListView)findViewById(R.id.listView);
 
-        //instantiate custom adapter
-        AlarmAdapter adapter = new AlarmAdapter(list, this, this);
-
-        //handle listview and assign adapter
+        //Le setea el adaptador a la lista
         mi_lista_alarmas.setAdapter(adapter);
-
     }
+
 }

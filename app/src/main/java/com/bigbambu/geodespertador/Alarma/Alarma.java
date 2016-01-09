@@ -8,13 +8,15 @@ import com.google.android.gms.maps.model.LatLng;
  * Created by Sebas on 06/01/2016.
  */
 public class Alarma{
+
     public static final char ACTIVADA = 'n';
     public static final char DESACTIVADA = 's';
-    String nombre;
-    LatLng ubicacion;
-    int distancia;
-    boolean sonando;
-    char activa;
+
+    private String nombre;
+    private LatLng ubicacion;
+    private int distancia;
+    private boolean sonando;
+    private char activa;
 
     public Alarma(String nombre, LatLng latlong, int distancia, char activar){
         this.nombre = nombre;
