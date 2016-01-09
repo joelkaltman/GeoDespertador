@@ -194,7 +194,7 @@ public class SettingsAlarma extends AppCompatActivity {
         Double nueva_lat = Mapa.ubicacionDestino.latitude;
         LatLng nueva_latlong = new LatLng(nueva_lat,nueva_lon);
         String nuevo_nombre = txt_nombre.getText().toString();
-        int nueva_distancia = skb_distancia.getProgress() + Constants.MINDISTANCE;
+        int nueva_distancia = skb_distancia.getProgress();
         return new Alarma(nuevo_nombre, nueva_latlong, nueva_distancia,Constants.ACTIVADA);
     }
 

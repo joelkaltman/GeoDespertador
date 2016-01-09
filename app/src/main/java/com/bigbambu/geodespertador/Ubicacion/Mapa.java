@@ -62,7 +62,7 @@ public class Mapa implements GoogleMap.OnMapLongClickListener{
             } catch (Exception a) {
 
             }
-            Mapa.opcionesCirculo.radius(radio);
+            Mapa.opcionesCirculo.radius(radio+Constants.MINDISTANCE);
             Mapa.opcionesCirculo.center(nueva_pos);
             Mapa.miCirculo = Mapa.map.addCircle(Mapa.opcionesCirculo);
         }
@@ -70,7 +70,7 @@ public class Mapa implements GoogleMap.OnMapLongClickListener{
 
     public void actualizarRadioCirculo(int radio){
         if(Mapa.miCirculo != null && Mapa.ready)
-            Mapa.miCirculo.setRadius(radio);
+            Mapa.miCirculo.setRadius(radio+Constants.MINDISTANCE);
     }
 
     private void configCirculo(){
