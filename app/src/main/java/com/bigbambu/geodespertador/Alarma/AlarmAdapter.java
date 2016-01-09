@@ -10,9 +10,10 @@ import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigbambu.geodespertador.Constants.Constants;
 import com.bigbambu.geodespertador.Layouts.PrincipalActivity;
-import com.bigbambu.geodespertador.R;
 import com.bigbambu.geodespertador.Layouts.SettingsAlarma;
+import com.bigbambu.geodespertador.R;
 
 import java.util.ArrayList;
 
@@ -107,7 +108,7 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
         i.putExtra("lat", alarma.getLatLong().latitude);
         i.putExtra("long", alarma.getLatLong().longitude);
         i.putExtra("distancia", alarma.getDistancia());
-        i.setAction(SettingsAlarma.MODIFICAR);
+        i.setAction(Constants.MODIFICAR);
         PrincipalActivity.contexto.startActivity(i);
     }
 }

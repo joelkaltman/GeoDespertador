@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.bigbambu.geodespertador.Alarma.AlarmAdapter;
 import com.bigbambu.geodespertador.Alarma.AlarmDB;
+import com.bigbambu.geodespertador.Constants.Constants;
 import com.bigbambu.geodespertador.R;
 import com.bigbambu.geodespertador.Ubicacion.GPSTracker;
 
@@ -47,7 +48,7 @@ public class PrincipalActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Intent i = new Intent(getApplicationContext(), SettingsAlarma.class);
-                i.setAction(SettingsAlarma.NUEVO);
+                i.setAction(Constants.NUEVO);
                 startActivity(i);
             }
         });

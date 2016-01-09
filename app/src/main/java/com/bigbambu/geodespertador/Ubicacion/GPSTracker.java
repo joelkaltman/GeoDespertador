@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 
 import com.bigbambu.geodespertador.Alarma.AlarmDB;
 import com.bigbambu.geodespertador.Alarma.Alarma;
+import com.bigbambu.geodespertador.Constants.Constants;
 import com.bigbambu.geodespertador.Layouts.sonando;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -42,7 +43,7 @@ public class GPSTracker extends Service implements LocationListener {
     @Override
     public void onCreate() {
         if (ubicacion_actual == null)
-            ubicacion_actual = Mapa.BSAS;
+            ubicacion_actual = Constants.BSAS;
         try {
             locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
