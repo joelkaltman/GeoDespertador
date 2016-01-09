@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigbambu.geodespertador.Layouts.PrincipalActivity;
@@ -63,6 +64,9 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
         listItemText = (TextView)view.findViewById(R.id.list_item_string);
         listItemText.setText(list.get(position).getNombre());
 
+        RelativeLayout linea = (RelativeLayout)view.findViewById(R.id.relative);
+
+        //region CLICK EN EL TEXTO
         listItemText.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -70,13 +74,29 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
                 return true;
             }
         });
-
         listItemText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 modificar(list.get(position));
             }
         });
+        //endregion
+
+        //region CLICK EN LA LINEA
+        linea.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                modificar(list.get(position));
+                return true;
+            }
+        });
+        linea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                modificar(list.get(position));
+            }
+        });
+        //endregion
 
         return view;
     }
