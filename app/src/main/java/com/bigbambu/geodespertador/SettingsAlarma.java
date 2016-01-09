@@ -72,7 +72,7 @@ public class SettingsAlarma extends AppCompatActivity {
         btn_guardar = (Button)findViewById(R.id.btn_guardar);
         btn_volver = (Button)findViewById(R.id.btn_volver);
         btn_centrar_destino = (ImageButton)findViewById(R.id.btn_centrar_destino);
-        btn_centrar_destino = (ImageButton)findViewById(R.id.btn_centrar_usuario);
+        btn_centrar_usuario = (ImageButton)findViewById(R.id.btn_centrar_usuario);
         skb_distancia = (SeekBar)findViewById(R.id.skb_distancia);
         btn_borrar = (Button)findViewById(R.id.btn_borrar);
         txt_km = (TextView)findViewById(R.id.txt_km);
@@ -87,7 +87,8 @@ public class SettingsAlarma extends AppCompatActivity {
                     String nueva_lat = String.valueOf(Mapa.ubicacionDestino.latitude);
                     String nuevo_nombre = txt_nombre.getText().toString();
                     int nueva_distancia = skb_distancia.getProgress();
-                    Alarma alarmaActual = new Alarma(nuevo_nombre, nueva_lat, nueva_lng, String.valueOf(nueva_distancia));
+                    String distancia = String.valueOf(nueva_distancia);
+                    Alarma alarmaActual = new Alarma(nuevo_nombre, nueva_lat, nueva_lng, distancia,"s");
                     String accion = getIntent().getAction();
                     try {
                         if (accion.equals("NUEVO")) {
@@ -96,12 +97,13 @@ public class SettingsAlarma extends AppCompatActivity {
                             base.borrarAlarma(nombre);
                             base.insertarAlarma(alarmaActual);
                         }
-                    }catch (Exception e){
-
+                    }catch (ExisteAlarmaException fallo){
+                        crearMensaje(fallo.getMessage());
                     }
+                    catch (Exception e){}
                     Volver();
                 } else {
-                    //debe ingresar una ubicacion
+                    crearMensaje("Debe ingresar una ubicacion destino");
                 }
             }
         });
@@ -109,9 +111,15 @@ public class SettingsAlarma extends AppCompatActivity {
         btn_borrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nombre = getIntent().getStringExtra("nombre");
-                base.borrarAlarma(nombre);
-                Volver();
+                String accion = getIntent().getAction();
+                if (accion.equals("NUEVO")) {
+                    Volver();
+                } else {
+                    String nombre = getIntent().getStringExtra("nombre");
+                    base.borrarAlarma(nombre);
+                    Volver();
+                }
+
             }
         });
 
@@ -125,15 +133,15 @@ public class SettingsAlarma extends AppCompatActivity {
         btn_centrar_destino.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(map.ubicacionDestino != null)
+                if (map.ubicacionDestino != null)
                     map.centrarMapa(map.ubicacionDestino);
             }
         });
 
-        btn_centrar_destino.setOnClickListener(new View.OnClickListener() {
+        btn_centrar_usuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(map.ubicacionUsuario != null)
+                if (map.ubicacionUsuario != null)
                     map.centrarMapa(map.ubicacionUsuario);
             }
         });
@@ -163,6 +171,9 @@ public class SettingsAlarma extends AppCompatActivity {
 
     }
 
+    private void crearMensaje(String mensaje){
+        //crear dialogo
+    }
 
     private void Volver(){
         Intent i = new Intent(getApplicationContext(), PrincipalActivity.class);

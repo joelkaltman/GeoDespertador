@@ -92,12 +92,14 @@ public class GPSTracker extends Service implements LocationListener {
         AlarmDB base = new AlarmDB(this);
         List<Alarma> alarmas = base.obtenerTodasAlarmas();
         for (Alarma a: alarmas) {
-            a.estaSonando(ubicacion_actual);
-            if (a.sonando){
-                Intent i = new Intent(getApplicationContext(), sonando.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("nombre", a.nombre);
-                startActivity(i);
+            if (a.activa == 's') {
+                a.estaSonando(ubicacion_actual);
+                if (a.sonando) {
+                    Intent i = new Intent(getApplicationContext(), sonando.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("nombre", a.nombre);
+                    startActivity(i);
+                }
             }
         }
     }

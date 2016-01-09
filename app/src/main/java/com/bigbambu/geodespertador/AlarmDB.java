@@ -28,11 +28,11 @@ public class AlarmDB implements Serializable{
     public List<Alarma> obtenerTodasAlarmas(){
         int cant_alarmas = cantidadAlarmas();
         List<Alarma> alarmas = new ArrayList<Alarma>();
-        Cursor c = db.rawQuery("SELECT nombre, latitud, longitud, distancia FROM Alarmas", null);
+        Cursor c = db.rawQuery("SELECT nombre, latitud, longitud, distancia, activa FROM Alarmas", null);
         int i = 0;
         c.moveToFirst();
         while (i < cant_alarmas) {
-            Alarma una_alarma = new Alarma(c.getString(0), c.getString(1), c.getString(2), c.getString(3));
+            Alarma una_alarma = new Alarma(c.getString(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4));
             alarmas.add(una_alarma);
             c.moveToNext();
             i++;
@@ -53,10 +53,10 @@ public class AlarmDB implements Serializable{
     }
 
     public Alarma obtenerAlarmaPorId(String nombre){
-        Cursor c = db.rawQuery("SELECT nombre, latitud, longitud, distancia FROM Alarmas where nombre=" + nombre, null);
-        Alarma mi_alarma = new Alarma("","","","");
+        Cursor c = db.rawQuery("SELECT nombre, latitud, longitud, distancia, activa FROM Alarmas where nombre=" + nombre, null);
+        Alarma mi_alarma = new Alarma("","","","","n");
         if (c.moveToFirst()) {
-            mi_alarma = new Alarma(c.getString(0), c.getString(1), c.getString(2), c.getString(3));
+            mi_alarma = new Alarma(c.getString(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4));
         }
         c.close();
         return mi_alarma;
@@ -70,19 +70,15 @@ public class AlarmDB implements Serializable{
     public void insertarAlarma(Alarma alarma) throws Exception{
         Cursor c = db.rawQuery("SELECT 1 FROM Alarmas where nombre = '"+ alarma.nombre + "'", null);
         if (c.moveToFirst()) {
-            throw new Exception("fallo");
+            throw new ExisteAlarmaException("Existe una alarma con el mismo nombre");
         }
         else {
-            String sql = "INSERT INTO Alarmas (nombre,longitud,latitud,distancia) VALUES ('" + alarma.nombre + "','" + alarma.longitud + "','" + alarma.latitud + "','" + alarma.distancia + "')";
+            String sql = "INSERT INTO Alarmas (nombre,longitud,latitud,distancia,activa) VALUES ('" + alarma.nombre + "','" + alarma.longitud + "','" + alarma.latitud + "','" + alarma.distancia + "','s')";
             db.execSQL(sql);
         }
         c.close();
     }
 
-    public void insertarAlarma(String nombre, String lat, String longi, String dist) throws Exception{
-        Alarma alarma = new Alarma(nombre, lat, longi, dist);
-        insertarAlarma(alarma);
-    }
 
     public void borrarAlarma(Alarma alarma){
         String sql = "DELETE FROM Alarmas WHERE nombre='" + alarma.nombre+ "'";

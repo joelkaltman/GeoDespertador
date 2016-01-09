@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by Sebas on 06/01/2016.
  */
 public class conexionBase extends SQLiteOpenHelper {
-    String sqlCreate = "CREATE TABLE IF NOT EXISTS Alarmas (nombre TEXT, longitud TEXT, latitud TEXT, distancia TEXT)";
+    String sqlCreate = "CREATE TABLE IF NOT EXISTS Alarmas (nombre TEXT, longitud TEXT, latitud TEXT, distancia TEXT, activa TEXT)";
 
     public conexionBase(Context contexto, String nombre,SQLiteDatabase.CursorFactory factory, int version) {
         super(contexto, nombre, factory, version);

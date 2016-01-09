@@ -31,8 +31,6 @@ public class PrincipalActivity extends AppCompatActivity {
         contexto = this;
         mi_base = new AlarmDB(this);
 
-        CrearAlarmas();
-
         List<Alarma> alarmas_lista = mi_base.obtenerTodasAlarmas();
         cargarListView(alarmas_lista);
 
@@ -58,19 +56,6 @@ public class PrincipalActivity extends AppCompatActivity {
         //startService(i);
     }
 
-    //MEtodo para crear alarmas, luego va a desaparecer
-    private void CrearAlarmas() {
-        try {
-            Alarma alarm = new Alarma("Casa", "-34.6229419", "-58.4491101", "100");
-            mi_base.insertarAlarma(alarm);
-            alarm = new Alarma("Facu", "20", "46", "50");
-            mi_base.insertarAlarma(alarm);
-            alarm = new Alarma("Sinagoga", "25", "53", "234");
-            mi_base.insertarAlarma(alarm);
-            alarm = new Alarma("LCDTM", "30", "32", "646");
-            mi_base.insertarAlarma(alarm);
-        }catch (Exception e){}
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
