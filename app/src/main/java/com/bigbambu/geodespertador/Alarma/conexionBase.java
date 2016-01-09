@@ -1,4 +1,4 @@
-package com.bigbambu.geodespertador;
+package com.bigbambu.geodespertador.Alarma;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

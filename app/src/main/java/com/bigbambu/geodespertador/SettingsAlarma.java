@@ -10,6 +10,9 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.bigbambu.geodespertador.Alarma.AlarmDB;
+import com.bigbambu.geodespertador.Alarma.Alarma;
+import com.bigbambu.geodespertador.Alarma.ExisteAlarmaException;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 

@@ -1,4 +1,4 @@
-package com.bigbambu.geodespertador;
+package com.bigbambu.geodespertador.Alarma;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import com.bigbambu.geodespertador.Alarma.Alarma;
+import com.bigbambu.geodespertador.PrincipalActivity;
+import com.bigbambu.geodespertador.R;
+import com.bigbambu.geodespertador.SettingsAlarma;
 
 import java.util.ArrayList;
 

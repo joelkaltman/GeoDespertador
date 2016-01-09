@@ -1,4 +1,4 @@
-package com.bigbambu.geodespertador;
+package com.bigbambu.geodespertador.Alarma;
 
 /**
  * Created by Sebas on 09/01/2016.

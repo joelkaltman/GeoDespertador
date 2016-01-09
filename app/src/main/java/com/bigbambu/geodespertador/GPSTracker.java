@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 
+import com.bigbambu.geodespertador.Alarma.AlarmDB;
+import com.bigbambu.geodespertador.Alarma.Alarma;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
@@ -92,12 +94,12 @@ public class GPSTracker extends Service implements LocationListener {
         AlarmDB base = new AlarmDB(this);
         List<Alarma> alarmas = base.obtenerTodasAlarmas();
         for (Alarma a: alarmas) {
-            if (a.activa == 's') {
+            if (a.getActiva() == 's') {
                 a.estaSonando(ubicacion_actual);
-                if (a.sonando) {
+                if (a.getSonando()) {
                     Intent i = new Intent(getApplicationContext(), sonando.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("nombre", a.nombre);
+                    i.putExtra("nombre", a.getNombre());
                     startActivity(i);
                 }
             }

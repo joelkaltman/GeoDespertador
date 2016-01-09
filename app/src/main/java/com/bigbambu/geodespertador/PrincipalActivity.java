@@ -10,6 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.bigbambu.geodespertador.Alarma.AlarmAdapter;
+import com.bigbambu.geodespertador.Alarma.AlarmDB;
+import com.bigbambu.geodespertador.Alarma.Alarma;
+
 import java.util.ArrayList;
 import java.util.List;
 

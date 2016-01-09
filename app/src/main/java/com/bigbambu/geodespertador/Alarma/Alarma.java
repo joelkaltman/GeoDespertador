@@ -1,4 +1,4 @@
-package com.bigbambu.geodespertador;
+package com.bigbambu.geodespertador.Alarma;
 
 import android.location.Location;
 
@@ -22,6 +22,13 @@ public class Alarma{
         this.distancia = distancia;
         this.activa = activar.charAt(0);
     }
+
+    public String getNombre(){return this.nombre;}
+    public Double getLatitud(){return Double.parseDouble(this.latitud);}
+    public Double getLongitud(){return Double.parseDouble(this.longitud);}
+    public int getDistancia(){return Integer.parseInt(this.distancia);}
+    public boolean getSonando(){return this.sonando;}
+    public char getActiva(){return this.activa;}
 
     public void estaSonando(LatLng ubicacion){
         if (activa == 's') {
