@@ -59,7 +59,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0m"
+                android:text="100m"
                 android:id="@+id/txt_km" />
 
         </LinearLayout>

@@ -30,10 +30,10 @@ public class GPSTracker extends Service implements LocationListener {
     boolean isNetworkEnabled = false;
 
     // The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 50; // 50 meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = Constants.DISTANCIALOCALIZAR;
 
     // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 30 * 1; // 30 segs
+    private static final long MIN_TIME_BW_UPDATES = Constants.TIEMPOLOCALIZAR;
 
     // Declaring a Location Manager
     protected LocationManager locationManager;
@@ -92,7 +92,7 @@ public class GPSTracker extends Service implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         ubicacion_actual = new LatLng(location.getLatitude(), location.getLongitude());
-        Mapa.actualizarMarcadorEstatico(ubicacion_actual, false);
+        Mapa.actualizarMarcadorEstatico(ubicacion_actual, Constants.USUARIO);
         AlarmDB base = new AlarmDB(this);
         List<Alarma> alarmas = base.obtenerTodasAlarmas();
         for (Alarma a: alarmas) {
