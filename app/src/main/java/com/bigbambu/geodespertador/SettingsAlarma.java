@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -18,10 +20,12 @@ public class SettingsAlarma extends AppCompatActivity {
     Button btn_guardar;
     Button btn_volver;
     Button btn_borrar;
+    ImageButton btn_centrar_usuario;
+    ImageButton btn_centrar_destino;
     EditText txt_nombre;
+    TextView txt_km;
     SeekBar skb_distancia;
     String nombre;
-    Alarma alarma_actual;
 
     //base de datos
     AlarmDB base;
@@ -38,7 +42,6 @@ public class SettingsAlarma extends AppCompatActivity {
 
 
         map = new Mapa(((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap(),this);
-        map.centrarMapa();
         configurarBotones();
         base = new AlarmDB(this);
 
@@ -48,6 +51,7 @@ public class SettingsAlarma extends AppCompatActivity {
         }else{
             modificarAlarma();
         }
+        map.centrarMapa(map.ubicacionDestino);
     }
 
     private void modificarAlarma(){
@@ -67,15 +71,17 @@ public class SettingsAlarma extends AppCompatActivity {
         txt_nombre = (EditText)findViewById(R.id.txt_nombre);
         btn_guardar = (Button)findViewById(R.id.btn_guardar);
         btn_volver = (Button)findViewById(R.id.btn_volver);
+        btn_centrar_destino = (ImageButton)findViewById(R.id.btn_centrar_destino);
+        btn_centrar_destino = (ImageButton)findViewById(R.id.btn_centrar_usuario);
         skb_distancia = (SeekBar)findViewById(R.id.skb_distancia);
         btn_borrar = (Button)findViewById(R.id.btn_borrar);
+        txt_km = (TextView)findViewById(R.id.txt_km);
 
 
 
         btn_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 if (Mapa.marcadorDestino != null) {
                     String nueva_lng = String.valueOf(Mapa.ubicacionDestino.longitude);
                     String nueva_lat = String.valueOf(Mapa.ubicacionDestino.latitude);
@@ -103,7 +109,6 @@ public class SettingsAlarma extends AppCompatActivity {
         btn_borrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 String nombre = getIntent().getStringExtra("nombre");
                 base.borrarAlarma(nombre);
                 Volver();
@@ -111,19 +116,37 @@ public class SettingsAlarma extends AppCompatActivity {
         });
 
         btn_volver.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 Volver();
             }
         });
+
+        btn_centrar_destino.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(map.ubicacionDestino != null)
+                    map.centrarMapa(map.ubicacionDestino);
+            }
+        });
+
+        btn_centrar_destino.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(map.ubicacionUsuario != null)
+                    map.centrarMapa(map.ubicacionUsuario);
+            }
+        });
+
         map.actualizarRadioCirculo(skb_distancia.getProgress());
         skb_distancia.setMax(1000);
         skb_distancia.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar barraRadio, int progreso, boolean fromUser) {
+                int valor = skb_distancia.getProgress();
                 map.actualizarRadioCirculo(skb_distancia.getProgress());
+                String texto = String.valueOf(valor) + "m";
+                txt_km.setText(texto);
             }
 
             @Override
@@ -151,6 +174,7 @@ public class SettingsAlarma extends AppCompatActivity {
        map.actualizarMarcador(Mapa.BSAS, Mapa.DESTINO);
        map.actualizarCirculo(Mapa.BSAS, skb_distancia.getProgress());
     }
+
 
 
 }

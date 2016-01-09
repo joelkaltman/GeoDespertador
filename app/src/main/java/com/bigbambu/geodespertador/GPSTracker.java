@@ -88,6 +88,7 @@ public class GPSTracker extends Service implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         ubicacion_actual = new LatLng(location.getLatitude(), location.getLongitude());
+        Mapa.actualizarMarcadorEstatico(ubicacion_actual, false);
         AlarmDB base = new AlarmDB(this);
         List<Alarma> alarmas = base.obtenerTodasAlarmas();
         for (Alarma a: alarmas) {
