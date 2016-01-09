@@ -1,6 +1,7 @@
 package com.bigbambu.geodespertador.Alarma;
 
 import android.location.Location;
+import com.bigbambu.geodespertador.Constants.Constants;
 import com.google.android.gms.maps.model.LatLng;
 
 /**
@@ -8,8 +9,6 @@ import com.google.android.gms.maps.model.LatLng;
  */
 public class Alarma{
 
-    public static final char ACTIVADA = 'n';
-    public static final char DESACTIVADA = 's';
 
     private String nombre;
     private LatLng ubicacion;
@@ -46,12 +45,12 @@ public class Alarma{
             Location ubicacionDestino = new Location("");
             ubicacionDestino.setLatitude(destino.latitude);
             ubicacionDestino.setLongitude(destino.longitude);
-            this.sonando = false;
+            this.sonando = Constants.SINSONAR;
             if (ubicacionDestino.distanceTo(ubicacionAlarma) < this.distancia && !this.sonando) {
-                this.sonando = true;
-                activa = Alarma.DESACTIVADA;
+                this.sonando = Constants.SONANDO;
+                activa = Constants.DESACTIVADA;
             } else if (ubicacionDestino.distanceTo(ubicacionAlarma) > this.distancia) {
-                this.sonando = false;
+                this.sonando = Constants.SINSONAR;
             }
         }
     }

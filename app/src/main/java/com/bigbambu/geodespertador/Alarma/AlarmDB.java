@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.bigbambu.geodespertador.Constants.Constants;
 import com.bigbambu.geodespertador.Excepciones.ExisteAlarmaException;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -15,12 +16,6 @@ import java.util.ArrayList;
  */
 
 public class AlarmDB implements Serializable{
-
-    //Consultas prearmadas
-    public static final String INSERTAR = "INSERT INTO Alarmas (nombre,longitud,latitud,distancia,activa) VALUES";
-    public static final String SELECTALL = "SELECT nombre, latitud, longitud, distancia, activa FROM Alarmas";
-    public static final String COUNT = "SELECT count(1) FROM Alarmas";
-    public static final String DELETE = "DELETE FROM Alarmas WHERE nombre='";
 
     //Variables utilizadas
     conexionBase conexion;
@@ -46,7 +41,7 @@ public class AlarmDB implements Serializable{
         abrir();
         int cant_alarmas = cantidadAlarmas();
         ArrayList<Alarma> alarmas = new ArrayList<Alarma>();
-        Cursor cursor = db.rawQuery(AlarmDB.SELECTALL, null);
+        Cursor cursor = db.rawQuery(Constants.SELECTALL, null);
         int i = 0;
         cursor.moveToFirst();
         while (i < cant_alarmas) {
@@ -67,7 +62,7 @@ public class AlarmDB implements Serializable{
     public int cantidadAlarmas(){
         abrir();
         int retornar = 0;
-        Cursor c = db.rawQuery(AlarmDB.COUNT, null);
+        Cursor c = db.rawQuery(Constants.COUNT, null);
         if (c.moveToFirst()) {
             retornar = c.getInt(0);
         }
@@ -93,12 +88,12 @@ public class AlarmDB implements Serializable{
                 throw new ExisteAlarmaException("Existe una alarma con el mismo nombre");
             }
             else {
-                String sql = AlarmDB.INSERTAR + "('"
+                String sql = Constants.INSERTAR + "('"
                         + alarma.getNombre() + "','"
                         + alarma.getLatLong().longitude + "','"
                         + alarma.getLatLong().latitude + "','"
                         + String.valueOf(alarma.getDistancia()) + "',' +"
-                        + Alarma.ACTIVADA + "')";
+                        + Constants.ACTIVADA + "')";
                 db.execSQL(sql);
             }
         }
@@ -149,7 +144,7 @@ public class AlarmDB implements Serializable{
      * @param nombre Nombre de la alarma que forma el query
      */
     private String armarDelete(String nombre){
-        return AlarmDB.DELETE + nombre + "'";
+        return Constants.DELETE + nombre + "'";
     }
 
     /**
@@ -157,9 +152,8 @@ public class AlarmDB implements Serializable{
      * @param nombre Nombre de la alarma que forma el query
      */
     private String cantidadDeAlarmasNombre(String nombre){
-        return AlarmDB.COUNT + " where nombre = '"+ nombre + "'";
+        return Constants.COUNT + " where nombre = '"+ nombre + "'";
     }
-
     //endregion
 
     //region CASTEO DE DATOS
