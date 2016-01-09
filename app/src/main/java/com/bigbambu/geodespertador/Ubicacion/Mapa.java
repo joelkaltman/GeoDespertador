@@ -1,5 +1,6 @@
 package com.bigbambu.geodespertador.Ubicacion;
 
+import com.bigbambu.geodespertador.Constants.Constants;
 import com.bigbambu.geodespertador.Layouts.SettingsAlarma;
 import com.bigbambu.geodespertador.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -16,10 +17,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * Created by Sebas on 06/01/2016.
  */
 public class Mapa implements GoogleMap.OnMapLongClickListener {
-    public static final int MINDISTANCE = 150;
-    public static final boolean DESTINO = true;
-    public static final boolean USUARIO = false;
-    public static final LatLng BSAS = new LatLng(-34.6229419,-58.4491101);
+
     public static GoogleMap map;
     public static SettingsAlarma settings;
     public static LatLng ubicacionDestino;
@@ -43,7 +41,7 @@ public class Mapa implements GoogleMap.OnMapLongClickListener {
     }
 
     public void centrarMapa() {
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(Mapa.BSAS, 15f));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(Constants.BSAS, 15f));
     }
 
     public void centrarMapa(LatLng ubic) {
@@ -87,7 +85,7 @@ public class Mapa implements GoogleMap.OnMapLongClickListener {
 
     public void actualizarRadioCirculo(int radio){
         if(Mapa.miCirculo != null)
-            Mapa.miCirculo.setRadius(radio+ Mapa.MINDISTANCE);
+            Mapa.miCirculo.setRadius(radio+ Constants.MINDISTANCE);
     }
 
     public void zoomin(){
@@ -97,7 +95,7 @@ public class Mapa implements GoogleMap.OnMapLongClickListener {
     @Override
     public void onMapLongClick(LatLng point) {
         Mapa.ubicacionDestino = point;
-        actualizarMarcador(Mapa.ubicacionDestino, Mapa.DESTINO);
+        actualizarMarcador(Mapa.ubicacionDestino, Constants.DESTINO);
         actualizarCirculo(point, (int)Mapa.miCirculo.getRadius());
 
       }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bigbambu.geodespertador.Alarma.AlarmDB;
 import com.bigbambu.geodespertador.Alarma.Alarma;
+import com.bigbambu.geodespertador.Constants.Constants;
 import com.bigbambu.geodespertador.Excepciones.ExisteAlarmaException;
 import com.bigbambu.geodespertador.Ubicacion.Mapa;
 import com.bigbambu.geodespertador.R;
@@ -20,8 +21,6 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class SettingsAlarma extends AppCompatActivity {
 
-    public static final String MODIFICAR = "Modificar";
-    public static final String NUEVO = "Nuevo";
 
     //region vaiables
     //elementos del layout
@@ -54,9 +53,9 @@ public class SettingsAlarma extends AppCompatActivity {
         base = new AlarmDB(this);
 
         String accion = getIntent().getAction();
-        if (accion.equals("NUEVO")){
+        if (accion.equals(Constants.NUEVO)){
             nuevaAlarma();
-        }else{
+        }else if (accion.equals(Constants.MODIFICAR)){
             modificarAlarma();
         }
         map.centrarMapa(map.ubicacionDestino);
@@ -90,13 +89,13 @@ public class SettingsAlarma extends AppCompatActivity {
         btn_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Mapa.marcadorDestino != null || txt_nombre.getText().toString() == "") {
+                if (Mapa.marcadorDestino != null || txt_nombre.getText().toString().equals("")) {
                     Alarma alarmaActual = getDatosPantalla();
                     String accion = getIntent().getAction();
                     try {
-                        if (accion.equals(SettingsAlarma.NUEVO)){
+                        if (accion.equals(Constants.NUEVO)){
                             base.insertarAlarma(alarmaActual);
-                        } else if (accion.equals(SettingsAlarma.MODIFICAR)){
+                        } else if (accion.equals(Constants.MODIFICAR)){
                             String nombre_anterior = getIntent().getStringExtra("nombre");
                             base.borrarAlarma(nombre_anterior);
                             base.insertarAlarma(alarmaActual);
@@ -109,7 +108,7 @@ public class SettingsAlarma extends AppCompatActivity {
                 } else {
                     if (Mapa.marcadorDestino == null)
                         crearMensaje("Debe ingresar una ubicacion destino");
-                    if (txt_nombre.getText().toString() == "")
+                    if (txt_nombre.getText().toString().equals(""))
                         crearMensaje("Nombre de alarma invalido");
                 }
             }
@@ -119,9 +118,9 @@ public class SettingsAlarma extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String accion = getIntent().getAction();
-                if (accion.equals(SettingsAlarma.NUEVO)) {
+                if (accion.equals(Constants.NUEVO)) {
                     Volver();
-                } else if (accion.equals(SettingsAlarma.MODIFICAR)){
+                } else if (accion.equals(Constants.MODIFICAR)){
                     String nombre = getIntent().getStringExtra("nombre");
                     base.borrarAlarma(nombre);
                     Volver();
@@ -184,7 +183,7 @@ public class SettingsAlarma extends AppCompatActivity {
         LatLng nueva_latlong = new LatLng(nueva_lat,nueva_lon);
         String nuevo_nombre = txt_nombre.getText().toString();
         int nueva_distancia = skb_distancia.getProgress() + Mapa.MINDISTANCE;
-        return new Alarma(nuevo_nombre, nueva_latlong, nueva_distancia,Alarma.ACTIVADA);
+        return new Alarma(nuevo_nombre, nueva_latlong, nueva_distancia,Constants.ACTIVADA);
     }
 
     private void crearMensaje(String mensaje){
