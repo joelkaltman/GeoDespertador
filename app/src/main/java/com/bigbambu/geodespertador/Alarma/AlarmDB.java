@@ -29,6 +29,7 @@ public class AlarmDB implements Serializable{
     public AlarmDB(Context contexto) {
         context = contexto;
         conexion = new conexionBase(contexto, "Alarmas", null, 1);
+        abrir();
     }
     //endregion
 
@@ -38,7 +39,6 @@ public class AlarmDB implements Serializable{
      * Devuelve la lista de todas las alarmas en la base de datos
      */
     public ArrayList<Alarma> obtenerTodasAlarmas(){
-        abrir();
         int cant_alarmas = cantidadAlarmas();
         ArrayList<Alarma> alarmas = new ArrayList<Alarma>();
         Cursor cursor = db.rawQuery(Constants.SELECTALL, null);
@@ -50,7 +50,6 @@ public class AlarmDB implements Serializable{
             i++;
         }
         cursor.close();
-        cerrar();
         return alarmas;
     }
     //endregion
@@ -60,14 +59,12 @@ public class AlarmDB implements Serializable{
      * Retorna la cantidad de alarmas en la base de datos
      */
     public int cantidadAlarmas(){
-        abrir();
         int retornar = 0;
         Cursor c = db.rawQuery(Constants.COUNT, null);
         if (c.moveToFirst()) {
             retornar = c.getInt(0);
         }
         c.close();
-        cerrar();
         return retornar;
     }
     //endregion
@@ -81,7 +78,6 @@ public class AlarmDB implements Serializable{
      * @throws ExisteAlarmaException En caso de que el nombre de la alarma ya exista
      */
     public void insertarAlarma(Alarma alarma) throws ExisteAlarmaException{
-        abrir();
         Cursor c = db.rawQuery(cantidadDeAlarmasNombre(alarma.getNombre()), null);
         if (c.moveToFirst()) {
             if (c.getInt(0) > 0) {
@@ -98,7 +94,6 @@ public class AlarmDB implements Serializable{
             }
         }
         c.close();
-        cerrar();
     }
     //endregion
 
@@ -108,10 +103,8 @@ public class AlarmDB implements Serializable{
      * @param nombre El nombre de la alarma que se va a borrar
      */
     public void borrarAlarma(String nombre){
-        abrir();
-        String sql = armarDelete(nombre);
+       String sql = armarDelete(nombre);
         db.execSQL(sql);
-        cerrar();
     }
 
     /**
@@ -119,10 +112,8 @@ public class AlarmDB implements Serializable{
      * @param alarma La alarma que se va a borrar
      */
     public void borrarAlarma(Alarma alarma){
-        abrir();
         String sql = armarDelete(alarma.getNombre());
         db.execSQL(sql);
-        cerrar();
     }
     //endregion
     //endregion
