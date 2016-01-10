@@ -108,8 +108,7 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
 
         sw_activada.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-
+                list.get(position).switchear();
             }
         });
         return view;
