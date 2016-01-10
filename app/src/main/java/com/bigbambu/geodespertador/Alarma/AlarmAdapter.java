@@ -71,12 +71,6 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
         listItemTextRadio = (TextView)view.findViewById(R.id.list_item_string2);
         listItemTextRadio.setText("("+list.get(position).getDistancia()+"m)");
         chk_activada = (ImageButton)view.findViewById(R.id.chk_activada);
-        if(list.get(position).getActiva() == 's'){
-            chk_activada.setBackgroundResource(R.drawable.reloj_prendido);
-        }else{
-            chk_activada.setBackgroundResource(R.drawable.reloj_apagado);
-        }
-
         RelativeLayout linea = (RelativeLayout)view.findViewById(R.id.relative);
 
         //region CLICK EN EL TEXTO
