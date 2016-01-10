@@ -37,6 +37,15 @@
             android:paddingBottom="5dp"
             android:textSize="10sp" />
 
+        <Switch android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:thumb="@drawable/circulo_switch"
+            android:track="@drawable/largo_switch"
+            android:textOff=""
+            android:textOn=""
+            android:id="@+id/sw_activada"
+            android:layout_marginLeft="1dp"/>
+
     </LinearLayout>
 
 </RelativeLayout>

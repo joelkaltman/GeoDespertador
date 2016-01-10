@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bigbambu.geodespertador.Constants.Constants;
@@ -26,6 +28,7 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
     PrincipalActivity actividad;
     TextView listItemText;
     TextView listItemTextRadio;
+    Switch sw_activada;
 
 
     public AlarmAdapter(ArrayList<Alarma> list, Context context, PrincipalActivity actividad) {
@@ -67,6 +70,7 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
         listItemText.setText(list.get(position).getNombre());
         listItemTextRadio = (TextView)view.findViewById(R.id.list_item_string2);
         listItemTextRadio.setText("("+list.get(position).getDistancia()+"m)");
+        sw_activada = (Switch)view.findViewById(R.id.sw_activada);
 
         RelativeLayout linea = (RelativeLayout)view.findViewById(R.id.relative);
 
@@ -102,6 +106,12 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
         });
         //endregion
 
+        sw_activada.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+
+            }
+        });
         return view;
     }
 
