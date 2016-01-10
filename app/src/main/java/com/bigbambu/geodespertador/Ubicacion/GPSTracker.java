@@ -97,7 +97,7 @@ public class GPSTracker extends Service implements LocationListener {
         List<Alarma> alarmas = base.obtenerTodasAlarmas();
         for (Alarma a: alarmas) {
             if (a.getActiva() == 's') {
-                base.desactivarAlarma(a);
+                a.switchear();
                 if(a.estaEnRango(ubicacion_actual)){
                     Intent i = new Intent(getApplicationContext(), sonando.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

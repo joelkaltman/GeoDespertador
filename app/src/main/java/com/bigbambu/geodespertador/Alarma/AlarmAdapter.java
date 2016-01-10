@@ -6,10 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bigbambu.geodespertador.Constants.Constants;
@@ -28,7 +27,7 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
     PrincipalActivity actividad;
     TextView listItemText;
     TextView listItemTextRadio;
-    Switch sw_activada;
+    ImageView chk_activada;
 
 
     public AlarmAdapter(ArrayList<Alarma> list, Context context, PrincipalActivity actividad) {
@@ -70,7 +69,12 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
         listItemText.setText(list.get(position).getNombre());
         listItemTextRadio = (TextView)view.findViewById(R.id.list_item_string2);
         listItemTextRadio.setText("("+list.get(position).getDistancia()+"m)");
-        sw_activada = (Switch)view.findViewById(R.id.sw_activada);
+        chk_activada = (ImageView)view.findViewById(R.id.chk_activada);
+        if(list.get(position).getActiva() == 's'){
+            chk_activada.setBackgroundResource(R.drawable.reloj_prendido);
+        }else{
+            chk_activada.setBackgroundResource(R.drawable.reloj_apagado);
+        }
 
         RelativeLayout linea = (RelativeLayout)view.findViewById(R.id.relative);
 
@@ -101,13 +105,19 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
         linea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(list.get(position).getActiva() == 's'){
+                    chk_activada.setBackgroundResource(R.drawable.reloj_apagado);
+                }else{
+                    chk_activada.setBackgroundResource(R.drawable.reloj_prendido);
+                }
                 modificar(list.get(position));
             }
         });
         //endregion
 
-        sw_activada.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        chk_activada.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 list.get(position).switchear();
             }
         });
