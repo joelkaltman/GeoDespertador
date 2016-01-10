@@ -106,11 +106,6 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
         linea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(list.get(position).getActiva() == 's'){
-                    chk_activada.setBackgroundResource(R.drawable.reloj_apagado);
-                }else{
-                    chk_activada.setBackgroundResource(R.drawable.reloj_prendido);
-                }
                 modificar(list.get(position));
             }
         });
