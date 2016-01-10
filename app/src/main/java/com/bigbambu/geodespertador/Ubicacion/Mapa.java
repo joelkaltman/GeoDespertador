@@ -8,8 +8,6 @@ import com.bigbambu.geodespertador.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -88,28 +86,28 @@ public class Mapa implements GoogleMap.OnMapLongClickListener{
 
     //region MARCADOR
     public void actualizarMarcador(LatLng nueva_pos, boolean esDestino) {
-        Mapa.actualizarMarcadorEstatico(nueva_pos, esDestino);
+        if (Mapa.ready) {
+            Mapa.actualizarMarcadorEstatico(nueva_pos, esDestino);
+        }
     }
     public static void actualizarMarcadorEstatico(LatLng nueva_pos, boolean esDestino) {
-        if (Mapa.ready) {
-            if (esDestino) {
-                try {
-                    Mapa.marcadorDestino.remove();
-                } catch (Exception a) {
-                }
-                Mapa.marcadorDestino = Mapa.map.addMarker(new MarkerOptions().position(nueva_pos));
-                Mapa.ubicacionDestino = nueva_pos;
-            } else {
-                try {
-                    Mapa.marcadorUsuario.remove();
-                } catch (Exception a) {
-                }
-                BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.usuario);
-                Mapa.marcadorUsuario = Mapa.map.addMarker(new MarkerOptions().position(nueva_pos).icon(icon));
-                Mapa.ubicacionUsuario = nueva_pos;
+        if (esDestino) {
+            try {
+                Mapa.marcadorDestino.remove();
+            } catch (Exception a) {
             }
+            if (Mapa.ready)
+                Mapa.marcadorDestino = Mapa.map.addMarker(new MarkerOptions().position(nueva_pos));
+            Mapa.ubicacionDestino = nueva_pos;
+        } else {
+            try {
+                Mapa.marcadorUsuario.remove();
+            } catch (Exception a) {
+            }
+            if (Mapa.ready)
+                Mapa.marcadorUsuario = Mapa.map.addMarker(new MarkerOptions().position(nueva_pos));//.icon(BitmapDescriptorFactory.fromResource(R.drawable.usuario);));
+            Mapa.ubicacionUsuario = nueva_pos;
         }
-
     }
     //endregion
 

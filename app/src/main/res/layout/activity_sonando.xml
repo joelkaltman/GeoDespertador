@@ -33,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="A una distancia de 0m"
-                    android:id="@+id/txt_sonando_km" />
+                    android:id="@+id/txt_sonando_distancia" />
             </LinearLayout>
 
             <android.support.v4.widget.Space

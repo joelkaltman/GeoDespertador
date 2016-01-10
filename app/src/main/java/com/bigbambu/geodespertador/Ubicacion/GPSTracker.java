@@ -102,6 +102,8 @@ public class GPSTracker extends Service implements LocationListener {
                     Intent i = new Intent(getApplicationContext(), sonando.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra("nombre", a.getNombre());
+                    i.putExtra("latitud", a.getLatLong().latitude);
+                    i.putExtra("longitud", a.getLatLong().longitude);
                     startActivity(i);
                 }
             }

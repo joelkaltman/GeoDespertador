@@ -1,5 +1,6 @@
 package com.bigbambu.geodespertador.Layouts;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -9,18 +10,18 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.bigbambu.geodespertador.R;
+import com.bigbambu.geodespertador.Ubicacion.Mapa;
 
 public class sonando extends AppCompatActivity {
-    TextView miTxt;
+    TextView txt_nombre;
+    TextView txt_distancia;
     Button btn_detener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sonando);
-        miTxt = (TextView)findViewById(R.id.txt_sonando_nombre);
-        btn_detener = (Button)findViewById(R.id.btn_sonando_detener);
-        miTxt.setText(getIntent().getStringExtra("nombre"));
+        this.configurarBotones();
     }
 
     @Override
@@ -49,9 +50,11 @@ public class sonando extends AppCompatActivity {
     private void configurarBotones() {
 
         //region ENLAZAR
-        miTxt = (TextView) findViewById(R.id.txt_sonando_nombre);
-        miTxt.setText(getIntent().getStringExtra("nombre"));
+        txt_nombre = (TextView) findViewById(R.id.txt_sonando_nombre);
+        txt_nombre.setText(getIntent().getStringExtra("nombre"));
         btn_detener = (Button) findViewById(R.id.btn_sonando_detener);
+        txt_distancia = (TextView)findViewById(R.id.txt_sonando_distancia);
+        txt_distancia.setText("Distancia: " + String.valueOf(this.obtenerDistanciaADestino()) + "m");
         //endregion
 
 
@@ -63,5 +66,15 @@ public class sonando extends AppCompatActivity {
             }
         });
         //endregion
+    }
+
+    public int obtenerDistanciaADestino(){
+        Location ubic_usuario = new Location("");
+        ubic_usuario.setLatitude(Mapa.ubicacionUsuario.latitude);
+        ubic_usuario.setLongitude(Mapa.ubicacionUsuario.longitude);
+        Location ubic_destino = new Location("");
+        ubic_destino.setLatitude(getIntent().getDoubleExtra("latitud", 0));
+        ubic_destino.setLongitude(getIntent().getDoubleExtra("longitud", 0));
+        return (int)ubic_destino.distanceTo(ubic_usuario);
     }
 }
