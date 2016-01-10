@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
@@ -69,7 +70,7 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
         listItemText.setText(list.get(position).getNombre());
         listItemTextRadio = (TextView)view.findViewById(R.id.list_item_string2);
         listItemTextRadio.setText("("+list.get(position).getDistancia()+"m)");
-        chk_activada = (ImageView)view.findViewById(R.id.chk_activada);
+        chk_activada = (ImageButton)view.findViewById(R.id.chk_activada);
         if(list.get(position).getActiva() == 's'){
             chk_activada.setBackgroundResource(R.drawable.reloj_prendido);
         }else{
@@ -119,6 +120,11 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
                 list.get(position).switchear();
+                if (list.get(position).getActiva() == 's'){
+                    chk_activada.setImageResource(R.drawable.reloj_prendido);
+                }else {
+                    chk_activada.setImageResource(R.drawable.reloj_apagado);
+                }
             }
         });
         return view;
