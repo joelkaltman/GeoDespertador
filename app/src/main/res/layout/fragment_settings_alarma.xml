@@ -33,7 +33,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txt_nombre"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:inputType="textCapSentences"/>
 
         </LinearLayout>
 
