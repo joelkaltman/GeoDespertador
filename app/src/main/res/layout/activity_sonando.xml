@@ -21,7 +21,7 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView android:text="Nueva Alarma" android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -36,20 +36,21 @@
                     android:id="@+id/txt_sonando_distancia" />
             </LinearLayout>
 
-            <android.support.v4.widget.Space
-                android:layout_width="140dp"
-                android:layout_height="match_parent"
-                android:id="@+id/view" />
+            <ImageButton
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:id="@+id/btn_sonando_modificar"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="50dp"
+                android:background="@drawable/icono_modificar" />
 
             <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:id="@+id/btn_sonando_modificar" />
-
-            <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:id="@+id/btn_sonando_borrar" />
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:id="@+id/btn_sonando_borrar"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/icono_borrar" />
 
         </LinearLayout>
 
@@ -61,7 +62,8 @@
             android:layout_weight="0.70"
             android:layout_below="@+id/txt_sonando_nombre"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"/>
 
         <Button
             android:layout_width="match_parent"
@@ -70,7 +72,9 @@
             android:id="@+id/btn_sonando_detener"
             android:layout_weight="0.04"
             android:textColor="#ffffff"
-            android:background="#ff0000" />
+            android:background="@drawable/detener"
+            android:layout_marginTop="10dp"
+            android:textSize="25dp" />
     </LinearLayout>
 
 </RelativeLayout>
