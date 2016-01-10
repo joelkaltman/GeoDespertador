@@ -1,0 +1,16 @@
+Arreglar:
+- Que la alarma suene en primer plano
+- Ir cerrando los layouts
+- Poner un tono de alarma mejor
+
+Por hacer:
+- Menu de opciones
+- Poder activar/desactivar una alarma desde principal con un checkbox
+- Explicacion como usar app
+- Creditos ;)
+
+Quizas?:
+- Poder elegir el tono de alarma
+
+Probar:
+- Que si salis de la zona de una alarma que ya sono, se vuelve a poner activa
