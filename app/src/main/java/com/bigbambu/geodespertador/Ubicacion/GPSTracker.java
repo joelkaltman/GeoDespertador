@@ -104,6 +104,7 @@ public class GPSTracker extends Service implements LocationListener {
                     i.putExtra("nombre", a.getNombre());
                     i.putExtra("latitud", a.getLatLong().latitude);
                     i.putExtra("longitud", a.getLatLong().longitude);
+                    i.putExtra("distancia", a.getDistancia());
                     startActivity(i);
                 }
             }

@@ -1,6 +1,8 @@
 package com.bigbambu.geodespertador.Layouts;
 
+import android.app.FragmentManager;
 import android.location.Location;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -9,19 +11,36 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.bigbambu.geodespertador.Constants.Constants;
 import com.bigbambu.geodespertador.R;
 import com.bigbambu.geodespertador.Ubicacion.Mapa;
+import com.google.android.gms.maps.model.LatLng;
 
 public class sonando extends AppCompatActivity {
     TextView txt_nombre;
     TextView txt_distancia;
     Button btn_detener;
+    MediaPlayer mp_alarma;
 
+    Mapa map;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sonando);
+
+        //mapa
+        FragmentManager fragmentManager_sonando = getFragmentManager();
+        map = new Mapa(fragmentManager_sonando,this);
+        LatLng latlng_destino = new LatLng(getIntent().getDoubleExtra("latitud", 0), getIntent().getDoubleExtra("longitud", 0));
+        map.actualizarMarcador(latlng_destino, Constants.DESTINO);
+        map.actualizarMarcador(Mapa.ubicacionUsuario, Constants.USUARIO);
+        int distancia = getIntent().getIntExtra("distancia",100);
+        map.actualizarCirculo(latlng_destino, distancia);
         this.configurarBotones();
+
+        //media player
+        mp_alarma = MediaPlayer.create(this, R.raw.asd);
+        mp_alarma.start();
     }
 
     @Override
@@ -62,6 +81,7 @@ public class sonando extends AppCompatActivity {
         btn_detener.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mp_alarma.stop();
                 finish();
             }
         });
@@ -73,8 +93,8 @@ public class sonando extends AppCompatActivity {
         ubic_usuario.setLatitude(Mapa.ubicacionUsuario.latitude);
         ubic_usuario.setLongitude(Mapa.ubicacionUsuario.longitude);
         Location ubic_destino = new Location("");
-        ubic_destino.setLatitude(getIntent().getDoubleExtra("latitud", 0));
-        ubic_destino.setLongitude(getIntent().getDoubleExtra("longitud", 0));
+        ubic_destino.setLatitude(Mapa.ubicacionDestino.latitude);
+        ubic_destino.setLongitude(Mapa.ubicacionUsuario.longitude);
         return (int)ubic_destino.distanceTo(ubic_usuario);
     }
 }
