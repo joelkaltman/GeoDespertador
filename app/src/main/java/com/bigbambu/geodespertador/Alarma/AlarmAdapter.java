@@ -72,7 +72,7 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
         listItemTextRadio.setText("("+list.get(position).getDistancia()+"m)");
         chk_activada = (ImageButton)view.findViewById(R.id.chk_activada);
         RelativeLayout linea = (RelativeLayout)view.findViewById(R.id.relative);
-        if (list.get(position).getActiva() == 's'){
+        if (list.get(position).getActiva() == Constants.ACTIVADA){
             chk_activada.setBackgroundResource(R.drawable.reloj_prendido);
         }else {
             chk_activada.setBackgroundResource(R.drawable.reloj_apagado);
@@ -113,7 +113,7 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
                 list.get(position).switchear();
-                if (list.get(position).getActiva() == 's'){
+                if (list.get(position).getActiva() == Constants.ACTIVADA){
                     chk_activada.setBackgroundResource(R.drawable.reloj_prendido);
                 }else {
                     chk_activada.setBackgroundResource(R.drawable.reloj_apagado);

@@ -15,8 +15,7 @@
             android:id="@+id/chk_activada"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:background="@drawable/reloj_apagado" />
+            android:adjustViewBounds="true" />
 
         <!--<ImageView
             android:layout_width="wrap_content"
