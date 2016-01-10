@@ -66,7 +66,7 @@
 
         <fragment
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="200dp"
             android:name="com.google.android.gms.maps.MapFragment"
             android:id="@+id/map"
             android:layout_weight="0.70"
@@ -77,45 +77,42 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:weightSum="1"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:id="@+id/botones">
 
-            <Button
-                android:layout_width="57dp"
-                android:layout_height="wrap_content"
-                android:text="volver"
+            <ImageButton
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:id="@+id/btn_volver"
-                android:textSize="10dp"
-                android:padding="0dp" />
+                android:background="@drawable/icono_volver"/>
 
-            <Button
-                android:layout_width="69dp"
-                android:layout_height="wrap_content"
-                android:text="Guardar"
+            <ImageButton
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:id="@+id/btn_guardar"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:textSize="10dp" />
+                android:background="@drawable/icono_guardar"
+                android:layout_marginLeft="25dp"/>
 
-            <Button
-                android:layout_width="77dp"
-                android:layout_height="wrap_content"
-                android:text="Borrar"
+            <ImageButton
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:id="@+id/btn_borrar"
-                android:textSize="10dp" />
+                android:background="@drawable/icono_borrar"
+                android:layout_marginLeft="25dp"/>
 
             <ImageButton
-                android:layout_width="45dp"
-                android:layout_height="match_parent"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:id="@+id/btn_centrar_usuario"
-                android:background="@drawable/centrar2" />
+                android:background="@drawable/icono_centrar"
+                android:layout_marginLeft="25dp"/>
 
             <ImageButton
-                android:layout_width="45dp"
-                android:layout_height="match_parent"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:id="@+id/btn_centrar_destino"
-                android:background="@drawable/marcador2" />
+                android:background="@drawable/icono_marcador"
+                android:layout_marginLeft="25dp"/>
         </LinearLayout>
 
 

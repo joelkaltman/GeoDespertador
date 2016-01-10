@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
@@ -24,9 +23,9 @@ public class SettingsAlarma extends AppCompatActivity {
 
 
     //region vaiables
-    Button btn_guardar;
-    Button btn_volver;
-    Button btn_borrar;
+    ImageButton btn_guardar;
+    ImageButton btn_volver;
+    ImageButton btn_borrar;
     ImageButton btn_centrar_usuario;
     ImageButton btn_centrar_destino;
     EditText txt_nombre;
@@ -47,6 +46,7 @@ public class SettingsAlarma extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_settings_alarma);
+        setTitle("GeoDespertador");
 
         FragmentManager fragmentManager = getFragmentManager();
         map.map = ((MapFragment) fragmentManager.findFragmentById(R.id.map)).getMap();
@@ -80,12 +80,12 @@ public class SettingsAlarma extends AppCompatActivity {
 
         //region ENLAZAR
         txt_nombre = (EditText)findViewById(R.id.txt_nombre);
-        btn_guardar = (Button)findViewById(R.id.btn_guardar);
-        btn_volver = (Button)findViewById(R.id.btn_volver);
+        btn_guardar = (ImageButton)findViewById(R.id.btn_guardar);
+        btn_volver = (ImageButton)findViewById(R.id.btn_volver);
         btn_centrar_destino = (ImageButton)findViewById(R.id.btn_centrar_destino);
         btn_centrar_usuario = (ImageButton)findViewById(R.id.btn_centrar_usuario);
         skb_distancia = (SeekBar)findViewById(R.id.skb_distancia);
-        btn_borrar = (Button)findViewById(R.id.btn_borrar);
+        btn_borrar = (ImageButton)findViewById(R.id.btn_borrar);
         txt_km = (TextView)findViewById(R.id.txt_km);
         //endregion
 
@@ -196,7 +196,7 @@ public class SettingsAlarma extends AppCompatActivity {
         Double nueva_lat = Mapa.ubicacionDestino.latitude;
         LatLng nueva_latlong = new LatLng(nueva_lat,nueva_lon);
         String nuevo_nombre = txt_nombre.getText().toString();
-        int nueva_distancia = skb_distancia.getProgress();
+        int nueva_distancia = skb_distancia.getProgress() + 100;
         return new Alarma(nuevo_nombre, nueva_latlong, nueva_distancia,Constants.ACTIVADA);
     }
 
