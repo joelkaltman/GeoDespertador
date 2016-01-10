@@ -2,6 +2,7 @@ Arreglar:
 - Que la alarma suene en primer plano
 - Ir cerrando los layouts
 - Poner un tono de alarma mejor
+- Icono marcador usuario
 
 Por hacer:
 - Menu de opciones
