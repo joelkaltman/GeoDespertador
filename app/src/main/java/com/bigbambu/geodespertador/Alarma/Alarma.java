@@ -1,7 +1,7 @@
 package com.bigbambu.geodespertador.Alarma;
 
 import android.location.Location;
-import com.bigbambu.geodespertador.Constants.Constants;
+
 import com.google.android.gms.maps.model.LatLng;
 
 /**
@@ -13,7 +13,6 @@ public class Alarma{
     private String nombre;
     private LatLng ubicacion;
     private int distancia;
-    private boolean sonando;
     private char activa;
 
     public Alarma(String nombre, LatLng latlong, int distancia, char activar){
@@ -27,7 +26,6 @@ public class Alarma{
     public String getNombre(){return this.nombre;}
     public LatLng getLatLong(){ return this.ubicacion;}
     public int getDistancia(){return this.distancia;}
-    public boolean getSonando(){return this.sonando;}
     public char getActiva(){return this.activa;}
     //endregion
 
@@ -37,21 +35,16 @@ public class Alarma{
      * este dentro del rango que contiene la alarma
      * @param destino la ubicacion a verificar si esta en el rango de la alarma
      */
-    public void estaSonando(LatLng destino){
-        if (activa == 's') {
-            Location ubicacionAlarma = new Location("");
-            ubicacionAlarma.setLatitude(this.ubicacion.latitude);
-            ubicacionAlarma.setLongitude(this.ubicacion.longitude);
-            Location ubicacionDestino = new Location("");
-            ubicacionDestino.setLatitude(destino.latitude);
-            ubicacionDestino.setLongitude(destino.longitude);
-            this.sonando = Constants.SINSONAR;
-            if (ubicacionDestino.distanceTo(ubicacionAlarma) < this.distancia && !this.sonando) {
-                this.sonando = Constants.SONANDO;
-                activa = Constants.DESACTIVADA;
-            } else if (ubicacionDestino.distanceTo(ubicacionAlarma) > this.distancia) {
-                this.sonando = Constants.SINSONAR;
-            }
+    public boolean estaEnRango(LatLng destino){
+        Location ubicacionAlarma = new Location("");
+        ubicacionAlarma.setLatitude(this.ubicacion.latitude);
+        ubicacionAlarma.setLongitude(this.ubicacion.longitude);
+        Location ubicacionDestino = new Location("");
+        ubicacionDestino.setLatitude(destino.latitude);
+        ubicacionDestino.setLongitude(destino.longitude);
+        if (ubicacionDestino.distanceTo(ubicacionAlarma) < this.distancia) {
+            return true;
         }
+        return false;
     }
 }

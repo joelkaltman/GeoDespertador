@@ -116,6 +116,23 @@ public class AlarmDB implements Serializable{
         db.execSQL(sql);
     }
     //endregion
+
+    //region MODIFICAR ALARMAS
+    /**
+     * Modifica el campo "activa" de la alarma
+     * @param alarma La alarma que se va a modificar
+     */
+
+    public void desactivarAlarma(Alarma alarma){
+        String sql = Constants.DESACTIVAR + alarma.getNombre() + "'";
+        db.execSQL(sql);
+    }
+
+    public void activarAlarma(Alarma alarma){
+        String sql = Constants.ACTIVAR + alarma.getNombre() + "'";
+        db.execSQL(sql);
+    }
+    //endregion
     //endregion
 
     //region METODOS PRIVADOS

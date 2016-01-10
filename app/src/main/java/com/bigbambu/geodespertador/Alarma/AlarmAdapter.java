@@ -25,6 +25,7 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
     private Context context;
     PrincipalActivity actividad;
     TextView listItemText;
+    TextView listItemTextRadio;
 
 
     public AlarmAdapter(ArrayList<Alarma> list, Context context, PrincipalActivity actividad) {
@@ -64,6 +65,8 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
         //Handle TextView and display string from your list
         listItemText = (TextView)view.findViewById(R.id.list_item_string);
         listItemText.setText(list.get(position).getNombre());
+        listItemTextRadio = (TextView)view.findViewById(R.id.list_item_string2);
+        listItemTextRadio.setText("("+list.get(position).getDistancia()+"m)");
 
         RelativeLayout linea = (RelativeLayout)view.findViewById(R.id.relative);
 

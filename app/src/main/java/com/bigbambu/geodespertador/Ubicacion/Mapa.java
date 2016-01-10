@@ -1,14 +1,8 @@
 package com.bigbambu.geodespertador.Ubicacion;
 
-import android.app.FragmentManager;
-
 import com.bigbambu.geodespertador.Constants.Constants;
-import com.bigbambu.geodespertador.Layouts.SettingsAlarma;
-import com.bigbambu.geodespertador.Layouts.sonando;
-import com.bigbambu.geodespertador.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -21,8 +15,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class Mapa implements GoogleMap.OnMapLongClickListener{
 
     public static GoogleMap map;
-    public static SettingsAlarma settings;
-    public static sonando sonando;
     public static LatLng ubicacionDestino;
     public static LatLng ubicacionUsuario;
     public static Marker marcadorDestino;
@@ -31,21 +23,10 @@ public class Mapa implements GoogleMap.OnMapLongClickListener{
     public static Circle miCirculo;
     public static boolean ready = false;
 
-    public Mapa(FragmentManager fragmentManager, SettingsAlarma setings) {
-        map = ((MapFragment) fragmentManager.findFragmentById(R.id.map)).getMap();
-        Mapa.settings = setings;
+    public Mapa(boolean clickeable) {
         configCirculo();
-        Mapa.map.setOnMapLongClickListener(this);
-        Mapa.ready = true;
-        centrarMapa(Constants.BSAS);
-
-    }
-
-    public Mapa(FragmentManager fragmentManager, sonando setings) {
-        map = ((MapFragment) fragmentManager.findFragmentById(R.id.map_sonando)).getMap();
-        Mapa.sonando = setings;
-        configCirculo();
-        Mapa.map.setOnMapLongClickListener(this);
+        if(clickeable)
+            Mapa.map.setOnMapLongClickListener(this);
         Mapa.ready = true;
         centrarMapa(Constants.BSAS);
 

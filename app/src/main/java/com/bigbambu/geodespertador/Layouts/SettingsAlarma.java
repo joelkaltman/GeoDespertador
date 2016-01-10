@@ -17,6 +17,7 @@ import com.bigbambu.geodespertador.Constants.Constants;
 import com.bigbambu.geodespertador.Excepciones.ExisteAlarmaException;
 import com.bigbambu.geodespertador.R;
 import com.bigbambu.geodespertador.Ubicacion.Mapa;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 public class SettingsAlarma extends AppCompatActivity {
@@ -48,7 +49,8 @@ public class SettingsAlarma extends AppCompatActivity {
         setContentView(R.layout.fragment_settings_alarma);
 
         FragmentManager fragmentManager = getFragmentManager();
-        map = new Mapa(fragmentManager,this);
+        map.map = ((MapFragment) fragmentManager.findFragmentById(R.id.map)).getMap();
+        map = new Mapa(true);
         configurarBotones();
         base = new AlarmDB(this);
 

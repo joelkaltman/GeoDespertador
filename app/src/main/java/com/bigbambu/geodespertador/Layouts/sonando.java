@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bigbambu.geodespertador.Constants.Constants;
 import com.bigbambu.geodespertador.R;
 import com.bigbambu.geodespertador.Ubicacion.Mapa;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 public class sonando extends AppCompatActivity {
@@ -29,12 +30,13 @@ public class sonando extends AppCompatActivity {
         setContentView(R.layout.activity_sonando);
 
         //mapa
-        FragmentManager fragmentManager_sonando = getFragmentManager();
-        map = new Mapa(fragmentManager_sonando,this);
+        FragmentManager fragmentManager = getFragmentManager();
+        map.map = ((MapFragment) fragmentManager.findFragmentById(R.id.map_sonando)).getMap();
+        map = new Mapa(false);
         LatLng latlng_destino = new LatLng(getIntent().getDoubleExtra("latitud", 0), getIntent().getDoubleExtra("longitud", 0));
         map.actualizarMarcador(latlng_destino, Constants.DESTINO);
         map.actualizarMarcador(Mapa.ubicacionUsuario, Constants.USUARIO);
-        int distancia = getIntent().getIntExtra("distancia",100);
+        int distancia = getIntent().getIntExtra("distancia", 100);
         map.actualizarCirculo(latlng_destino, distancia);
         this.configurarBotones();
 

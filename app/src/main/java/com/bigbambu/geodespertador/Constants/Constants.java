@@ -32,6 +32,8 @@ public class Constants {
     public static final String SELECTALL = "SELECT nombre, latitud, longitud, distancia, activa FROM Alarmas";
     public static final String COUNT = "SELECT count(1) FROM Alarmas";
     public static final String DELETE = "DELETE FROM Alarmas WHERE nombre='";
+    public static final String DESACTIVAR = "UPDATE Alarmas SET activa='n' WHERE nombre='";
+    public static final String ACTIVAR = "UPDATE Alarmas SET activa='s' WHERE nombre='";
 
     //Acciones SettingsAlarma
     public static final String MODIFICAR = "Modificar";
