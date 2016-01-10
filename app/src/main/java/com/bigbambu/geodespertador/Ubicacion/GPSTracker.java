@@ -108,9 +108,9 @@ public class GPSTracker extends Service implements LocationListener {
                     startActivity(i);
                 }
             }else{
-                if(!a.estaEnRango(ubicacion_actual)){
+                /*if(!a.estaEnRango(ubicacion_actual)){
                     base.activarAlarma(a);
-                }
+                }*/
             }
         }
     }
