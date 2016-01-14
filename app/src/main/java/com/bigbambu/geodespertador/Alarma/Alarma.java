@@ -1,8 +1,8 @@
 package com.bigbambu.geodespertador.Alarma;
 
+import android.content.Context;
 import android.location.Location;
 
-import com.bigbambu.geodespertador.Layouts.PrincipalActivity;
 import com.google.android.gms.maps.model.LatLng;
 
 /**
@@ -30,8 +30,8 @@ public class Alarma{
     public char getActiva(){return this.activa;}
     //endregion
 
-    public void switchear() {
-        AlarmDB db = new AlarmDB(PrincipalActivity.contexto);
+    public void switchear(Context contexto) {
+        AlarmDB db = new AlarmDB(contexto);
         if (this.activa == 's') {
             this.activa = 'n';
             db.desactivarAlarma(this);

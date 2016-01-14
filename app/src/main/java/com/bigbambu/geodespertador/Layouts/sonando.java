@@ -52,8 +52,8 @@ public class sonando extends AppCompatActivity {
         String nombre = getIntent().getStringExtra("nombre");
         LatLng latlng = new LatLng(getIntent().getDoubleExtra("latitud", 0), getIntent().getDoubleExtra("longitud", 0));
         int distancia = getIntent().getIntExtra("distancia", 100);
-        alarma_actual = new Alarma(nombre, latlng, distancia, 'n');
-
+        alarma_actual = new Alarma(nombre, latlng, distancia, 's');
+        alarma_actual.switchear(this);
         map.actualizarMarcador(alarma_actual.getLatLong(), Constants.DESTINO);
         map.actualizarMarcador(Mapa.ubicacionUsuario, Constants.USUARIO);
         map.actualizarCirculo(alarma_actual.getLatLong(), alarma_actual.getDistancia());

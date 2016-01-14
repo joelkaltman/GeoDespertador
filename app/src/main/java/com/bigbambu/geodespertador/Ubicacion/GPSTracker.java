@@ -1,7 +1,7 @@
 package com.bigbambu.geodespertador.Ubicacion;
 
 import android.Manifest;
-import android.app.Service;
+import android.app.IntentService;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Created by Joel on 07-Jan-16.
  */
-public class GPSTracker extends Service implements LocationListener {
+public class GPSTracker extends IntentService implements LocationListener {
     // Flag for GPS status
     boolean isGPSEnabled = false;
 
@@ -39,6 +39,10 @@ public class GPSTracker extends Service implements LocationListener {
     protected LocationManager locationManager;
 
     public static LatLng ubicacion_actual;
+
+    public GPSTracker (){
+        super("GPSTracker");
+    }
 
     @Override
     public void onCreate() {
@@ -87,6 +91,15 @@ public class GPSTracker extends Service implements LocationListener {
     }
 
 
+    @Override
+    protected void onHandleIntent(Intent intent){
+        while (true) {
+            try {
+                Thread.sleep(3000);
+            }catch (InterruptedException e){}
+        }
+    }
+
     //overrides locationListener
 
     @Override
@@ -97,7 +110,6 @@ public class GPSTracker extends Service implements LocationListener {
         List<Alarma> alarmas = base.obtenerTodasAlarmas();
         for (Alarma a: alarmas) {
             if (a.getActiva() == 's') {
-                a.switchear();
                 if(a.estaEnRango(ubicacion_actual)){
                     Intent i = new Intent(getApplicationContext(), sonando.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,8 +27,7 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
     PrincipalActivity actividad;
     TextView listItemText;
     TextView listItemTextRadio;
-    ImageView chk_activada;
-
+    ImageButton chk_button;
 
     public AlarmAdapter(ArrayList<Alarma> list, Context context, PrincipalActivity actividad) {
         this.list = list;
@@ -70,12 +68,12 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
         listItemText.setText(list.get(position).getNombre());
         listItemTextRadio = (TextView)view.findViewById(R.id.list_item_string2);
         listItemTextRadio.setText("("+list.get(position).getDistancia()+"m)");
-        chk_activada = (ImageButton)view.findViewById(R.id.chk_activada);
-        RelativeLayout linea = (RelativeLayout)view.findViewById(R.id.relative);
+        chk_button = (ImageButton) view.findViewById(R.id.chk_activada);
+        final RelativeLayout linea = (RelativeLayout)view.findViewById(R.id.relative);
         if (list.get(position).getActiva() == Constants.ACTIVADA){
-            chk_activada.setBackgroundResource(R.drawable.reloj_prendido);
+            chk_button.setBackgroundResource(R.drawable.reloj_prendido);
         }else {
-            chk_activada.setBackgroundResource(R.drawable.reloj_apagado);
+            chk_button.setBackgroundResource(R.drawable.reloj_apagado);
         }
         //region CLICK EN EL TEXTO
         listItemText.setOnLongClickListener(new View.OnLongClickListener() {
@@ -109,17 +107,19 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
         });
         //endregion
 
-        chk_activada.setOnClickListener(new View.OnClickListener() {
+        chk_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                list.get(position).switchear();
-                if (list.get(position).getActiva() == Constants.ACTIVADA){
-                    chk_activada.setBackgroundResource(R.drawable.reloj_prendido);
-                }else {
-                    chk_activada.setBackgroundResource(R.drawable.reloj_apagado);
+                list.get(position).switchear(PrincipalActivity.contexto);
+                ImageButton botonactual = (ImageButton)v.findViewById(R.id.chk_activada);
+                if (list.get(position).getActiva() == Constants.ACTIVADA) {
+                    botonactual.setBackgroundResource(R.drawable.reloj_prendido);
+                } else {
+                    botonactual.setBackgroundResource(R.drawable.reloj_apagado);
                 }
             }
         });
+
         return view;
     }
 

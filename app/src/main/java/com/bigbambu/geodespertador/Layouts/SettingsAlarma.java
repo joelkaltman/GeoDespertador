@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -80,6 +81,10 @@ public class SettingsAlarma extends AppCompatActivity {
 
         //region ENLAZAR
         txt_nombre = (EditText)findViewById(R.id.txt_nombre);
+        int maxLength = 15;
+        InputFilter[] fArray = new InputFilter[1];
+        fArray[0] = new InputFilter.LengthFilter(maxLength);
+        txt_nombre.setFilters(fArray);
         btn_guardar = (ImageButton)findViewById(R.id.btn_guardar);
         btn_volver = (ImageButton)findViewById(R.id.btn_volver);
         btn_centrar_destino = (ImageButton)findViewById(R.id.btn_centrar_destino);
@@ -213,9 +218,7 @@ public class SettingsAlarma extends AppCompatActivity {
        txt_nombre.setText("Nueva Alarma");
        txt_nombre.setOnClickListener(new View.OnClickListener() {
            @Override
-           public void onClick(View v) {
-               txt_nombre.setText("");
-           }
+           public void onClick(View v) {if (txt_nombre.getText().equals("Nueva Alarma")) txt_nombre.setText("");}
        });
        map.actualizarMarcador(Constants.BSAS, Constants.DESTINO);
        map.actualizarCirculo(Constants.BSAS, skb_distancia.getProgress());

@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.bigbambu.geodespertador.Alarma.AlarmAdapter;
@@ -16,11 +17,16 @@ import com.bigbambu.geodespertador.Constants.Constants;
 import com.bigbambu.geodespertador.R;
 import com.bigbambu.geodespertador.Ubicacion.GPSTracker;
 
+import java.util.ArrayList;
+
 
 public class PrincipalActivity extends AppCompatActivity {
 
     public AlarmDB mi_base;
     public static Context contexto;
+
+    public static ArrayList<ImageButton> botones;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +41,11 @@ public class PrincipalActivity extends AppCompatActivity {
         //Conecta a la db
         mi_base = new AlarmDB(this);
 
+
+        PrincipalActivity.botones = new ArrayList<>();
+
         //carga la lista de alarmas en el listView
         cargarListView();
-
 
         //region CONFIGURAR BOTON NUEVA ALARMA
         Button nueva_alarma;
@@ -55,6 +63,7 @@ public class PrincipalActivity extends AppCompatActivity {
         //endregion
 
     }
+
 
     //region METODOS OVERRIDE QUE NO SE QUE HACEN
     @Override
