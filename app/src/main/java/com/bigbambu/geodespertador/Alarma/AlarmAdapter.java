@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
     TextView listItemText;
     TextView listItemTextRadio;
     ImageButton chk_button;
+    LinearLayout layout_boton;
 
     public AlarmAdapter(ArrayList<Alarma> list, Context context, PrincipalActivity actividad) {
         this.list = list;
@@ -68,6 +70,7 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
         listItemText.setText(list.get(position).getNombre());
         listItemTextRadio = (TextView)view.findViewById(R.id.list_item_string2);
         listItemTextRadio.setText("("+list.get(position).getDistancia()+"m)");
+        layout_boton = (LinearLayout)view.findViewById(R.id.layout_texto);
         chk_button = (ImageButton) view.findViewById(R.id.chk_activada);
         final RelativeLayout linea = (RelativeLayout)view.findViewById(R.id.relative);
         if (list.get(position).getActiva() == Constants.ACTIVADA){
@@ -75,31 +78,9 @@ public class AlarmAdapter extends BaseAdapter implements ListAdapter {
         }else {
             chk_button.setBackgroundResource(R.drawable.reloj_apagado);
         }
-        //region CLICK EN EL TEXTO
-        listItemText.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                modificar(list.get(position));
-                return true;
-            }
-        });
-        listItemText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                modificar(list.get(position));
-            }
-        });
-        //endregion
 
-        //region CLICK EN LA LINEA
-        linea.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                modificar(list.get(position));
-                return true;
-            }
-        });
-        linea.setOnClickListener(new View.OnClickListener() {
+        //region CLICK EN EL LAYOUT
+        layout_boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 modificar(list.get(position));

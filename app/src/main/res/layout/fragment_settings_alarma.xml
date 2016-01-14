@@ -83,42 +83,47 @@
             android:weightSum="1"
             android:layout_marginTop="30dp"
             android:id="@+id/botones"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+            android:gravity="center">
 
             <ImageButton
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:id="@+id/btn_volver"
-                android:background="@drawable/icono_volver"/>
+                android:background="@drawable/icono_volver"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"/>
 
             <ImageButton
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:id="@+id/btn_guardar"
                 android:background="@drawable/icono_guardar"
-                android:layout_marginLeft="25dp"/>
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"/>
 
             <ImageButton
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:id="@+id/btn_borrar"
                 android:background="@drawable/icono_borrar"
-                android:layout_marginLeft="25dp"/>
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"/>
 
             <ImageButton
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:id="@+id/btn_centrar_usuario"
                 android:background="@drawable/icono_centrar"
-                android:layout_marginLeft="25dp"/>
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"/>
 
             <ImageButton
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:id="@+id/btn_centrar_destino"
                 android:background="@drawable/icono_marcador"
-                android:layout_marginLeft="25dp"/>
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"/>
         </LinearLayout>
 
 
