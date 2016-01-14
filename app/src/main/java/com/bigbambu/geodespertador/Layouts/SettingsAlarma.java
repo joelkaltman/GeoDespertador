@@ -202,7 +202,7 @@ public class SettingsAlarma extends AppCompatActivity {
         Double nueva_lat = Mapa.ubicacionDestino.latitude;
         LatLng nueva_latlong = new LatLng(nueva_lat,nueva_lon);
         String nuevo_nombre = txt_nombre.getText().toString();
-        int nueva_distancia = skb_distancia.getProgress() + 100;
+        int nueva_distancia = skb_distancia.getProgress() + Constants.MINDISTANCE;
         return new Alarma(nuevo_nombre, nueva_latlong, nueva_distancia,Constants.ACTIVADA);
     }
 
@@ -222,7 +222,7 @@ public class SettingsAlarma extends AppCompatActivity {
            public void onClick(View v) {if (txt_nombre.getText().equals("Nueva Alarma")) txt_nombre.setText("");}
        });
        map.actualizarMarcador(Constants.BSAS, Constants.DESTINO);
-       map.actualizarCirculo(Constants.BSAS, skb_distancia.getProgress());
+       map.actualizarCirculo(Constants.BSAS, skb_distancia.getProgress() + Constants.MINDISTANCE);
     }
 
 
