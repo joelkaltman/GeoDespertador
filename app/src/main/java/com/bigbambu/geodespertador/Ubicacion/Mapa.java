@@ -1,8 +1,10 @@
 package com.bigbambu.geodespertador.Ubicacion;
 
 import com.bigbambu.geodespertador.Constants.Constants;
+import com.bigbambu.geodespertador.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -97,10 +99,26 @@ public class Mapa implements GoogleMap.OnMapLongClickListener{
                 Mapa.marcadorUsuario.remove();
             } catch (Exception a) {
             }
-            if (Mapa.ready)
-                Mapa.marcadorUsuario = Mapa.map.addMarker(new MarkerOptions().position(nueva_pos));//.icon(BitmapDescriptorFactory.fromResource(R.drawable.usuario);));
-            Mapa.ubicacionUsuario = nueva_pos;
+            if (Mapa.ready) {
+                try {
+                    Mapa.marcadorUsuario = Mapa.map.addMarker(new MarkerOptions().position(nueva_pos).icon(BitmapDescriptorFactory.fromResource(R.drawable.usuario)));
+                } catch (Exception e) {
+                    Mapa.marcadorUsuario = Mapa.map.addMarker(new MarkerOptions().position(nueva_pos));
+                }
+                Mapa.ubicacionUsuario = nueva_pos;
+            }
         }
+    }
+    public static void actualizarMarcadorUsuarioActual() {
+            if (Mapa.ready) {
+                if(Mapa.ubicacionUsuario != null) {
+                    try {
+                        Mapa.marcadorUsuario = Mapa.map.addMarker(new MarkerOptions().position(Mapa.ubicacionUsuario).icon(BitmapDescriptorFactory.fromResource(R.drawable.usuario)));
+                    } catch (Exception e) {
+                        Mapa.marcadorUsuario = Mapa.map.addMarker(new MarkerOptions().position(Mapa.ubicacionUsuario));
+                    }
+                }
+            }
     }
     //endregion
 

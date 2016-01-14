@@ -48,6 +48,7 @@ public class sonando extends AppCompatActivity {
         FragmentManager fragmentManager = getFragmentManager();
         map.map = ((MapFragment) fragmentManager.findFragmentById(R.id.map_sonando)).getMap();
         map = new Mapa(false);
+        map.actualizarMarcadorUsuarioActual();
 
         String nombre = getIntent().getStringExtra("nombre");
         LatLng latlng = new LatLng(getIntent().getDoubleExtra("latitud", 0), getIntent().getDoubleExtra("longitud", 0));

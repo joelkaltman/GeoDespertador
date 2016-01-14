@@ -52,6 +52,7 @@ public class SettingsAlarma extends AppCompatActivity {
         FragmentManager fragmentManager = getFragmentManager();
         map.map = ((MapFragment) fragmentManager.findFragmentById(R.id.map)).getMap();
         map = new Mapa(true);
+        map.actualizarMarcadorUsuarioActual();
         configurarBotones();
         base = new AlarmDB(this);
 
