@@ -58,7 +58,6 @@ public class sonando extends AppCompatActivity {
         alarma_actual = new Alarma(nombre, latlng, distancia, 's');
         alarma_actual.switchear(this);
         map.actualizarMarcador(alarma_actual.getLatLong(), Constants.DESTINO);
-        map.actualizarMarcador(Mapa.ubicacionUsuario, Constants.USUARIO);
         map.actualizarCirculo(alarma_actual.getLatLong(), alarma_actual.getDistancia());
         this.configurarBotones();
 

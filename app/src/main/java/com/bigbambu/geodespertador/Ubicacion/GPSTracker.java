@@ -104,8 +104,8 @@ public class GPSTracker extends IntentService implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        ubicacion_actual = new LatLng(location.getLatitude(), location.getLongitude());
-        Mapa.actualizarMarcadorEstatico(ubicacion_actual, Constants.USUARIO);
+        Mapa.ubicacionUsuario = new LatLng(location.getLatitude(), location.getLongitude());
+        Mapa.actualizarMarcadorUsuarioActual();
         AlarmDB base = new AlarmDB(this);
         List<Alarma> alarmas = base.obtenerTodasAlarmas();
         for (Alarma a: alarmas) {
