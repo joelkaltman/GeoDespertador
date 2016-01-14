@@ -1,10 +1,12 @@
 package com.bigbambu.geodespertador.Layouts;
 
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -63,6 +65,9 @@ public class sonando extends AppCompatActivity {
         //media player
         mp_alarma = MediaPlayer.create(this, R.raw.asd);
         mp_alarma.start();
+
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(2000);
     }
 
     @Override
